@@ -89,7 +89,8 @@ session:
   - title: "What can you do with this data?"
     minutes: "10–20"
     short: 8
-    cut: "Never cut. If short of time, cap the feedback at 3 minutes."
+    checkpoint: true
+    cut: "If short of time, cap the feedback at 3 minutes."
     script: "In pairs, you have five minutes. Look at this table and list every problem you can find, and what would need to change before someone else could reliably reuse it. … Let's hear one problem from each of two or three pairs. … Now the answers. The resolution column contains 512x512, which isn't a resolution at all. It's most likely the image size in pixels, entered in the wrong column. It looks plausible and it's wrong. The organism column mixes a scientific name with common names, Drosophila, fly and mouse. Pick one convention and use it everywhere. And drug1 and drug2 mean nothing to anyone outside the original team, which is a clear case for a data dictionary. None of these fixes needs special software. They're conventions. Making a spreadsheet FAIR is mostly about consistency and agreement."
     tip: "Hand out the table (below) and keep the answers back until after the exercise. Set a visible five-minute timer. Prompt stuck pairs with: what does 512x512 mean in the Resolution column? Can you tell what drug1 and drug2 are? The table is imaging data, but participants don't need imaging expertise to spot the problems. You can swap in a messy table from your own institution, keeping the same kinds of problem. For a longer, hands-on version, use the original Data Carpentry messy spreadsheet instead (see Participant materials)."
     slide:
@@ -182,7 +183,8 @@ session:
   - title: "Fix the table"
     minutes: "28–36"
     short: 5
-    cut: "Never cut. If short of time, fix two columns instead of the whole table."
+    checkpoint: true
+    cut: "If short of time, fix two columns instead of the whole table."
     script: "Let's use what we've just seen. Go back to the table from the exercise. In pairs, rewrite it so it's Tidy and consistent: one convention for names, one date format, clear column headers, and every value in the right column. Some things you can fix yourselves. Some you can't, because only the person who collected the data knows. Mark those as missing and write down the question you'd ask them. … Here's one way to do it. The organism names are consistent, the dates are ISO 8601, the headers have no spaces, and 512x512 has moved to its own column for image size. Three things we couldn't fix: which microscope was used, whether actin in the last row is actin-GFP, and what drug1 and drug2 are. Those go back to whoever collected the data, and drug1 and drug2 get defined in the data dictionary, which is next."
     tip: "Paper and pen work fine; people don't need to type. Expect different answers for column names and file names, which is fine as long as they're consistent. The point to reach: some fixes are conventions you can apply, and some information is lost unless it was recorded at the time. The cleaned version on the answers slide is one possible answer written for this playbook, not part of the EuroBioimaging material."
     slides:
@@ -217,7 +219,8 @@ session:
   - title: "Build it FAIR from the start"
     minutes: "36–48"
     short: 10
-    cut: "Never cut. If short of time, cover technical and provenance metadata in full and summarise discovery metadata in one sentence."
+    checkpoint: true
+    cut: "If short of time, cover technical and provenance metadata in full and summarise discovery metadata in one sentence."
     script: "This is the main message of the session. Design your table before you collect a single row. Collect data straight into that Tidy structure. Analyse from a flat copy and keep wide or pivoted views separate. Then when it's time to share, the table is already FAIR and sharing is quick. Every FAIR spreadsheet needs three kinds of metadata. Technical metadata describes the table itself. This is the data dictionary: for each column, its name, type, unit, description and allowed values. Spell out any in-house abbreviations, and define your missing-value code once and use it everywhere. Provenance metadata describes how the data was produced: renamed variables, recoded values, derived columns and quality-control steps. Prefer scripted changes in R or Python over manual edits in Excel, because a script can be rerun and checked. If you use an AI tool to clean or transform data, record exactly what it changed. Discovery metadata lets people find and cite the dataset: title, creator, description, licence and identifiers. Fill it in before the data is public; it costs little now. Use international standards where you can: ISO 8601 for dates, standard units, recognised country codes. You can keep all this in a README file, a README tab in the workbook, or a formal package such as Frictionless Data or RO-Crate."
     tip: "Optional discussion: how much of your work is cleaning up a spreadsheet just before submission or publication? Walk through the example data dictionary (below): sample_id, treatment, collection_date and value. For provenance, name the four things to record: renamed variables, recoded values, derived variables and quality-control steps. The source slides use MedDRA as a vocabulary example; use one closer to your audience, and point them to FAIRsharing to find theirs."
     slides:

@@ -77,4 +77,5 @@ exclude:
 markdown: kramdown
 kramdown:
   input: GFM
+  toc_levels: 2..3   # used by "On this page" lists ({:toc})
   hard_wrap: false

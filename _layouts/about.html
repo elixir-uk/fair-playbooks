@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{%- assign about_pages = "/about/|About;/about/contributors/|Contributors;/about/accessibility/|Accessibility;/about/privacy/|Privacy;/about/licence/|Licence and credits" | split: ";" -%}
+{%- assign about_pages = "/about/|About;/about/contributors/|Contributors;/about/accessibility/|Accessibility;/about/privacy/|Privacy;/about/licence/|Licence and credits;/about/write-a-module/|Write a module" | split: ";" -%}
 <p class="eyebrow">About</p>
 <nav class="subnav" aria-label="About this playbook">
   {%- for item in about_pages -%}
@@ -13,6 +13,36 @@ layout: default
 {%- if page.intro %}
 <p class="brand-sub">{{ page.intro }}</p>
 {%- endif %}
+{%- if page.toc %}
+{%- assign parts = content | split: '<!--toc-end-->' %}
+<div class="toc-layout">
+{{ parts[0] }}
+<div class="prose">
+{{ parts[1] }}
+</div>
+</div>
+{%- else %}
 <div class="prose">
 {{ content }}
 </div>
+{%- endif %}
+{%- if page.toc %}
+<script>
+  // Highlight the section you're reading in the side menu
+  (function () {
+    var links = document.querySelectorAll('.page-toc a[href^="#"]');
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    var byId = {};
+    links.forEach(function (a) { byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+    var heads = Array.prototype.filter.call(document.querySelectorAll('.toc-layout .prose h2[id], .toc-layout .prose h3[id]'), function (h) { return byId[h.id]; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) { a.removeAttribute('aria-current'); });
+        byId[e.target.id].setAttribute('aria-current', 'location');
+      });
+    }, { rootMargin: '0px 0px -75% 0px' });
+    heads.forEach(function (h) { io.observe(h); });
+  })();
+</script>
+{%- endif %}

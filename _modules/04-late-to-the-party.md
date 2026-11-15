@@ -76,7 +76,7 @@ session:
         credit: "“Datasets Anonymous”, NFDI4BIOIMAGE Consortium (2024): NFDI4BIOIMAGE data management illustrations by Henning Falk, Zenodo, https://doi.org/10.5281/zenodo.14186100, CC-BY 4.0"
   - title: "Triage: quick wins vs deeper retrofit"
     minutes: "23–28"
-    cut: "Never cut."
+    checkpoint: true
     principles: ["F1", "F2", "R1.1"]
     script: "With limited time, the most useful skill is triage. What gives the most FAIRness for the least effort? A few minutes buys a DOI from a generalist repository, keywords, a named licence and a list of what your abbreviations mean. Days of work buy a domain repository, a community metadata standard, ontology mapping and a full provenance chain. Remember that depositing in a repository does most of the work of making data findable and accessible for you, through identifiers, indexing and download."
     tip: "This is the core of the session. Keep it even when you are very short of time."
@@ -89,7 +89,7 @@ session:
       prompt: "Start with the minutes"
   - title: "Minimum Viable FAIR"
     minutes: "28–33"
-    cut: "Never cut."
+    checkpoint: true
     principles: ["F1", "A1.1", "I2", "R1.1"]
     script: "When you can't do full FAIR, aim for four things. Get a persistent identifier from a repository. Use an open format, within legal and ethical limits. Use standard terms, or at least define your own terms clearly. Give enough metadata to show where the data came from, plus a licence. That won't make the dataset fully FAIR, but it will make it FAIR enough. Then turn it round. If you were the one reusing this dataset, what would you need?"
     tip: "Let the room build the minimum from a reuser's point of view before you confirm the four actions. People accept it more readily when they get there themselves."

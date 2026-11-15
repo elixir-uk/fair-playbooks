@@ -1,0 +1,43 @@
+# The answers in "Build a session" (/recommend/), and the values modules use
+# in their front matter (audience, scenario, dataType, intent) to be matched.
+#
+# To add a choice: add an entry under the right question, then tag the modules
+# it applies to with its `value`. That's all: the session builder and the
+# "How to write a module" guide both read this file.
+#   value:  what you write in a module file (lowercase, hyphens, no spaces)
+#   label:  the button text in the session builder
+#   short:  how it reads in "why this matches" (e.g. "fits the PhD student")
+#   person: audience only – a pixel character from assets/js/pixel-people.js
+#           (leave it out if there isn't one yet; the button just has no picture)
+
+audience:
+  - { value: phd-student, label: "A PhD student / new researcher", short: "PhD student", person: phd-student }
+  - { value: postdoc, label: "A postdoc mid-career", short: "postdoc", person: postdoc }
+  - { value: pi, label: "A PI / group leader", short: "PI", person: pi }
+  - { value: decision-maker, label: "A decision-maker (head of department, dean)", short: "decision-maker", person: decision-maker }
+  - { value: rdm-peer, label: "Another RDM professional", short: "fellow RDM professional", person: rdm-peer }
+  - { value: researcher, label: "A generic researcher (any career stage)", short: "researcher", person: researcher }
+
+scenario:
+  - { value: starting-project, label: "They're starting a new project", short: "starting a project" }
+  - { value: mid-project, label: "They're mid-project", short: "mid-project" }
+  - { value: ending-project, label: "A project is ending", short: "project ending" }
+  - { value: legacy-data, label: "There's legacy/orphan data", short: "legacy data" }
+  - { value: advocating-internally, label: "Need to advocate to leadership/colleagues", short: "internal advocacy" }
+  - { value: training-team, label: "Training a team", short: "team training" }
+
+dataType:
+  - { value: sequencing, label: "Sequencing (RNA-seq, NGS, etc.)", short: "sequencing" }
+  - { value: proteomics, label: "Proteomics / mass spec", short: "proteomics" }
+  - { value: imaging, label: "Imaging", short: "imaging" }
+  - { value: spreadsheet, label: "Bespoke data (spreadsheet / custom assay)", short: "spreadsheet / bespoke data" }
+  - { value: code, label: "Code / analytical pipelines", short: "code" }
+  - { value: mixed, label: "Mixed / don't know yet", short: "mixed" }
+  - { value: n-a, label: "Not data-specific (general / cultural)", short: "general" }
+
+intent:
+  - { value: how-to, label: "Teach how to do something practical", short: "how-to teaching" }
+  - { value: motivate, label: "Motivate / shift attitude", short: "motivation" }
+  - { value: signpost, label: "Signpost to other resources", short: "signposting" }
+  - { value: self-assess, label: "Let them self-assess where they are", short: "self-assessment" }
+  - { value: hands-on-exercise, label: "Hands-on exercise / activity", short: "hands-on exercise" }

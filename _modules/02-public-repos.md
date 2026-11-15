@@ -80,7 +80,7 @@ session:
       prompt: "What can you see before you download anything?"
   - title: "Read the metadata: what only you can provide"
     minutes: "25–35"
-    cut: "Never cut."
+    checkpoint: true
     principles: ["F2", "R1", "R1.3", "I1"]
     script: "Now the metadata. This is where most of the FAIR work happens, and where most of it goes wrong. ArrayExpress uses a standard called MAGE-TAB, with two files. The IDF covers the study: title, authors, design and protocols. The SDRF is a spreadsheet with one row per sample, its characteristics, and links to its raw files. Rich metadata means more than a title and a date: organism, tissue, disease, treatment, time points, and any confounders you recorded. It's also what makes the data findable. Search for synovial macrophage rheumatoid arthritis and you find this dataset because those words are in its metadata. Using a community format means tools and other databases can read it and compare it with datasets from around the world. Ontologies can sound daunting. They're dictionaries of terms a community has agreed on. If you describe the disease with a term from a disease ontology, such as rheumatic disease, your dataset can be merged with others that use the same term, without anyone chasing synonyms."
     tip: "Give pairs 2–3 minutes before opening it up. People usually find that some fields use ontology terms and others use inconsistent free text for the same thing. A good discussion question: who is responsible for the quality of this metadata, the researcher, the repository or the journal? If time is short, skip the hands-on part and talk through one SDRF row together, pointing out what is and isn't there."
@@ -104,7 +104,7 @@ session:
         - "You: descriptions, shared terms, licence, provenance"
   - title: "Where it goes wrong"
     minutes: "40–45"
-    cut: "Never cut."
+    checkpoint: true
     script: "The most common failure is leaving FAIR to the end. The data is deposited the week before the paper goes in, under time pressure, with whatever metadata can be scraped together. Batch information is gone. Sample names are inconsistent. The SDRF is incomplete. The fix is to keep a metadata spreadsheet like a lab notebook. Start it on day one and add to it as you go. By the time you submit, it's already done. Not every repository helps you like this one, and not every data type has a metadata standard. Metadata quality can't be automated, so use ontologies and define your variables."
     tip: "Ask: what does this tell you about when FAIR practice needs to start? Then point people to your preferred repository and to FAIRsharing for other data types."
     slide:

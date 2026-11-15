@@ -431,7 +431,7 @@
           var short = st.short === undefined || st.short === null ? '' : (+st.short === 0 ? 'take-home' : st.short + ' min');
           var cells = [(i + 1) + '. ' + asText(st.title) + (st.optional ? ' (optional)' : ''), full ? full + ' min' : ''];
           if (hasShort) cells.push(short);
-          cells.push(st.cut ? asText(st.cut, p) : '');
+          cells.push((st.checkpoint ? 'Never cut. ' : '') + (st.cut ? asText(st.cut, p) : ''));
           rows.push({ header: false, cells: cells.map(span) });
         });
         children.push(table(rows));

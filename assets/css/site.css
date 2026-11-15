@@ -285,7 +285,7 @@ footer { max-width: 980px; margin: 0 auto 2rem; padding: 2rem 1.5rem; color: var
 .pb-badge[data-pb="communicate-advocate"] { background: var(--p2); color: var(--on-accent); }
 .fac-time { background: var(--surface-alt); color: var(--ink); }
 .fac-pill { background: var(--surface-alt); color: var(--muted); border: 1px solid var(--line); }
-.fac-slide-prompt { background: var(--soft); color: var(--soft-ink); font-family: var(--font-body); font-size: var(--fs-ui); font-weight: 700; letter-spacing: 0; white-space: normal; padding: 0.3rem 0.8rem; margin: 0.6rem 0 0; }
+.fac-slide-prompt { border-radius: 0; background: var(--soft); color: var(--soft-ink); font-family: var(--font-body); font-size: var(--fs-ui); font-weight: 700; letter-spacing: 0; white-space: normal; padding: 0.3rem 0.8rem; margin: 0.6rem 0 0; }
 .fac-slide-then { margin: 0.3rem 0 0; font-size: var(--fs-small); color: var(--muted); }
 .secondary-band { text-transform: uppercase; text-align: center; width: max-content; }
 .secondary-band[data-tone="strong"] { background: var(--ink); color: var(--light-on-dark); }
@@ -669,6 +669,30 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 .level-start, .level-goal { flex: none; align-self: flex-end; font-family: var(--font-pixel); font-size: var(--fs-pixel); color: var(--muted); padding: 0 0.4rem 0.8rem; }
 .level-goal .pixel-icon { width: 2rem; height: 2rem; }
 /* About sub-pages: the same pixel tabs, wrapping on small screens */
+/* "On this page" list (kramdown {:toc}) */
+.page-toc { border: var(--outline); box-shadow: var(--shadow-sm); background: var(--surface); padding: 1rem 1.3rem; margin: 0 0 2.5rem; }
+.page-toc-label { margin: 0 0 0.6rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; color: var(--ink); }
+.page-toc ul { list-style: none; margin: 0; padding: 0; }
+.page-toc > ul { columns: 2 16rem; column-gap: 2rem; }
+.page-toc > ul > li { break-inside: avoid; margin: 0 0 0.5rem; font-weight: 700; }
+.page-toc li ul { margin: 0.2rem 0 0 0.9rem; font-weight: 400; font-size: var(--fs-small); }
+.page-toc li li { margin: 0.1rem 0; }
+.page-toc a { text-decoration: none; }
+.page-toc a:hover { text-decoration: underline; }
+/* Wide screens: the "On this page" list becomes a sticky side menu beside the
+   text, and the page widens so the text column keeps a comfortable reading width. */
+@media (min-width: 1000px) {
+  main:has(.toc-layout) { max-width: 1180px; }
+  .toc-layout { display: grid; grid-template-columns: minmax(0, 46rem) 15rem; column-gap: 3.5rem; justify-content: space-between; align-items: start; }
+  .toc-layout > .prose { grid-column: 1; grid-row: 1; }
+  .toc-layout > .page-toc { grid-column: 2; grid-row: 1; position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; margin: 0; }
+  .toc-layout > .page-toc > ul { columns: auto; }
+  .toc-layout > .prose > h2:first-child { margin-top: 0; }
+}
+/* Images in page text (e.g. screenshots in the guide): framed, and no wider than the text */
+.prose img { display: block; box-sizing: border-box; width: 100%; max-width: 38rem; height: auto; padding: 0.5rem; background: var(--surface-alt); border: 3px solid var(--ink); box-shadow: 0.35rem 0.35rem 0 var(--accent); margin: 1rem 0 1.4rem; }
+.page-toc a[aria-current] { color: var(--ink); font-weight: 900; }
+.page-toc a[aria-current]::before { content: "▸ "; color: var(--accent-text); }
 .subnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 1.4rem; }
 .subnav a { background: var(--surface); color: var(--ink); border: var(--outline); box-shadow: var(--shadow-sm); padding: 0.5rem 0.8rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; text-decoration: none; line-height: 1.4; }
 .subnav a:hover { transform: var(--lift); }

@@ -81,7 +81,7 @@ session:
         - "R: Creative Commons chooser, file-format guidance"
   - title: "Wrap-up"
     minutes: "39–42"
-    cut: "Never cut."
+    checkpoint: true
     script: "Two things to take away. RDMkit for orientation, the FAIR Cookbook for a specific task, FAIRsharing for standards and repositories. And today was a map. Come back to these tools when you need them. Which one tool are you most likely to use in the next month?"
     tip: "Send the handout afterwards: the quick reference, the full list by FAIR letter and the other things to consider."
     slide:

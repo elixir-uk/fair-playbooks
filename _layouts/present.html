@@ -6,12 +6,8 @@
   title / points / exercise. Branding and local contacts come from the
   institution profile at load time; downloads are built by assets/js/decks.js.
 
-  To add present mode for a module, create present/<module-id>.html:
-    ---
-    layout: present
-    module: <module-id>
-    permalink: /present/<module-id>/
-    ---
+  Every module with a `session:` gets this page automatically at
+  /present/<module-id>/ (see _plugins/present_pages.rb).
 {%- endcomment -%}
 {%- assign mod = site.modules | where: "slug", page.module | first -%}
 {%- assign session = mod.session -%}

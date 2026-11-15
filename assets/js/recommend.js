@@ -90,16 +90,8 @@
     dataType: { lead: 'the data type', conjunction: 'covers' },
     intent: { lead: 'the format you need', conjunction: 'delivers' },
   };
-  const VALUE_LABELS = {
-    'phd-student': 'PhD student', 'postdoc': 'postdoc', 'pi': 'PI', 'decision-maker': 'decision-maker',
-    'rdm-peer': 'fellow RDM professional', 'researcher': 'researcher',
-    'starting-project': 'starting a project', 'mid-project': 'mid-project', 'ending-project': 'project ending',
-    'legacy-data': 'legacy data', 'advocating-internally': 'internal advocacy', 'training-team': 'team training',
-    'sequencing': 'sequencing', 'proteomics': 'proteomics', 'imaging': 'imaging',
-    'spreadsheet': 'spreadsheet / bespoke data', 'code': 'code', 'mixed': 'mixed', 'n-a': 'general',
-    'how-to': 'how-to teaching', 'motivate': 'motivation', 'signpost': 'signposting',
-    'self-assess': 'self-assessment', 'hands-on-exercise': 'hands-on exercise',
-  };
+  // Labels come from _data/choices.yml (set in recommend.html)
+  const VALUE_LABELS = window.__CHOICE_LABELS__ || {};
 
   function reasoningSentence(matched) {
     const parts = [];

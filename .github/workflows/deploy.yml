@@ -33,7 +33,7 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true   # runs `bundle install` and caches gems
 
-      # OPTIONAL — regenerate the editable .pptx/.docx decks from each module's
+      # OPTIONAL – regenerate the editable .pptx/.docx decks from each module's
       # `session:` source before building, so downloads ship in the assets.
       # These are the framework-agnostic build scripts from ../scripts (unchanged
       # by this migration). Uncomment once the deck outputs are wired to

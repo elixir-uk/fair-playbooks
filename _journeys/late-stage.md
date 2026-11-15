@@ -1,5 +1,5 @@
 ---
-title: "A project is ending — what can we still do?"
+title: "A project is ending – what can we still do?"
 scenario: "A PhD is wrapping up, a grant is closing, or a researcher is leaving. There's a pile of data with no FAIR plan."
 audience: "Late-stage projects and retiring researchers"
 journey_path:

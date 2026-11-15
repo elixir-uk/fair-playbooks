@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   decks.js — ONE SOURCE → branded, editable downloads, built in the browser.
+   decks.js – ONE SOURCE → branded, editable downloads, built in the browser.
 
    Reads the module data (#fair-module, see _includes/module-data.html) and the
    LIVE institution profile at the moment of the click, so every download
@@ -216,7 +216,7 @@
       s.addText('Credits and licence', { x: 0.5, y: 0.4, w: 12, h: 0.7, fontFace: FONT, fontSize: 28, bold: true, color: b.primary });
       if (d.sources && d.sources.length) {
         s.addText(d.sources.map(function (src) {
-          return { text: src.name + (src.note ? ' — ' + src.note : '') + (src.url ? '  ' + src.url : ''), options: { bullet: true, breakLine: true } };
+          return { text: src.name + (src.note ? ' – ' + src.note : '') + (src.url ? '  ' + src.url : ''), options: { bullet: true, breakLine: true } };
         }), { x: 0.5, y: 1.25, w: 12.3, h: 3.5, fontFace: FONT, fontSize: 14, color: DEFAULT.ink, valign: 'top', paraSpaceAfter: 6 });
       }
       s.addText([
@@ -257,20 +257,19 @@
       return para([new D.TextRun({ text: label + ' ', bold: true, color: b.accentText }), new D.TextRun({ text: text })]);
     }
 
-    // Inline HTML → runs (bold / italic / code / links / line breaks)
+    // Inline HTML → runs (bold / code / links / line breaks; no italics)
     function runs(node, fmt) {
       fmt = fmt || {};
       var out = [];
       node.childNodes.forEach(function (n) {
         if (n.nodeType === 3) {
           var t = n.textContent.replace(/\s+/g, ' ');
-          if (t) out.push(new D.TextRun({ text: t, bold: fmt.bold, italics: fmt.italics, font: fmt.code ? 'Courier New' : undefined }));
+          if (t) out.push(new D.TextRun({ text: t, bold: fmt.bold, font: fmt.code ? 'Courier New' : undefined }));
         } else if (n.nodeType === 1) {
           var tag = n.tagName;
           if (tag === 'BR') { out.push(new D.TextRun({ text: '', break: 1 })); return; }
           var f = Object.assign({}, fmt);
           if (tag === 'STRONG' || tag === 'B') f.bold = true;
-          if (tag === 'EM' || tag === 'I') f.italics = true;
           if (tag === 'CODE') f.code = true;
           out = out.concat(runs(n, f));
           if (tag === 'A') {
@@ -342,7 +341,7 @@
       }
       children.push(para([new D.TextRun({ text: 'FACILITATOR GUIDE · MODULE ' + pad2(d.number), bold: true, color: b.accentText })]));
       children.push(new D.Paragraph({ heading: D.HeadingLevel.TITLE, children: [new D.TextRun({ text: asText(d.title), bold: true, color: b.primary })] }));
-      children.push(para([new D.TextRun({ text: asText(d.summary), italics: true })]));
+      children.push(para([new D.TextRun({ text: asText(d.summary) })]));
       if (d.benefit) children.push(labelled("What's in it for participants:", asText(d.benefit)));
       if (d.hook) children.push(labelled("Why they'll care:", asText(d.hook)));
       children.push(para([new D.TextRun({ text: 'Prepared for ' + org + '. Generated ' + new Date().toISOString().slice(0, 10) + ' from the live kit' + (d.url ? ' (' + location.origin + d.url + ')' : '') + '.', color: DEFAULT.muted })]));
@@ -390,7 +389,7 @@
       if (d.sources && d.sources.length) {
         children.push(heading('Built from', D.HeadingLevel.HEADING_1));
         d.sources.forEach(function (src) {
-          children.push(para([new D.TextRun({ text: src.name, bold: true }), new D.TextRun({ text: (src.note ? ' — ' + src.note : '') + (src.url ? ' (' + src.url + ')' : '') })], { bullet: { level: 0 } }));
+          children.push(para([new D.TextRun({ text: src.name, bold: true }), new D.TextRun({ text: (src.note ? ' – ' + src.note : '') + (src.url ? ' (' + src.url + ')' : '') })], { bullet: { level: 0 } }));
         });
       }
 
@@ -408,7 +407,7 @@
       if (spaced.length) children.push(new D.Paragraph({ children: spaced }));
       var doc = new D.Document({
         creator: org,
-        title: asText(d.title) + ' — facilitator guide',
+        title: asText(d.title) + ' – facilitator guide',
         styles: { default: { document: { run: { font: 'Lato', size: 22 } } } },
         sections: [{ children: children }]
       });
@@ -441,7 +440,7 @@
       .then(function () { label.textContent = original; })
       .catch(function (err) {
         console.error(err);
-        label.textContent = 'Download failed — check your connection';
+        label.textContent = 'Download failed – check your connection';
         setTimeout(function () { label.textContent = original; }, 4000);
       })
       .then(function () { btn.removeAttribute('aria-busy'); });

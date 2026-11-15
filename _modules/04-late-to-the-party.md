@@ -20,7 +20,7 @@ sources:
   - name: "NFDI4BIOIMAGE data management illustrations by Henning Falk (2024)"
     url: "https://doi.org/10.5281/zenodo.14186100"
     note: "“Imaging Data Lifecycle” and “Datasets Anonymous”, CC-BY 4.0, used unchanged with attribution"
-  - name: "RDMkit — Data life cycle"
+  - name: "RDMkit – Data life cycle"
     url: "https://rdmkit.elixir-europe.org/data_life_cycle"
     note: "Participant reference for the lifecycle stages"
   - name: "F-UJI FAIR assessment tool"
@@ -181,10 +181,10 @@ The session runs an hour. Step 3 is optional: if you're short of time, set it as
 | Material | Source | Status |
 |---|---|---|
 | Lifecycle cartoon (step 1) and "Datasets Anonymous" (step 3) | [NFDI4BIOIMAGE illustrations by Henning Falk, 2024](https://doi.org/10.5281/zenodo.14186100), CC-BY 4.0 | **Reused unchanged**, embedded in the slides with the full citation |
-| Lifecycle stages (step 2) | [RDMkit — Data life cycle](https://rdmkit.elixir-europe.org/data_life_cycle) | **Linked** for participants to follow up |
+| Lifecycle stages (step 2) | [RDMkit – Data life cycle](https://rdmkit.elixir-europe.org/data_life_cycle) | **Linked** for participants to follow up |
 | FAIR check of a published dataset | [F-UJI](https://www.f-uji.net) | **Linked**, for the "published, not FAIRly" case |
 | How-to for deeper retrofit | [FAIR Cookbook](https://faircookbook.elixir-europe.org) recipes on identifiers, licences and metadata | **Linked** |
-| Planning help (step 3) | [RDMkit — Data management plan](https://rdmkit.elixir-europe.org/data_management_plan), [Data Stewardship Wizard](https://ds-wizard.org), [RDMkit — Preserving](https://rdmkit.elixir-europe.org/preserving) | **Linked** |
+| Planning help (step 3) | [RDMkit – Data management plan](https://rdmkit.elixir-europe.org/data_management_plan), [Data Stewardship Wizard](https://ds-wizard.org), [RDMkit – Preserving](https://rdmkit.elixir-europe.org/preserving) | **Linked** |
 | Triage, Minimum Viable FAIR and the priority worksheet (steps 4–6) | Written at the Contentathon (Allyson Lister, Nick Owen and contributors) | **Declared gap.** We have not found an existing open resource that targets late-stage data. If you know one, tell us and we'll link it instead. |
 | "Before you start" questions (step 3) | Written at the Contentathon (Allyson Lister, Nick Owen and contributors) | **Declared gap**, adapted from standard DMP prompts |
 

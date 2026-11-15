@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   Recommender scorer — ported verbatim from src/pages/recommend.astro.
+   Recommender scorer – ported verbatim from src/pages/recommend.astro.
    moduleData comes from the #module-data JSON emitted by Liquid; each entry
    already carries its baseurl-aware `url`, so links work under any baseurl.
    ═══════════════════════════════════════════════════════════════════════ */

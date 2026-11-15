@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   Runtime institutional profile — lifted verbatim from the Astro BaseLayout.
+   Runtime institutional profile – lifted verbatim from the Astro BaseLayout.
    Framework-agnostic. Reads/writes localStorage key `fair:profile`, exposes
    window.FairProfile, live-recolours via CSS variables, swaps the header logo,
    and hydrates institutional-help / repo / team slots on every page.
@@ -104,7 +104,7 @@
       if (p && p.name) s.textContent = (p.contactTeam || p.name) + (p.contactEmail ? ' · ' + p.contactEmail : '');
       else s.textContent = '[ set up your institution profile ]';
     });
-    // <span data-profile-help="dmp">[ placeholder ]</span> — categories as on /branding/
+    // <span data-profile-help="dmp">[ placeholder ]</span> – categories as on /branding/
     root.querySelectorAll('[data-profile-help]').forEach(function (s) {
       if (s.getAttribute('data-placeholder') === null) s.setAttribute('data-placeholder', s.textContent);
       var entry = p && p.help && p.help[s.getAttribute('data-profile-help')];

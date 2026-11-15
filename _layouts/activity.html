@@ -5,7 +5,7 @@ layout: default
   Activity / game page. Two audiences on one page:
    • On SCREEN: the at-a-glance card + facilitator run-sheet.
    • On PRINT (Cmd/Ctrl-P → Save as PDF): ONLY the `.print-sheet` blocks in the
-     body — the handouts/worksheets — each on its own page, no site chrome.
+     body – the handouts/worksheets – each on its own page, no site chrome.
   Everything a facilitator needs to run a published game, with the printable bits.
 {%- endcomment -%}
 
@@ -32,11 +32,11 @@ layout: default
   </dl>
 </section>
 
-<!-- Attribution — translated, not reinvented -->
+<!-- Attribution -->
 {% if page.source %}
 <section class="sources-strip">
-  <span class="sources-eyebrow">Adapted from: translated, not reinvented</span>
-  <p>{{ page.source }}{% if page.source_url %} — <a href="{{ page.source_url }}">{{ page.source_url }}</a>{% endif %} · <strong>{{ page.licence | default: "CC-BY 4.0" }}</strong></p>
+  <span class="sources-eyebrow">Adapted from</span>
+  <p>{{ page.source }}{% if page.source_url %} – <a href="{{ page.source_url }}">{{ page.source_url }}</a>{% endif %} · <strong>{{ page.licence | default: "CC-BY 4.0" }}</strong></p>
 </section>
 {% endif %}
 

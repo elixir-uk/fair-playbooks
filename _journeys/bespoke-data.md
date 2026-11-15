@@ -1,6 +1,6 @@
 ---
 title: "Helping a researcher with non-standard data"
-scenario: "A researcher has a bespoke dataset — say, custom assay outputs in a spreadsheet — with no obvious community repository. They want to share it."
+scenario: "A researcher has a bespoke dataset – say, custom assay outputs in a spreadsheet – with no obvious community repository. They want to share it."
 audience: "Mid-project researchers with non-standard data types"
 journey_path:
   - module: 00-what-is-fair

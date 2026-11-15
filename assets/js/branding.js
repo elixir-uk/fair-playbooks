@@ -1,4 +1,4 @@
-/* Institution profile set-up form — ported from src/pages/branding.astro.
+/* Institution profile set-up form – ported from src/pages/branding.astro.
    Reads/writes window.FairProfile (defined in profile.js). */
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('brand-form');
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var r = new FileReader();
     r.onload = function () {
       logoData = r.result;
-      logoStatus.textContent = '✓ Logo loaded (' + Math.round(f.size / 1024) + ' KB) — Save to apply it across the site.';
+      logoStatus.textContent = '✓ Logo loaded (' + Math.round(f.size / 1024) + ' KB) – Save to apply it across the site.';
       logoStatus.hidden = false;
     };
     r.readAsDataURL(f);

@@ -1,10 +1,10 @@
 # ─────────────────────────────────────────────────────────────────────────
-# FAIR-in-action Playbook — Jekyll site config
+# FAIR-in-action Playbook – Jekyll site config
 # Migrated from Astro. Uses the ELIXIR Toolkit Theme (ETT) lineage.
 # ─────────────────────────────────────────────────────────────────────────
 
 title: "FAIR-in-action Playbook"
-description: "A facilitator's kit for RDM professionals running FAIR sessions — choose, adapt, deploy. Built by the ELIXIR-UK RDM Club, commissioned by BioFAIR."
+description: "A facilitator's kit for RDM professionals running FAIR sessions – choose, adapt, deploy. Built by the ELIXIR-UK RDM Club, commissioned by BioFAIR."
 lang: en
 
 # ── Base path handling ───────────────────────────────────────────────────
@@ -16,7 +16,7 @@ lang: en
 baseurl: ""
 url: "https://elixir-uk.github.io"
 
-# ── ELIXIR Toolkit Theme (ETT) — lineage, not a hard dependency ──────────
+# ── ELIXIR Toolkit Theme (ETT) – lineage, not a hard dependency ──────────
 # ETT is the community-maintained Jekyll theme behind RDMkit, the FAIR Cookbook
 # and the ELIXIR-UK handbook. This site follows ETT's collection/layout model
 # and carries the ELIXIR-UK brand, but does NOT pull ETT as a remote_theme:
@@ -25,7 +25,7 @@ url: "https://elixir-uk.github.io"
 # build under stock Jekyll / GitHub Pages. We therefore vendor equivalent
 # layouts/includes locally (self-contained, always builds). See MIGRATION-NOTES.md
 # "Theme strategy" for how to formally adopt ETT internals if desired.
-# remote_theme: ELIXIR-Belgium/elixir-toolkit-theme   # (disabled — see note above)
+# remote_theme: ELIXIR-Belgium/elixir-toolkit-theme   # (disabled – see note above)
 
 # ── Collections (was Astro content collections) ──────────────────────────
 collections:
@@ -48,7 +48,7 @@ defaults:
   - scope: { path: "", type: "activities" }
     values: { layout: "activity" }
 
-# ── Branding (ELIXIR-UK) — surfaced to templates via site.brand ──────────
+# ── Branding (ELIXIR-UK) – surfaced to templates via site.brand ──────────
 brand:
   org_name: "ELIXIR-UK RDM Club"
   org_short: "ELIXIR-UK"

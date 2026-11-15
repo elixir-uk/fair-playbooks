@@ -7,7 +7,7 @@ estimatedMinutes:
   long: 40
 prerequisites: ["00-what-is-fair"]
 sources:
-  - name: "Galaxy Training Network — RNAseq FAIR tutorial"
+  - name: "Galaxy Training Network – RNAseq FAIR tutorial"
     url: "https://training.galaxyproject.org"
     note: "Hands-on submission workflow this activity is built around"
   - name: "RDMkit"
@@ -32,8 +32,8 @@ session:
     objectives:
       - "Participants can name the four FAIR principles"
       - "Participants understand that FAIR has both infrastructure and content dimensions"
-    tip: "If attendees haven't seen FAIR before, spend 2 extra minutes pointing to each letter and asking the group what they think it means before revealing the definition — this activates prior knowledge."
-    script: "Welcome. We'll work through a real, published dataset and see the FAIR principles as actual files and metadata decisions — not theory. The key idea: a repository gives you F and A almost for free; the I and R are your job."
+    tip: "If attendees haven't seen FAIR before, spend 2 extra minutes pointing to each letter and asking the group what they think it means before revealing the definition – this activates prior knowledge."
+    script: "Welcome. We'll work through a real, published dataset and see the FAIR principles as actual files and metadata decisions – not theory. The key idea: a repository gives you F and A almost for free; the I and R are your job."
     points:
       - "FAIR = Findable, Accessible, Interoperable, Reusable (Wilkinson 2016)"
       - "The repository handles the plumbing; the researcher supplies the content"
@@ -43,7 +43,7 @@ session:
       - "Participants know what RNA-seq data consists of and why batch effects matter"
       - "Participants can identify the three components of a repository submission"
     tip: "If the group includes non-bioinformaticians, draw the count matrix on a whiteboard (rows = genes, columns = samples, values = read counts). One minute here pays off for the rest of the session."
-    script: "RNA-seq is a great worked example. Three things go into the repository: metadata, raw FASTQ, and the count matrix. Batch effects can swamp the biology — record them in metadata from day one."
+    script: "RNA-seq is a great worked example. Three things go into the repository: metadata, raw FASTQ, and the count matrix. Batch effects can swamp the biology – record them in metadata from day one."
     points:
       - "Worked dataset: Alivernini et al. 2020 · <code>E-MTAB-9224</code>"
       - "Same structure for scRNA-seq, proteomics (PRIDE), metabolomics (MetaboLights)"
@@ -57,8 +57,8 @@ session:
       - "Participants can explain what a persistent identifier is and why it matters"
       - "Participants can locate a dataset in ArrayExpress by accession number"
       - "Participants understand that open HTTPS access satisfies A1 and A1.1"
-    tip: "If attendees struggle to find the accession in the paper, point them to the Data Availability section at the end — a real-world lesson that accession numbers aren't always prominently placed."
-    script: "F1 — the accession is a permanent, citable ID. F4 — indexed and keyword-searchable. One click downloads over HTTPS, no login: that's A1/A1.1. Then point them at your institution's preferred repository."
+    tip: "If attendees struggle to find the accession in the paper, point them to the Data Availability section at the end – a real-world lesson that accession numbers aren't always prominently placed."
+    script: "F1 – the accession is a permanent, citable ID. F4 – indexed and keyword-searchable. One click downloads over HTTPS, no login: that's A1/A1.1. Then point them at your institution's preferred repository."
     points:
       - "Accession <code>E-MTAB-9224</code> is globally unique & persistent"
       - "Where your researchers deposit: <span class=\"repo-slot\" data-profile-repo>[ your institution's preferred repository ]</span>"
@@ -82,8 +82,8 @@ session:
     objectives:
       - "Participants can complete a minimum-viable RNA-seq metadata spreadsheet"
       - "Participants understand that good FAIR practice begins at experimental design, not submission"
-    tip: "The key insight: most metadata cannot be retrospectively retrieved — batch information in particular is often lost if not recorded at the bench. For advanced groups, ask them to look up the EFO term for 'rheumatoid arthritis' at ebi.ac.uk/ols4."
-    script: "Everything we've discussed comes from a spreadsheet you fill in as you run the experiment — which becomes the SDRF. Annotare can't conjure information that was never recorded; batch info especially is lost if not captured at the bench."
+    tip: "The key insight: most metadata cannot be retrospectively retrieved – batch information in particular is often lost if not recorded at the bench. For advanced groups, ask them to look up the EFO term for 'rheumatoid arthritis' at ebi.ac.uk/ols4."
+    script: "Everything we've discussed comes from a spreadsheet you fill in as you run the experiment – which becomes the SDRF. Annotare can't conjure information that was never recorded; batch info especially is lost if not captured at the bench."
     points:
       - "Compulsory: sample IDs, condition, replicates, platform, reference genome + version, protocol"
       - "Strongly recommended: batch (run/date/operator), RIN, QC, confounders, software versions"
@@ -94,7 +94,7 @@ session:
       - "Participants understand why a data licence is required and know the common options"
       - "Participants can articulate the most common failures in FAIR practice"
       - "Participants can map each FAIR principle to the correct lifecycle stage"
-    tip: "The 'one specific change' prompt is a closing commitment device — people are more likely to act on a concrete, self-generated commitment than a general instruction. Signpost the Galaxy RNA-seq FAIR tutorial as follow-up."
+    tip: "The 'one specific change' prompt is a closing commitment device – people are more likely to act on a concrete, self-generated commitment than a general instruction. Signpost the Galaxy RNA-seq FAIR tutorial as follow-up."
     script: "No licence = others can't legally reuse it (CC0 or CC-BY). Provenance: genome build and software versions matter. Take-home: repositories do F/A, you supply I/R, and FAIR starts at experimental design. Ask everyone for one specific change they'll make."
     points:
       - "Repository handles F1, F3, F4, A1, A2 · you must provide F2, I1, R1"

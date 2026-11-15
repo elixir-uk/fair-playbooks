@@ -121,6 +121,8 @@ h1 { font-size: var(--fs-h1); font-weight: 700; margin: 0 0 0.6rem; }
 h2 { font-size: var(--fs-h2); font-weight: 700; margin: 3rem 0 1rem; }
 h3 { font-size: var(--fs-title); font-weight: 600; margin: 2rem 0 0.8rem; }
 p { margin: 0 0 1rem; }
+/* No italics anywhere: harder to read, especially for dyslexic readers. Emphasis stays in the markup for screen readers. */
+em, i, cite, dfn, var, address { font-style: normal; }
 a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: color var(--ease); }
 a:hover { color: var(--accent-text); }
 code, pre { font-family: var(--font-mono); font-size: 0.9em; }
@@ -202,7 +204,7 @@ footer { max-width: 980px; margin: 4rem auto 2rem; padding: 2rem 1.5rem; border-
 /* ─── 4.1 Label (eyebrow): small mono uppercase line above a heading ──── */
 .eyebrow, .hero-eyebrow, .rec-eyebrow, .results-eyebrow, .brand-eyebrow,
 .workshop-pack-eyebrow, .fac-eyebrow, .fac-label, .sources-eyebrow, .primary-tag,
-.use-cases-label, .diff-num, .sheet-kicker, .act-card dt, .act-tile-meta dt {
+.diff-num, .sheet-kicker, .act-card dt, .act-tile-meta dt {
   display: block; font-family: var(--font-pixel); font-size: var(--fs-pixel); font-weight: 400;
   line-height: 1.7; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted);
   margin-bottom: 0.5rem;
@@ -210,11 +212,10 @@ footer { max-width: 980px; margin: 4rem auto 2rem; padding: 2rem 1.5rem; border-
 /* colour variants: accent (page eyebrows), link blue (section labels), light (on dark) */
 .rec-eyebrow, .results-eyebrow, .brand-eyebrow, .diff-num, .sheet-kicker { color: var(--accent-text); }
 .workshop-pack-eyebrow, .fac-eyebrow { color: var(--link); }
-.primary-tag, .use-cases-label { color: var(--light-on-dark); }
+.primary-tag { color: var(--light-on-dark); }
 .fac-script .fac-label { color: var(--accent-on-dark); }
 .fac-tip .fac-label { color: var(--link); }   /* after .fac-script: tips carry both classes */
 .fac-exercise .fac-label { color: var(--accent-text); }
-.use-cases-label { display: inline; margin: 0; }
 
 /* ─── 4.2 Buttons ─────────────────────────────────────────────────────── */
 /* Base: --ink pill with an accent shadow. Primary: accent pill, ink shadow.
@@ -239,7 +240,7 @@ footer { max-width: 980px; margin: 4rem auto 2rem; padding: 2rem 1.5rem; border-
 .brand-text-btn:hover { color: var(--accent-text); }
 
 /* ─── 4.3 Pills: badges, tags, time chips ─────────────────────────────── */
-.badge, .pb-badge, .use-case-tag, .fac-time, .fac-pill, .secondary-band, .fac-slide-prompt {
+.badge, .pb-badge, .fac-time, .fac-pill, .secondary-band, .fac-slide-prompt {
   display: inline-block; padding: 0.2rem 0.7rem; border-radius: var(--r-pill);
   font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 600; line-height: 1.5;
   letter-spacing: 0.04em; white-space: nowrap;
@@ -247,7 +248,6 @@ footer { max-width: 980px; margin: 4rem auto 2rem; padding: 2rem 1.5rem; border-
 .badge { background: var(--ink); color: #fff; text-transform: uppercase; }
 .pb-badge { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; background: var(--p1); color: #fff; margin-right: 0.4rem; box-shadow: var(--shadow-sm); }
 .pb-badge[data-pb="communicate-advocate"] { background: var(--p2); color: var(--on-accent); }
-.use-case-tag { background: #fff; color: var(--ink); font-size: var(--fs-small); font-weight: 500; letter-spacing: 0; }
 .fac-time { background: var(--surface-alt); color: var(--ink); }
 .fac-pill { background: var(--surface-alt); color: var(--muted); border: 1px solid var(--line); }
 .fac-slide-prompt { background: var(--soft); color: var(--soft-ink); font-family: var(--font-body); font-size: var(--fs-ui); font-weight: 700; letter-spacing: 0; white-space: normal; padding: 0.3rem 0.8rem; margin: 0.6rem 0 0; }
@@ -303,7 +303,7 @@ blockquote::before {
 }
 blockquote:has(> p:first-child > strong:first-child)::before {
   content: 'i'; align-items: center; padding-right: 0.1rem;
-  background: var(--accent); color: var(--on-accent); font-size: var(--fs-lead); font-style: italic;
+  background: var(--accent); color: var(--on-accent); font-size: var(--fs-lead);
 }
 blockquote > :last-child { margin-bottom: 0; }
 blockquote p + p { margin-top: -0.4rem; }
@@ -362,17 +362,12 @@ blockquote p + p { margin-top: -0.4rem; }
 .hero { margin: 1rem 0 4rem; position: relative; }
 .hero-eyebrow { font-size: var(--fs-small); margin-bottom: 0.8rem; }
 .hero-title { font-size: var(--fs-display); line-height: 0.95; margin: 0 0 1.5rem; font-weight: 700; }
-.hero-title em, .rec-title em, .brand-title em { font-style: italic; color: var(--accent-text); }
-.hero-period { color: var(--accent-text); }
 .hero-sub { font-size: var(--fs-lead); max-width: 38rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.5; }
 .hero-cta { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
 .hero-link { font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 0.1rem; }
 .hero-link:hover { color: var(--accent-text); border-color: var(--accent-text); }
 
 .diff { margin: 0 0 4rem; }
-.diff-banner { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; border: var(--outline); border-radius: var(--r-md); padding: 1.1rem 1.4rem; margin-bottom: 1.5rem; background: var(--light); color: var(--ink-on-light); }
-.diff-not, .diff-not strong { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lead); color: var(--ink-on-light); }
-.diff-is { color: var(--ink-on-light); }
 .diff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
 .diff-pillar { margin: 0; }
 .diff-pillar strong { display: block; font-family: var(--font-display); font-size: var(--fs-lead); margin: 0.3rem 0 0.5rem; }
@@ -416,7 +411,6 @@ blockquote p + p { margin-top: -0.4rem; }
 .mod-hero-benefit span { display: table; margin-bottom: 0.45rem; padding: 0.15rem 0.75rem; border-radius: var(--r-pill); background: var(--pop); color: var(--ink); box-shadow: var(--shadow-sm-accent); font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
 .mod-hud { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin: 0 0 1rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); letter-spacing: 0.04em; text-transform: uppercase; color: var(--light-on-dark); }
 .mod-hud b { color: #fff; font-weight: 400; font-size: 1.35em; margin-left: 0.35em; }
-.use-cases { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
 
 /* ─── Module page: sources strip ──────────────────────────────────────── */
 .sources-strip { border: var(--hairline); padding: 1rem 1.3rem; margin: 0 0 1.5rem; }
@@ -617,12 +611,15 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 .level-step a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--ink); }
 .level-block {
   align-self: stretch; height: 2.6rem; display: grid; place-items: center;
-  background: var(--accent); border: 2px solid var(--ink);
-  box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.18), inset 4px 4px 0 rgba(255, 255, 255, 0.28);
-  transition: transform var(--ease);
+  background: var(--tint); border: 2px solid var(--ink);
+  box-shadow: inset -3px -3px 0 rgba(2, 52, 82, 0.1);
+  transition: transform var(--ease), background var(--ease);
 }
-.level-step a:hover .level-block, .level-step a:focus-visible .level-block { transform: translateY(-5px); }
-.level-num { font-family: var(--font-pixel); font-size: 0.72rem; color: var(--on-accent); }
+/* Calm at rest; checkpoints get a soft accent; full accent only on hover */
+.level-step.is-checkpoint .level-block { background: var(--soft); }
+.level-step a:hover .level-block, .level-step a:focus-visible .level-block { transform: translateY(-5px); background: var(--accent); }
+.level-num { font-family: var(--font-pixel); font-size: 0.72rem; color: var(--ink); }
+.level-step a:hover .level-num, .level-step a:focus-visible .level-num { color: var(--on-accent); }
 .level-time { font-family: var(--font-pixel); font-size: var(--fs-pixel); color: var(--muted); margin-bottom: 0.35rem; }
 .level-flag { width: 1.7rem; height: 1.7rem; margin-bottom: 0.1rem; }
 .is-optional .level-block { background: var(--surface); border-style: dashed; box-shadow: none; }

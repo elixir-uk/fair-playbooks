@@ -32,34 +32,25 @@ layout: default
       {%- if page.sources %}<span>Resources <b>{{ page.sources.size | prepend: '0' | slice: -2, 2 }}</b></span>{% endif -%}
     </p>
 
-    {% if page.useCases and page.useCases.size > 0 %}
-    <div class="use-cases">
-      <span class="use-cases-label">covers:</span>
-      {% for uc in page.useCases %}
-        <span class="use-case-tag">{% case uc %}{% when 'unpublished' %}Unpublished{% when 'published-not-fair' %}Published but not FAIRly{% when 'legacy' %}Legacy data{% else %}{{ uc }}{% endcase %}</span>
-      {% endfor %}
-    </div>
-    {% endif %}
   </div>
 </header>
 
 {% if page.drawnFromExistingResources %}
 <div class="callout">
-  <strong>Drawn from existing resources</strong> This module isn't being written
-  fresh by the FAIR-in-action Bridge project — it pulls from established sources
-  (RDMkit, GO FAIR, the original FAIR principles paper). Follow the links in the long version.
+  <strong>Drawn from existing resources</strong> This module brings together established
+  sources: RDMkit, GO FAIR and the original FAIR principles paper. Follow the links for more depth.
 </div>
 {% endif %}
 
 {% if page.sources and page.sources.size > 0 %}
 <section class="sources-strip">
-  <span class="sources-eyebrow">Built from: translated, not reinvented</span>
+  <span class="sources-eyebrow">Built from</span>
   <ul class="sources-list">
     {% for s in page.sources %}
       <li>
         <span class="pixel-icon" data-pixel-icon="floppy"></span>
         <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.name }}</a>
-        {% if s.note %}<span class="sources-note">— {{ s.note }}</span>{% endif %}
+        {% if s.note %}<span class="sources-note"> – {{ s.note }}</span>{% endif %}
       </li>
     {% endfor %}
   </ul>

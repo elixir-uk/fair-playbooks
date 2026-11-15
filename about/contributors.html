@@ -1,0 +1,33 @@
+---
+layout: about
+title: Contributors
+heading: Contributors
+description: The people and organisations behind the FAIR-in-action Playbook, and how to contribute.
+permalink: /about/contributors/
+---
+<h2>Organisations</h2>
+<ul>
+  {%- for org in site.data.contributors.organisations %}
+  <li><strong>{% if org.url %}<a href="{{ org.url }}">{{ org.name }}</a>{% else %}{{ org.name }}{% endif %}</strong>: {{ org.role }}.</li>
+  {%- endfor %}
+</ul>
+
+<h2>People</h2>
+{%- assign people = site.data.contributors.people | sort: "name" %}
+{%- if people.size > 0 %}
+<ul class="contributors">
+  {%- for p in people %}
+  <li>
+    <strong>{{ p.name }}</strong>{% if p.affiliation %}, {{ p.affiliation }}{% endif %}{% if p.role %} – {{ p.role }}{% endif %}
+    {%- if p.orcid %} · <a href="https://orcid.org/{{ p.orcid }}" aria-label="ORCID for {{ p.name }}">ORCID</a>{% endif %}
+    {%- if p.github %} · <a href="https://github.com/{{ p.github }}" aria-label="GitHub profile for {{ p.name }}">GitHub</a>{% endif %}
+  </li>
+  {%- endfor %}
+</ul>
+{%- else %}
+<p>We're adding the names of everyone who wrote, reviewed and tested the modules. Until then, see <a href="https://github.com/elixir-uk/fair-playbooks/graphs/contributors">contributors on GitHub</a>.</p>
+{%- endif %}
+
+<h2>Contribute</h2>
+<p>Ran a module and changed something that worked better? Spotted a mistake or a broken link? <a href="https://github.com/elixir-uk/fair-playbooks/issues">Open an issue on GitHub</a> or send a pull request. If you'd like to write a new module, the reference module to copy is "Late to the party", and the README explains the format.</p>
+<p>Contributions are shared under the same <a href="{{ '/about/licence/' | relative_url }}">CC BY 4.0 licence</a> as the rest of the playbook.</p>

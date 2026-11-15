@@ -1,0 +1,18 @@
+---
+layout: default
+---
+{%- assign about_pages = "/about/|About;/about/contributors/|Contributors;/about/accessibility/|Accessibility;/about/privacy/|Privacy;/about/licence/|Licence and credits" | split: ";" -%}
+<p class="eyebrow">About</p>
+<nav class="subnav" aria-label="About this playbook">
+  {%- for item in about_pages -%}
+    {%- assign parts = item | split: "|" -%}
+    <a href="{{ parts[0] | relative_url }}"{% if page.url == parts[0] %} aria-current="page"{% endif %}>{{ parts[1] }}</a>
+  {%- endfor -%}
+</nav>
+<h1>{{ page.heading | default: page.title }}</h1>
+{%- if page.intro %}
+<p class="brand-sub">{{ page.intro }}</p>
+{%- endif %}
+<div class="prose">
+{{ content }}
+</div>

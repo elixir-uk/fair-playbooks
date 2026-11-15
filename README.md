@@ -1,6 +1,6 @@
 # FAIR-in-action Playbook
 
-Ready-to-use FAIR activities for the people who support researchers: pick a session, adapt it to your institution, and run it. Built by the **ELIXIR-UK RDM Club**, commissioned by **BioFAIR** as part of the Pathfinder project *The FAIR-in-action Bridge*.
+Ready-to-use FAIR activities for the people who support researchers: pick a session, adapt it to your institution, and run it. Made for the life sciences; the activities work in other fields once you swap in your own examples. Built by the **ELIXIR-UK RDM Club**, commissioned by **BioFAIR** as part of the Pathfinder project *The FAIR-in-action Bridge*.
 
 Live site: <https://elixir-uk.github.io/fair-playbooks/>
 
@@ -89,11 +89,12 @@ _activities/     games (LEGO metadata, spot the mess, …)
 _journeys/       ready-made paths through modules
 _layouts/        page templates (module, journey, activity, present, default)
 _includes/       header, footer, module data for downloads
-_data/           optional profile.json (see "Add your institution's branding")
+_data/           contributors.yml (the /about/contributors/ list); optional profile.json (see "Add your institution's branding")
 assets/css/      site.css
 assets/js/       profile, downloads, recommender, promo, certificates, pixel art
 assets/fonts/    Lato + Press Start 2P (OFL), used to draw downloadable posters
 assets/vendor/   pptxgenjs and docx (MIT), for the browser-made downloads
+about/           About, Contributors, Accessibility, Privacy, Licence and credits
 index.html, recommend.html, branding.html, promo.html, certificate.html, 404.html
 scripts/         older offline generators from the Astro version (not used by the site)
 ```

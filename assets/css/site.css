@@ -380,6 +380,7 @@ blockquote p + p { margin-top: -0.4rem; }
 .hero-eyebrow { font-size: var(--fs-small); margin-bottom: 0.8rem; }
 .hero-title { font-size: var(--fs-display); line-height: 0.95; margin: 0 0 1.5rem; font-weight: 700; }
 .hero-sub { font-size: var(--fs-lead); max-width: 38rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.5; }
+.hero-note { max-width: 38rem; margin: -1.2rem 0 2rem; color: var(--muted); }
 .hero-cta { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
 .hero-link { font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 0.1rem; }
 .hero-link:hover { color: var(--accent-text); border-color: var(--accent-text); }
@@ -643,6 +644,11 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 .is-optional .level-num { color: var(--muted); }
 .level-start, .level-goal { flex: none; align-self: flex-end; font-family: var(--font-pixel); font-size: var(--fs-pixel); color: var(--muted); padding: 0 0.4rem 0.8rem; }
 .level-goal .pixel-icon { width: 2rem; height: 2rem; }
+/* About sub-pages: the same pixel tabs, wrapping on small screens */
+.subnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 1.4rem; }
+.subnav a { background: var(--surface); color: var(--ink); border: var(--outline); box-shadow: var(--shadow-sm); padding: 0.5rem 0.8rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; text-decoration: none; line-height: 1.4; }
+.subnav a:hover { transform: var(--lift); }
+.subnav a[aria-current="page"] { background: var(--ink); color: #fff; }
 .level-switch { display: inline-flex; margin-top: 0.4rem; border: var(--outline); box-shadow: var(--shadow-sm); }
 .level-switch button { background: var(--surface); color: var(--ink); border: 0; padding: 0.5rem 0.9rem; cursor: pointer; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; }
 .level-switch button + button { border-left: var(--outline); }

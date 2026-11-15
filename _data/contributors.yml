@@ -1,0 +1,18 @@
+# Contributors shown on /about/contributors/.
+# Add one entry per person. Only `name` is required.
+#
+# - name: Ada Lovelace
+#   affiliation: University of Wessex
+#   role: Module author          # e.g. Co-lead, Module author, Reviewer, Contentathon participant
+#   orcid: 0000-0000-0000-0000   # optional
+#   github: adalovelace          # optional
+#
+# Organisations take an optional `url:` too.
+
+organisations:
+  - name: ELIXIR-UK RDM Club
+    role: Builds and maintains the playbook
+  - name: BioFAIR
+    role: Commissioned the playbook through the Pathfinder project The FAIR-in-action Bridge
+
+people: []

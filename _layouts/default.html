@@ -12,9 +12,10 @@
   {% seo %}
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   {% include header.html %}
   <div id="profile-indicator" class="source-banner" data-active="false" hidden></div>
-  <main>
+  <main id="main" tabindex="-1">
     {{ content }}
   </main>
   {% include footer.html %}

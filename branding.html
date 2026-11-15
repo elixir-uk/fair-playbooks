@@ -43,11 +43,15 @@ extra_js:
 
   <fieldset>
     <legend>Brand (optional)</legend>
-    <p class="brand-hint">Recolour the site, the live slides and the downloads, and swap in your logo. Give two colours with different jobs, so text always stays readable.</p>
+    <p class="brand-hint">Recolour the site, the live slides and the downloads, and swap in your logo. Give up to three colours with different jobs; the kit adjusts shades where needed so text always stays readable.</p>
     <div class="brand-colours">
       <label for="brandPrimary">Dark colour
         <span class="brand-role">Backgrounds behind white text, headings and body text. Must be dark enough for white text on top.</span>
         <span class="brand-pick"><input type="color" id="brandPrimaryPick" aria-label="Pick the dark colour" value="#023452" /><input type="text" id="brandPrimary" name="brandPrimary" placeholder="#023452" /></span>
+      </label>
+      <label for="brandMid">Mid colour
+        <span class="brand-role">Pale panels and the pixel ground. Leave empty to derive it from your dark colour. Links always stay blue.</span>
+        <span class="brand-pick"><input type="color" id="brandMidPick" aria-label="Pick the mid colour" value="#037eab" /><input type="text" id="brandMid" name="brandMid" placeholder="#037EAB" /></span>
       </label>
       <label for="brandAccent">Accent colour
         <span class="brand-role">The bright one: circles, buttons and highlights. Never used directly as text on white.</span>
@@ -64,33 +68,33 @@ extra_js:
     <p class="brand-hint">These replace the generic "ask your local RDM professional" placeholders inside the activities.</p>
     <div class="help-row" data-cat="repository">
       <span class="help-label">Institutional repository support</span>
-      <input type="text" data-field="contact" placeholder="Team / contact name" />
-      <input type="url" data-field="url" placeholder="https:// (optional)" />
+      <input type="text" data-field="contact" placeholder="Team / contact name" aria-label="Institutional repository support: team or contact name" />
+      <input type="url" data-field="url" placeholder="https:// (optional)" aria-label="Institutional repository support: web page (optional)" />
     </div>
     <div class="help-row" data-cat="dmp">
       <span class="help-label">Data Management Plan advice</span>
-      <input type="text" data-field="contact" placeholder="Team / contact name" />
-      <input type="url" data-field="url" placeholder="https:// (optional)" />
+      <input type="text" data-field="contact" placeholder="Team / contact name" aria-label="Data Management Plan advice: team or contact name" />
+      <input type="url" data-field="url" placeholder="https:// (optional)" aria-label="Data Management Plan advice: web page (optional)" />
     </div>
     <div class="help-row" data-cat="ethics">
       <span class="help-label">Ethics and legal review</span>
-      <input type="text" data-field="contact" placeholder="Team / contact name" />
-      <input type="url" data-field="url" placeholder="https:// (optional)" />
+      <input type="text" data-field="contact" placeholder="Team / contact name" aria-label="Ethics and legal review: team or contact name" />
+      <input type="url" data-field="url" placeholder="https:// (optional)" aria-label="Ethics and legal review: web page (optional)" />
     </div>
     <div class="help-row" data-cat="licensing">
       <span class="help-label">Licensing advice</span>
-      <input type="text" data-field="contact" placeholder="Team / contact name" />
-      <input type="url" data-field="url" placeholder="https:// (optional)" />
+      <input type="text" data-field="contact" placeholder="Team / contact name" aria-label="Licensing advice: team or contact name" />
+      <input type="url" data-field="url" placeholder="https:// (optional)" aria-label="Licensing advice: web page (optional)" />
     </div>
     <div class="help-row" data-cat="it">
       <span class="help-label">IT / data conversion support</span>
-      <input type="text" data-field="contact" placeholder="Team / contact name" />
-      <input type="url" data-field="url" placeholder="https:// (optional)" />
+      <input type="text" data-field="contact" placeholder="Team / contact name" aria-label="IT / data conversion support: team or contact name" />
+      <input type="url" data-field="url" placeholder="https:// (optional)" aria-label="IT / data conversion support: web page (optional)" />
     </div>
     <div class="help-row" data-cat="training">
       <span class="help-label">RDM training / Carpentries</span>
-      <input type="text" data-field="contact" placeholder="Team / contact name" />
-      <input type="url" data-field="url" placeholder="https:// (optional)" />
+      <input type="text" data-field="contact" placeholder="Team / contact name" aria-label="RDM training / Carpentries: team or contact name" />
+      <input type="url" data-field="url" placeholder="https:// (optional)" aria-label="RDM training / Carpentries: web page (optional)" />
     </div>
   </fieldset>
 

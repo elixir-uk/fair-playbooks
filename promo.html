@@ -50,15 +50,19 @@ extra_js:
       <label>Date <input type="text" name="date" placeholder="Wed 3 December" maxlength="28" /></label>
       <label>Time <input type="text" name="time" placeholder="10:00–11:00" maxlength="20" /></label>
       <label>Place <input type="text" name="place" placeholder="Room 2.14 or online" maxlength="36" /></label>
+
+    </fieldset>
+    <fieldset>
+      <legend>How people sign up</legend>
       <label>Sign-up link <input type="text" name="book" placeholder="go.example.ac.uk/fair" maxlength="40" /></label>
-      <label>QR code for sign-up <span class="brand-hint">Optional. Upload a PNG, JPG or SVG of your QR code; it goes next to the BOOK YOUR PLACE button.</span>
+      <label>QR code for sign-up <span class="brand-hint">Optional. Upload a PNG, JPG or SVG of your QR code. It appears next to the BOOK YOUR PLACE button, with "Scan to join" under it.</span>
         <input type="file" name="qr" id="promo-qr" accept="image/png,image/jpeg,image/svg+xml" />
       </label>
       <button type="button" class="brand-text-btn" id="promo-qr-clear" hidden>Remove QR code</button>
     </fieldset>
     <fieldset>
       <legend>Who it's for</legend>
-      <p class="brand-hint">Pick up to three characters for the poster.</p>
+      <p class="brand-hint">Pick up to six characters for the poster.</p>
       <div class="promo-cast" id="promo-cast"></div>
     </fieldset>
   </form>

@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var b = p.brand || {};
     if (form.elements['brandPrimary']) form.elements['brandPrimary'].value = b.primary || '';
     if (form.elements['brandAccent']) form.elements['brandAccent'].value = b.accent || '';
+    if (form.elements['brandMid']) form.elements['brandMid'].value = b.mid || '';
+    if (b.mid && document.getElementById('brandMidPick')) try { document.getElementById('brandMidPick').value = b.mid; } catch (e) {}
     logoData = b.logo || null;
     if (b.primary && document.getElementById('brandPrimaryPick')) try { document.getElementById('brandPrimaryPick').value = b.primary; } catch (e) {}
     if (b.accent && document.getElementById('brandAccentPick')) try { document.getElementById('brandAccentPick').value = b.accent; } catch (e) {}
@@ -64,7 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     var primary = form.elements['brandPrimary'].value.trim();
     var accent = form.elements['brandAccent'].value.trim();
-    if (primary || accent || logoData) p.brand = { primary: primary, accent: accent, logo: logoData || '' };
+    var mid = form.elements['brandMid'] ? form.elements['brandMid'].value.trim() : '';
+    if (primary || accent || mid || logoData) p.brand = { primary: primary, mid: mid, accent: accent, logo: logoData || '' };
     return p;
   }
 
@@ -82,19 +85,22 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderCheck() {
     if (!check || !window.FairProfile.colours) return;
     var primary = form.elements['brandPrimary'].value.trim(), accent = form.elements['brandAccent'].value.trim();
-    if (!primary && !accent) { check.innerHTML = ''; return; }
-    var c = window.FairProfile.colours({ brand: { primary: primary, accent: accent } });
+    var mid = form.elements['brandMid'] ? form.elements['brandMid'].value.trim() : '';
+    if (!primary && !accent && !mid) { check.innerHTML = ''; return; }
+    var c = window.FairProfile.colours({ brand: { primary: primary, accent: accent, mid: mid } });
     var whiteOnDark = c.contrast('#ffffff', primary && /^#?[0-9a-f]{6}$/i.test(primary.replace('#','')) ? (primary[0] === '#' ? primary : '#' + primary) : c.dark);
     var rows = [];
     rows.push(c.darkAdjusted
       ? '<li class="warn"><b>Dark colour is too light</b> for white text (' + ratio(whiteOnDark) + ', needs 4.5:1). The site will use a darker shade, <span class="sw" style="background:' + c.dark + '"></span>' + c.dark + '. Choose a darker colour to keep yours exactly.</li>'
       : '<li class="ok"><b>Dark colour works</b> with white text (' + ratio(c.contrast('#ffffff', c.dark)) + ').</li>');
     rows.push('<li class="ok"><b>Accent as text</b> on light backgrounds uses <span class="sw" style="background:' + c.accentText + '"></span>' + c.accentText + ' (' + ratio(c.contrast(c.accentText, '#f1f4f6')) + ').' + (c.accentText.toLowerCase() !== c.accent.toLowerCase() ? ' Your accent is too light for text, so a darker shade is used automatically.' : '') + '</li>');
+    rows.push('<li class="ok"><b>Mid colour</b> for panels and the pixel ground: <span class="sw" style="background:' + c.mid + '"></span>' + c.mid + (mid ? '' : ', derived from your dark colour') + '. Links always stay blue.</li>');
     rows.push('<li class="ok"><b>Text on the accent</b> is ' + (c.onAccent === '#ffffff' ? 'white' : (c.onAccent === '#000000' ? 'black' : 'your dark colour')) + ' (' + ratio(c.contrast(c.onAccent, c.accent)) + ').</li>');
-    check.innerHTML = '<div class="brand-preview" style="background:' + c.dark + '"><span style="color:#fff">Heading on dark</span> <span class="pv-pill" style="background:' + c.accent + ';color:' + c.onAccent + '">Button</span> <span style="color:' + c.accentOnDark + '">Label</span></div><ul>' + rows.join('') + '</ul>';
+    check.innerHTML = '<div class="brand-preview" style="background:' + c.dark + '"><span style="color:#fff">Heading on dark</span> <span class="pv-pill" style="background:' + c.accent + ';color:' + c.onAccent + '">Button</span> <span style="color:' + c.accentOnDark + '">Label</span> <span class="pv-pill" style="background:' + c.light + ';color:' + c.inkOnLime + '">Panel</span></div><ul>' + rows.join('') + '</ul>';
   }
   sync('brandPrimary', 'brandPrimaryPick');
   sync('brandAccent', 'brandAccentPick');
+  sync('brandMid', 'brandMidPick');
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -111,28 +117,37 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('brand-demo').addEventListener('click', function () {
-    // Demo: Earlham Institute. Colours are taken from earlham.ac.uk (logo red
-    // and wordmark charcoal). Team names are generic placeholders: replace
-    // them with Earlham's real contacts before using this as a showcase.
+    // Demo: University of Manchester. Dark #250038, mid (Manchester purple)
+    // #660099, accent (gold) #FFCC33, and the logo from assets/branding/demo/.
+    // Contacts are generic placeholders.
     var demo = {
-      name: 'Earlham Institute',
-      shortName: 'Earlham',
+      name: 'University of Manchester',
+      shortName: 'Manchester',
       contactEmail: '',
-      contactTeam: 'Earlham research data team',
-      policiesUrl: 'https://www.earlham.ac.uk',
+      contactTeam: 'Research data team',
+      policiesUrl: '',
       help: {
-        repository: { contact: 'Earlham research data team', url: '' },
+        repository: { contact: 'Institutional repository team', url: '' },
         dmp: { contact: 'Research office: DMP advice', url: '' },
-        ethics: { contact: 'Ethics and governance', url: '' },
-        licensing: { contact: 'Library and scholarly communications', url: '' },
-        it: { contact: 'Research computing', url: '' },
-        training: { contact: 'Earlham training team', url: 'https://www.earlham.ac.uk' }
+        ethics: { contact: 'Research ethics and governance', url: '' },
+        licensing: { contact: 'Library: copyright and licensing', url: '' },
+        it: { contact: 'Research IT', url: '' },
+        training: { contact: 'Library training team', url: '' }
       },
-      brand: { primary: '#4e515a', accent: '#c61f16', logo: '' }
+      brand: { primary: '#250038', mid: '#660099', accent: '#ffcc33', logo: '' }
     };
-    fillForm(demo);
-    window.FairProfile.set(demo);
-    flash('✓ Loaded the Earlham Institute demo. Open any module: the local-help boxes and colours now show Earlham. Clear it when you are done.');
+    // The logo is stored as a data URL, the same as an uploaded one, so posters
+    // and downloads can embed it.
+    var base = window.__BASE__ || '/';
+    fetch(base + 'assets/branding/demo/university-of-manchester.png').then(function (r) { return r.blob(); }).then(function (b) {
+      return new Promise(function (ok) { var fr = new FileReader(); fr.onload = function () { ok(fr.result); }; fr.readAsDataURL(b); });
+    }).catch(function () { return ''; }).then(function (logo) {
+      demo.brand.logo = logo;
+      logoData = logo || null;
+      fillForm(demo);
+      window.FairProfile.set(demo);
+      flash('✓ Loaded the University of Manchester demo. Open any module: the local-help boxes, colours and logo now show Manchester. Clear it when you are done.');
+    });
   });
 
   document.getElementById('brand-export').addEventListener('click', function () {

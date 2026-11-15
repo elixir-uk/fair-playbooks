@@ -30,7 +30,7 @@
     :root {
       /* Same token names as assets/css/site.css section 1 (profile overrides
          --ink, --accent, --on-accent, --accent-on-dark at runtime). */
-      --ink:#023452; --accent:#f47d20; --on-accent:#023452; --accent-on-dark:#f47d20; --link:#026a91; --light:#9bcbdd;
+      --ink:#023452; --accent:#f47d20; --on-accent:#023452; --accent-on-dark:#f47d20; --link:#026a91; --mid:#037eab; --pop:#4dd9ef; --light:#9bcbdd;
       --text:#0f2233; --muted:#4a6577;
       --soft: color-mix(in srgb, var(--accent) 12%, #fff); --soft-ink: color-mix(in srgb, var(--accent) 55%, #000);
       --display:'Lato',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace; --pixel:'Press Start 2P','JetBrains Mono',monospace;
@@ -43,14 +43,14 @@
 
     /* Pixel ground along the bottom of every slide (replaces the circles) */
     .dots { position: absolute; left: 0; right: 0; bottom: 0; height: 0.42em; pointer-events: none;
-      background: linear-gradient(to bottom, var(--light) 0 22%, var(--link) 22% 64%, var(--ink) 64% 80%, var(--link) 80%); }
+      background: linear-gradient(to bottom, var(--light) 0 22%, var(--mid) 22% 64%, var(--ink) 64% 80%, var(--mid) 80%); }
     .dots i { display: none; }
     /* Game HUD, top right of content slides */
     .s-hud { position: absolute; top: 5em; right: 4.4em; z-index: 2; font-family: var(--pixel); font-size: 0.32em; letter-spacing: 0.04em; color: var(--muted); text-transform: uppercase; }
     .s-hud b { color: var(--ink); font-weight: 400; }
     /* Title slide: stars and PRESS START */
     section.title { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='120' shape-rendering='crispEdges'%3E%3Cg fill='%239bcbdd'%3E%3Crect x='14' y='12' width='3' height='3'/%3E%3Crect x='96' y='30' width='3' height='3' opacity='.5'/%3E%3Crect x='150' y='8' width='3' height='3' opacity='.7'/%3E%3Crect x='60' y='70' width='3' height='3' opacity='.4'/%3E%3Crect x='128' y='92' width='3' height='3'/%3E%3Crect x='30' y='104' width='3' height='3' opacity='.6'/%3E%3C/g%3E%3C/svg%3E"); }
-    .t-start { margin: 1.6em 0 0; font-family: var(--pixel); font-size: 0.42em; letter-spacing: 0.06em; color: var(--accent-on-dark); animation: blink 1.1s steps(2) infinite; }
+    .t-start { margin: 1.6em 0 0; font-family: var(--pixel); font-size: 0.42em; letter-spacing: 0.06em; color: var(--accent-on-dark); animation: blink 1.1s steps(2) 3; }   /* blinks 3 times, then stays: WCAG 2.2.2 */
     @keyframes blink { 50% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .t-start { animation: none; } }
     /* Level complete slide */
@@ -103,7 +103,7 @@
     .t-head { color: #fff; font-weight: 900; font-size: 2.3em; line-height: 1.04; letter-spacing: -0.025em; margin: 0 0 0.4em; max-width: 12em; text-transform: none; }
     .t-sub { color: rgba(255,255,255,.82); font-size: 0.8em; max-width: 24em; line-height: 1.45; margin: 0; }
     .t-benefit { margin: 1.1em 0 0; max-width: 24em; color: #fff; font-size: 0.68em; line-height: 1.5; font-weight: 700; }
-    .t-benefit span { display: table; margin-bottom: 0.5em; padding: 0.2em 0.8em; border-radius: 999px; background: #4dd9ef; color: var(--ink); box-shadow: 0.15em 0.15em 0 #011c2d; font-family: var(--mono); font-size: 0.6em; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .t-benefit span { display: table; margin-bottom: 0.5em; padding: 0.2em 0.8em; border-radius: 999px; background: var(--pop); color: var(--ink); box-shadow: 0.15em 0.15em 0 #011c2d; font-family: var(--mono); font-size: 0.6em; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
     section.title .dots .d1 { background: var(--link); opacity: .6; }
 
     .credits li { font-size: 0.6em; }
@@ -148,7 +148,7 @@
   </div>
   <div class="brandmark"><span id="brand-org">ELIXIR-UK RDM Club</span></div>
 
-  <div class="reveal">
+  <div class="reveal" role="main">
     <div class="slides">
 
       <section class="title" data-background-color="#023452">
@@ -262,6 +262,9 @@
         root.style.setProperty('--accent', c.accent);
         root.style.setProperty('--on-accent', c.onAccent);
         root.style.setProperty('--accent-on-dark', c.accentOnDark);
+        root.style.setProperty('--mid', c.mid);
+        root.style.setProperty('--pop', c.pop);
+        root.style.setProperty('--light', c.light);
         document.querySelectorAll('section.title').forEach(function (s) { s.setAttribute('data-background-color', c.dark); });
       }
       if (b.logo) document.querySelectorAll('.t-logo').forEach(function (img) { img.src = b.logo; img.alt = p.name || ''; });

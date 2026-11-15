@@ -311,6 +311,11 @@
     var accent = cs.getPropertyValue('--accent').trim(), ink = cs.getPropertyValue('--ink').trim();
     if (/^#[0-9a-f]{6}$/i.test(accent)) b.orange = accent;
     if (/^#[0-9a-f]{6}$/i.test(ink)) b.navy = ink;
+    var mid = cs.getPropertyValue('--p1').trim(), light = cs.getPropertyValue('--light').trim();
+    if (/^#[0-9a-f]{6}$/i.test(mid)) b.blue = mid;
+    if (/^#[0-9a-f]{6}$/i.test(light)) b.light = light;
+    var pop = cs.getPropertyValue('--pop').trim();
+    if (/^#[0-9a-f]{6}$/i.test(pop)) b.cyan = pop;
     return b;
   }
   function hydrate(scope) {

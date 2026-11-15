@@ -45,7 +45,7 @@
   if (window.PixelPeople) window.PixelPeople.hydrate(castBox);
   castBox.addEventListener('change', function (e) {
     var on = castBox.querySelectorAll('input:checked');
-    if (on.length > 3) e.target.checked = false;
+    if (on.length > 6) e.target.checked = false;
     draw();
   });
 
@@ -77,7 +77,7 @@
   function tokens() {
     var cs = getComputedStyle(document.documentElement);
     var v = function (n, d) { var x = cs.getPropertyValue(n).trim(); return /^#[0-9a-f]{3,8}$/i.test(x) ? x : d; };
-    return { ink: v('--ink', '#023452'), accent: v('--accent', '#f47d20'), onAccent: v('--on-accent', '#023452'), link: v('--link', '#026a91'), light: v('--light', '#9bcbdd'), accentOnDark: v('--accent-on-dark', '#f47d20'), pop: v('--pop', '#4dd9ef') };
+    return { ink: v('--ink', '#023452'), accent: v('--accent', '#f47d20'), onAccent: v('--on-accent', '#023452'), link: v('--link', '#026a91'), mid: v('--p1', '#037eab'), light: v('--light', '#9bcbdd'), accentOnDark: v('--accent-on-dark', '#f47d20'), pop: v('--pop', '#4dd9ef') };
   }
 
   // ─── Text helpers (Press Start 2P is monospaced: 1em per character) ───
@@ -103,7 +103,7 @@
     var base = Math.min(W, H), m = Math.round(base * 0.075), g = Math.round(H * 0.055);
     var o = [];
     o.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" shape-rendering="crispEdges" ' +
-      'style="--ink:' + T.light + ';--accent:' + T.accent + ';--link:' + T.link + ';--light:' + T.light + '">');
+      'style="--ink:' + T.light + ';--accent:' + T.accent + ';--p1:' + T.mid + ';--link:' + T.link + ';--light:' + T.light + '">');
     o.push('<defs><style>' +
       '@font-face{font-family:PLato;font-weight:400;src:url(' + A.lato + ') format("woff2")}' +
       '@font-face{font-family:PLato;font-weight:900;src:url(' + A.lato9 + ') format("woff2")}' +
@@ -118,7 +118,7 @@
     // ground with a gap bridged by missing blocks, floppies, and the FAIR flag
     var gy = H - g, gapA = Math.round(W * 0.58), gapB = Math.round(W * 0.76);
     [[0, gapA], [gapB, W]].forEach(function (seg) {
-      o.push('<rect x="' + seg[0] + '" y="' + gy + '" width="' + (seg[1] - seg[0]) + '" height="' + g + '" fill="' + T.link + '"/>');
+      o.push('<rect x="' + seg[0] + '" y="' + gy + '" width="' + (seg[1] - seg[0]) + '" height="' + g + '" fill="' + T.mid + '"/>');
       o.push('<rect x="' + seg[0] + '" y="' + gy + '" width="' + (seg[1] - seg[0]) + '" height="' + Math.round(g * 0.18) + '" fill="' + T.light + '"/>');
     });
     var b = Math.round(g * 0.9);
@@ -135,7 +135,7 @@
       o.push('<rect x="' + lx + '" y="' + m + '" width="' + Math.round(lh * 2.4) + '" height="' + lh + '" fill="#fff"/>');
       o.push('<image href="' + esc(d.logo) + '" x="' + (lx + 8) + '" y="' + (m + 8) + '" width="' + (Math.round(lh * 2.4) - 16) + '" height="' + (lh - 16) + '" preserveAspectRatio="xMidYMid meet"/>');
     }
-    var cr = Math.round(base * 0.016);
+    var cr = Math.round(base * 0.021);
     o.push('<text class="lt" x="' + (W - m) + '" y="' + (m + Math.round(lh * 0.45)) + '" font-size="' + cr + '" text-anchor="end" fill="' + T.light + '">ELIXIR-UK RDM Club · FAIR-in-action Playbook</text>');
     o.push('<text class="lt" x="' + (W - m) + '" y="' + (m + Math.round(lh * 0.45) + Math.round(cr * 1.5)) + '" font-size="' + cr + '" text-anchor="end" fill="' + T.light + '" opacity=".75">commissioned by BioFAIR</text>');
 
@@ -147,7 +147,7 @@
     var colW = two ? Math.round(W * 0.52) : W - m * 2;
     var top = m + lh + Math.round(base * 0.08);
     var y = top;
-    var ps = Math.round(base * 0.022);
+    var ps = Math.round(base * 0.028);
     var titleSize = Math.round(base * (fmt === 'a4' ? 0.085 : fmt === 'square' ? 0.07 : 0.085));
     y += Math.round(titleSize * 0.95);   // the title leads: no internal module label on posters
     var tl = wrap(d.title, Math.floor(colW / (titleSize * 0.56)), 3);
@@ -159,30 +159,35 @@
     y += Math.round(tagSize * 1.35 * (tg.length - 1) + tagSize * 0.4 + base * 0.05);
     var leftEnd = y;
 
-    // right column on slides, same column otherwise
-    var C = two ? R : L;
-    var cx = two ? Math.round(W * 0.6) : m;
-    var cw = two ? W - cx - m : colW;
-    var cy = two ? top : y;
-    var cast = d.cast.slice(0, 3);
-    var gap = 0.18;
-    var cs = Math.min(Math.round(base * (fmt === 'a4' ? 0.19 : fmt === 'square' ? 0.15 : 0.19)), Math.floor(cw / (3 + 2 * gap)));
+    // Characters: one row of up to six in the main (left) column, sized to fit.
+    var cast = d.cast.slice(0, 6);
+    var gap = 0.18, perRow = Math.max(1, cast.length);
+    var cs = Math.min(Math.round(base * (fmt === 'square' ? 0.15 : 0.19)), Math.floor(colW / (perRow + (perRow - 1) * gap)));
+    var C = L, cx = m, cw = colW, cy = y;
     if (cast.length) {
-      var lab = Math.round(ps * 0.8);
+      var lab = Math.round(ps * 0.85);
       C.push('<text class="px" x="' + cx + '" y="' + (cy + lab) + '" font-size="' + lab + '" fill="' + T.light + '">PLAYER SELECT</text>');
       cy += lab + Math.round(lab * 0.9);
-      var brand = Object.assign({}, window.PixelPeople.palette.brand, { orange: T.accent, navy: T.ink });
+      var brand = Object.assign({}, window.PixelPeople.palette.brand, { orange: T.accent, navy: T.ink, blue: T.mid, light: T.light, cyan: T.pop });
+      // Names: one word per line, one shared size for the whole row, centred under each tile.
+      var names = cast.map(function (k) { var c = window.PixelPeople.cast[k]; return c ? (c.short || c.label).toUpperCase().split(' ') : []; });
+      var longest = Math.max.apply(null, names.map(function (w) { return Math.max.apply(null, w.map(function (x) { return x.length; }).concat([1])); }));
+      var lines = Math.max.apply(null, names.map(function (w) { return w.length; }).concat([1]));
+      var nl = Math.min(Math.round(ps * 0.78), Math.floor(cs * (1 + gap * 0.8) / longest));   // pixel font: 1em per letter
+      var rowH = cs + Math.round(nl * (1.2 + 1.35 * lines));
       cast.forEach(function (key, i) {
         var c = window.PixelPeople.cast[key]; if (!c) return;
-        var x = cx + i * Math.round(cs * (1 + gap));
-        C.push('<rect x="' + (x + 8) + '" y="' + (cy + 8) + '" width="' + cs + '" height="' + cs + '" fill="' + T.accent + '"/>');
-        C.push(nest(window.PixelPeople.svg(c, { brand: brand }), x, cy, cs, cs));
-        C.push('<rect x="' + x + '" y="' + cy + '" width="' + cs + '" height="' + cs + '" fill="none" stroke="#fff" stroke-width="4"/>');
-        var nl = Math.round(ps * 0.62);
-        C.push('<text class="px" x="' + x + '" y="' + (cy + cs + Math.round(nl * 2.2)) + '" font-size="' + nl + '" fill="#fff">' + esc(fit((c.short || c.label).toUpperCase(), Math.floor(cs / nl))) + '</text>');
+        var x = cx + (i % perRow) * Math.round(cs * (1 + gap)), y = cy + Math.floor(i / perRow) * rowH;
+        C.push('<rect x="' + (x + 8) + '" y="' + (y + 8) + '" width="' + cs + '" height="' + cs + '" fill="' + T.accent + '"/>');
+        C.push(nest(window.PixelPeople.svg(c, { brand: brand }), x, y, cs, cs));
+        C.push('<rect x="' + x + '" y="' + y + '" width="' + cs + '" height="' + cs + '" fill="none" stroke="#fff" stroke-width="4"/>');
+        names[i].forEach(function (w, j) {
+          C.push('<text class="px" text-anchor="middle" x="' + Math.round(x + cs / 2) + '" y="' + (y + cs + Math.round(nl * (2.2 + 1.35 * j))) + '" font-size="' + nl + '" fill="#fff">' + esc(w) + '</text>');
+        });
       });
-      cy += cs + Math.round(ps * 2.6);
+      cy += rowH + Math.round(ps * 0.4);
     }
+    if (two) { leftEnd = cy; C = R; cx = Math.round(W * 0.6); cw = W - cx - m; cy = top; }   // slide: details on the right
 
     // HUD: date / time / place
     var hs = Math.round(ps * 0.95), rowH = Math.round(hs * 2.2);
@@ -205,7 +210,7 @@
       C.push('<rect x="' + cx + '" y="' + cy + '" width="' + q + '" height="' + q + '" fill="#fff"/>');
       var pad = Math.round(q * 0.06);
       C.push('<image href="' + esc(d.qr) + '" x="' + (cx + pad) + '" y="' + (cy + pad) + '" width="' + (q - pad * 2) + '" height="' + (q - pad * 2) + '" preserveAspectRatio="xMidYMid meet"/>');
-      C.push('<text class="px" x="' + (cx + q / 2) + '" y="' + (cy + q + Math.round(bs * 1.5)) + '" font-size="' + Math.round(bs * 0.55) + '" text-anchor="middle" fill="' + T.light + '">SCAN TO JOIN</text>');
+      C.push('<text class="px" x="' + (cx + q / 2) + '" y="' + (cy + q + Math.round(bs * 1.5)) + '" font-size="' + Math.round(bs * 0.7) + '" text-anchor="middle" fill="' + T.light + '">SCAN TO JOIN</text>');
     }
     var bx = cx + q + qg, bw = Math.min(cw - q - qg, Math.round(bs * 18));
     var by = d.qr ? cy + Math.round((q - bh) / 2) - (d.book ? Math.round(bs * 1.1) : 0) : cy;
@@ -215,7 +220,7 @@
     C.push('<text class="px" x="' + (bx + bw / 2) + '" y="' + (by + bh / 2 + bl / 2) + '" font-size="' + bl + '" text-anchor="middle" fill="' + T.onAccent + '">BOOK YOUR PLACE</text>');
     var after = by + bh;
     if (d.book) {
-      var ls = Math.round(bs * 0.8);
+      var ls = Math.round(bs * 0.85);
       C.push('<text class="px" x="' + bx + '" y="' + (after + Math.round(ls * 2)) + '" font-size="' + ls + '" fill="#fff">' + esc(fit(d.book, Math.floor((cw - q - qg) / ls))) + '</text>');
       after += Math.round(ls * 2.2);
     }

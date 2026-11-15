@@ -5,7 +5,7 @@
    as 16 rows of 16 characters, so you can edit one by eye:
 
      .  transparent      k  ink (--ink)        w  white
-     a  accent (--accent) b  blue (--link)      l  light blue (--light)
+     a  accent (--accent) b  mid (--p1)          l  light (--light)
      s  skin
 
    Colours are CSS variables, so icons follow the institution profile.
@@ -190,7 +190,7 @@
 
   var FILL = {
     k: 'var(--ink, #023452)', w: '#ffffff', a: 'var(--accent, #f47d20)',
-    b: 'var(--link, #026a91)', l: 'var(--light, #9bcbdd)', s: '#eab894'
+    b: 'var(--p1, #037eab)', l: 'var(--light, #9bcbdd)', s: '#eab894'
   };
 
   // fill: override every colour with one value (e.g. 'currentColor', or a
@@ -231,7 +231,7 @@
     });
     // platforms: light top edge, brick body
     function ground(x0, x1) {
-      o.push('<rect x="' + x0 + '" y="18" width="' + (x1 - x0) + '" height="6" fill="var(--link, #026a91)"/>');
+      o.push('<rect x="' + x0 + '" y="18" width="' + (x1 - x0) + '" height="6" fill="var(--p1, #037eab)"/>');
       o.push('<rect x="' + x0 + '" y="18" width="' + (x1 - x0) + '" height="1" fill="var(--light, #9bcbdd)"/>');
       for (var x = x0 + 3; x < x1; x += 8) o.push('<rect x="' + x + '" y="20" width="1" height="2" fill="var(--ink, #023452)" opacity="0.6"/>');
       o.push('<rect x="' + x0 + '" y="22" width="' + (x1 - x0) + '" height="1" fill="var(--ink, #023452)" opacity="0.6"/>');
@@ -249,6 +249,46 @@
     return o.join('');
   }
 
+  // ─── Footer pile: a heap of data blocks rising from the ground ─────────
+  // 320 columns of 6 px blocks (1920 px wide, centred, cropped by the page).
+  // Each column is a <g class="pile-col"> so CSS can make it rise into view.
+  // Deterministic, so every page shows the same pile.
+  function pile() {
+    var COLS = 320, B = 6, H = 72, seed = 11, o = [];
+    var rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    var fills = ['var(--ink, #023452)', 'var(--p1, #037eab)', 'var(--light, #9bcbdd)', 'var(--light, #9bcbdd)', 'var(--tint, #e6f2f7)', 'var(--p1, #037eab)'];
+    o.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + (COLS * B) + ' ' + H + '" width="' + (COLS * B) + '" height="' + H + '" shape-rendering="crispEdges" aria-hidden="true" focusable="false">');
+    var heights = [];
+    for (var c = 0; c < COLS; c++) {
+      var h = 4.2 + 3 * Math.sin(c / 19) + 2.2 * Math.sin(c / 7.1 + 1.3) + 2 * Math.sin(c / 41 + 2) + rnd() * 1.8;
+      heights.push(Math.max(1, Math.min(10, Math.round(h))));
+    }
+    heights.forEach(function (h, c) {
+      if (!h) return;
+      o.push('<g class="pile-col" style="--d:' + (c % 40) + '">');
+      for (var r = 0; r < h; r++) {
+        var f = r === h - 1 && rnd() < 0.12 ? 'var(--accent, #f47d20)' : fills[Math.floor(rnd() * fills.length)];
+        o.push('<rect x="' + (c * B) + '" y="' + (H - (r + 1) * B) + '" width="' + B + '" height="' + B + '" fill="' + f + '"/>');
+      }
+      o.push('</g>');
+    });
+    // a few recognisable pieces in the heap: floppies (resources) and a missing block
+    [[700, 'floppy'], [1210, 'floppy'], [1500, 'ghost']].forEach(function (it) {
+      var col = Math.floor(it[0] / B), top = H - heights[col] * B - 24;
+      o.push('<g class="pile-col" style="--d:' + (col % 40) + '"><svg x="' + it[0] + '" y="' + top + '" width="24" height="24" viewBox="0 0 16 16">' +
+        svg(it[1]).replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '') + '</svg></g>');
+    });
+    o.push('</svg>');
+    return o.join('');
+  }
+
+  // Rise into view once, when the pile scrolls into the window
+  function watchPile(el) {
+    if (!('IntersectionObserver' in root)) { el.classList.add('is-in'); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { el.classList.add('is-in'); io.disconnect(); } }); }, { threshold: 0.2 });
+    io.observe(el);
+  }
+
   function hydrate(scope) {
     (scope || root.document).querySelectorAll('[data-pixel-icon]').forEach(function (el) {
       if (!el.firstChild) el.innerHTML = svg(el.getAttribute('data-pixel-icon'));
@@ -256,9 +296,12 @@
     (scope || root.document).querySelectorAll('[data-pixel-scene]').forEach(function (el) {
       if (!el.firstChild) el.innerHTML = scene();
     });
+    (scope || root.document).querySelectorAll('[data-pixel-pile]').forEach(function (el) {
+      if (!el.firstChild) { el.innerHTML = pile(); watchPile(el); }
+    });
   }
 
-  var api = { svg: svg, scene: scene, names: Object.keys(ICONS), icons: ICONS, hydrate: hydrate };
+  var api = { svg: svg, scene: scene, pile: pile, names: Object.keys(ICONS), icons: ICONS, hydrate: hydrate };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else {
     root.PixelIcons = api;

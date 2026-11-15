@@ -119,7 +119,7 @@
   // text, headings, body text) and an ACCENT (brand.accent: fills and
   // highlights only). From these we derive every other pairing so nothing
   // falls below WCAG AA (4.5:1 for text).
-  var CANON = { dark: '#023452', accent: '#f47d20' };
+  var CANON = { dark: '#023452', mid: '#037eab', accent: '#f47d20' };
   function rgb(h) {
     h = String(h || '').replace('#', '').trim();
     if (h.length === 3) h = h.replace(/./g, '$&$&');
@@ -138,12 +138,21 @@
     for (var i = 0; i <= 20 && contrast(hexOf(c), against) < min; i++) c = c.map(function (v) { return v + (t - v) * 0.1; });
     return hexOf(c);
   }
+  function mixHex(a, b, t) { var A = rgb(a), B = rgb(b); return hexOf(A.map(function (v, i) { return v + (B[i] - v) * t; })); }
+  // Three brand colours: DARK (text, dark panels), MID (pale panels, the pixel
+  // ground, decoration) and ACCENT (fills and highlights). Links always stay
+  // blue (--link), whatever the profile. With no mid colour given,
+  // a profile derives one from its dark colour so nothing stays ELIXIR blue.
   function colours(p) {
     var b = (p && p.brand) || {};
     var darkIn = rgb(b.primary) ? b.primary : CANON.dark;
     var accent = rgb(b.accent) ? b.accent : CANON.accent;
-    // Dark must read as text on the palest tinted panel too (#e6f2f7), not just white
-    var dark = shiftUntil(darkIn, '#e6f2f7', 4.5, 'black');
+    var mid = rgb(b.mid) ? b.mid : (rgb(b.primary) ? mixHex(darkIn, '#ffffff', 0.35) : CANON.mid);
+    var light = mixHex(mid, '#ffffff', 0.6), tint = mixHex(mid, '#ffffff', 0.9);
+    // the bright highlight (tags, badges): ELIXIR cyan by default, a lighter mid under a profile
+    var pop = rgb(b.primary) || rgb(b.mid) ? mixHex(mid, '#ffffff', 0.45) : '#4dd9ef';
+    // Dark must read as text on the palest tinted panel too, not just white
+    var dark = shiftUntil(darkIn, tint, 4.5, 'black');
     var onAccent = contrast(dark, accent) >= 4.5 ? dark : (contrast('#ffffff', accent) >= 4.5 ? '#ffffff'
       : (contrast('#000000', accent) > contrast('#ffffff', accent) ? '#000000' : '#ffffff'));
     return {
@@ -152,8 +161,11 @@
       accent: accent,
       accentText: shiftUntil(accent, '#f1f4f6', 4.5, 'black'),   // accent used as text on light backgrounds
       onAccent: onAccent,                                          // text placed on an accent fill
-      inkOnLime: shiftUntil(dark, '#9bcbdd', 4.5, 'black'),
-      limeOnDark: contrast('#9bcbdd', dark) >= 4.5 ? '#9bcbdd' : '#ffffff',
+      mid: mid,
+      pop: pop,
+      light: light, tint: tint,
+      inkOnLime: shiftUntil(dark, light, 4.5, 'black'),
+      limeOnDark: contrast(light, dark) >= 4.5 ? light : (contrast(shiftUntil(light, dark, 4.5, 'white'), dark) >= 4.5 ? shiftUntil(light, dark, 4.5, 'white') : '#ffffff'),
       accentOnDark: (function () { var t = contrast(accent, dark) >= 4.5 ? accent : shiftUntil(accent, dark, 4.5, 'white'); return contrast(t, dark) >= 4.5 ? t : '#ffffff'; })(),
       contrast: contrast
     };
@@ -177,10 +189,14 @@
         '--on-accent': c.onAccent,
         '--accent-on-dark': c.accentOnDark,
         '--ink-on-light': c.inkOnLime,
-        '--light-on-dark': c.limeOnDark
+        '--light-on-dark': c.limeOnDark,
+        '--p1': c.mid,
+        '--light': c.light,
+        '--tint': c.tint,
+        '--pop': c.pop
       };
     }
-    var vars = ['--ink', '--accent', '--accent-text', '--on-accent', '--accent-on-dark', '--ink-on-light', '--light-on-dark'];
+    var vars = ['--ink', '--accent', '--accent-text', '--on-accent', '--accent-on-dark', '--ink-on-light', '--light-on-dark', '--p1', '--light', '--tint', '--pop'];
     if (b.primary || b.accent) {
       Object.keys(tokens).forEach(function (k) { root.style.setProperty(k, tokens[k]); });
     } else {

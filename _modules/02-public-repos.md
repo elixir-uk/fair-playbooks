@@ -1,6 +1,7 @@
 ---
 title: "When a public repository solves most of the problem"
 number: 2
+variant: "B · playbook"   # version A (as submitted) is 02-public-repos-original
 summary: "For many life-science data types (sequencing, proteomics, structures), depositing in a community repository takes care of much of FAIR. Using a real RNA-seq dataset in ArrayExpress, participants see what the repository does for them and what they still have to provide themselves: rich metadata, shared vocabulary, a licence and provenance."
 estimatedMinutes:
   long: 45  # provisional – see "Timings to confirm" below
@@ -129,6 +130,8 @@ session:
         - "Software parameters and versions"
       prompt: "Compare with the SDRF and IDF files"
 ---
+
+<p class="callout"><strong>Version B: playbook version.</strong> Reorganised from the module lead's original around what the repository does for you and what you still provide, with the FAIR principles in the facilitator notes. Compare it with <a href="../02-public-repos-original/">version A, as submitted</a>, which walks through the FAIR principles one by one.</p>
 
 ## The situation
 

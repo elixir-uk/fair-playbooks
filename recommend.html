@@ -15,7 +15,8 @@ extra_js:
 {%- comment -%} Serialise modules + tags as JSON for the client-side scorer {%- endcomment -%}
 <script id="module-data" type="application/json">
 [
-{%- for m in site.modules -%}
+{%- assign listed = site.modules | where_exp: "m", "m.in_builder != false" -%}
+{%- for m in listed -%}
 {
 "id": {{ m.slug | jsonify }},
 "url": {{ m.url | relative_url | jsonify }},
@@ -31,8 +32,18 @@ extra_js:
 "dataType": {% if m.dataType %}{{ m.dataType | jsonify }}{% else %}[]{% endif %},
 "intent": {% if m.intent %}{{ m.intent | jsonify }}{% else %}[]{% endif %},
 "steps": {% if m.session %}{{ m.session.size }}{% else %}0{% endif %},
+"status": {{ m.status | default: 'ready' | jsonify }},
+"statusLabel": {{ site.data.statuses[m.status].label | default: '' | jsonify }},
 "sources": [{% for s in m.sources %}{{ s.name | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}]
 }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
+</script>
+<script id="game-data" type="application/json">
+[
+{%- for g in site.activities -%}
+{ "id": {{ g.slug | jsonify }}, "url": {{ g.url | relative_url | jsonify }}, "title": {{ g.title | jsonify }}, "summary": {{ g.summary | jsonify }}, "time": {{ g.time | jsonify }}, "dropIn": {{ g.drop_in | default: '' | jsonify }},
+  "audience": {{ g.audience | default: empty | jsonify }}, "scenario": {{ g.scenario | default: empty | jsonify }}, "dataType": {{ g.dataType | default: empty | jsonify }}, "intent": {{ g.intent | default: empty | jsonify }} }{% unless forloop.last %},{% endunless %}
 {%- endfor -%}
 ]
 </script>
@@ -119,6 +130,18 @@ extra_js:
       <p class="muted">More modules that fit, best match first.</p>
     </div>
     <div id="secondary-results"></div>
+
+    <div class="results-secondary-header" id="game-header" hidden>
+      <h3>Open with a game</h3>
+      <p class="muted">A short game to win the room over before the session, or to run on its own as a drop-in stand.</p>
+    </div>
+    <div id="game-results"></div>
+
+    <div class="results-secondary-header" id="reading-header" hidden>
+      <h3>Further reading</h3>
+      <p class="muted">Outline modules that fit your answers: background notes to read or to build your own session from. They don't have slides yet.</p>
+    </div>
+    <div id="reading-results"></div>
 
     <div class="results-summary" id="results-summary"></div>
     <button class="restart">← Start over</button>

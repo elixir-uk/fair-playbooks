@@ -15,7 +15,7 @@ extra_js:
 <script id="promo-data" type="application/json">
 {
 "modules": [
-{%- assign mods = site.modules | sort: 'number' -%}
+{%- assign mods = site.modules | where_exp: "m", "m.in_builder != false and m.status != 'outline' and m.status != 'in-progress'" | sort: 'number' -%}
 {%- for m in mods -%}
 { "id": {{ m.slug | jsonify }}, "title": {{ m.slide_title | default: m.title | jsonify }}, "tagline": {{ m.benefit | default: m.slide_subtitle | default: m.summary | jsonify }}, "kind": "Module {{ m.number | prepend: '0' | slice: -2, 2 }}", "minutes": {{ m.estimatedMinutes.long | default: 0 }}, "audience": {% if m.audience %}{{ m.audience | jsonify }}{% else %}[]{% endif %} }{% unless forloop.last %},{% endunless %}
 {%- endfor -%}

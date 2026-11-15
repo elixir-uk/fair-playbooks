@@ -1,6 +1,7 @@
 ---
 title: "FAIRification of GitHub repositories"
 number: 5
+status: outline   # see _data/statuses.yml
 summary: "How to make code and analytical pipelines shared on GitHub FAIR as well as open. Covers the minimum-viable checklist (licence, README, citation, archived release) and the aspirational best-practice layer (containers, workflow standards, machine-readable metadata)."
 estimatedMinutes:
   long: 60  # no short version – this is a reference checklist, doesn't recap meaningfully

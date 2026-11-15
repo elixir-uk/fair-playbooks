@@ -1,6 +1,7 @@
 ---
 title: "Advocating FAIR to students and PhDs"
 number: 13
+status: outline   # see _data/statuses.yml
 summary: "How to win over early-career researchers who generate the data, were never formally taught FAIR, and aren't graded on it. Built from real objections at Contentathon #3. Covers the barriers that stop them, the framings that work, and an activity to deliver it."
 estimatedMinutes:
   short: 10

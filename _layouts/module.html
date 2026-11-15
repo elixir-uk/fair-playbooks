@@ -18,6 +18,8 @@ layout: default
   <div class="mod-hero-content">
     <div class="mod-hero-badges">
       {% if page.isSideRoom %}<span class="badge">side room</span>{% endif %}
+      {% if page.variant %}<span class="variant-chip">Version {{ page.variant }}</span>{% endif %}
+      {%- assign st = site.data.statuses[page.status] -%}{% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
     </div>
     <h1 class="mod-hero-title">{{ page.title }}</h1>
     <p class="mod-hero-summary">{{ page.summary }}</p>
@@ -25,11 +27,13 @@ layout: default
     {% if page.hook %}<p class="mod-hero-benefit"><span>Why they'll care</span>{{ page.hook }}</p>{% endif %}
 
     {%- comment -%} Game-style counter: steps, time and the short version {%- endcomment -%}
+{%- unless site.data.statuses[page.status] %}
     <p class="mod-hud" aria-label="At a glance">
       {%- if page.session %}<span>Steps <b>{{ page.session.size | prepend: '0' | slice: -2, 2 }}</b></span>{% endif -%}
       <span>Time <b>{{ page.estimatedMinutes.long }}</b> min</span>
       {%- if page.estimatedMinutes.short %}<span>Short <b>{{ page.estimatedMinutes.short }}</b> min</span>{% endif -%}
     </p>
+    {%- endunless %}
 
   </div>
 </header>
@@ -221,9 +225,15 @@ layout: default
 {% include module-data.html mod=page html=content %}
 <script src="{{ '/assets/js/decks.js' | relative_url }}"></script>
 {% else %}
+{%- assign st = site.data.statuses[page.status] -%}
 <div class="info-block">
+  {%- if st %}
+  <strong>{{ st.label }}</strong>
+  {{ st.note }}
+  {%- else %}
   <strong>No slides yet</strong>
-  This module doesn't have a step-by-step session plan, so there are no slides, facilitator guide or PDF to download yet. Want to help write one? <a href="https://github.com/elixir-uk/fair-playbooks/issues">Suggest it on GitHub</a>.
+  This module doesn't have a step-by-step session plan, so there are no slides or facilitator guide to download yet. Want to help write one? <a href="https://github.com/elixir-uk/fair-playbooks/issues">Suggest it on GitHub</a>.
+  {%- endif %}
 </div>
 <article class="prose mod-prose">
   {{ content }}

@@ -1,6 +1,7 @@
 ---
 title: "Training your team to think FAIR"
 number: 12
+status: outline   # see _data/statuses.yml
 summary: "Ways to build FAIR thinking into a research team without turning it into a compliance exercise. Covers onboarding routines, lab meeting prompts, and how to handle the 'we don't have time' objection."
 estimatedMinutes:
   short: 10

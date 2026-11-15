@@ -4,7 +4,7 @@ title: Home
 description: A facilitator's kit for RDM professionals running FAIR sessions – choose, adapt, deploy
 ---
 {%- comment -%} Ports src/pages/index.astro (canonical, non-forked variant) {%- endcomment -%}
-{%- assign modules = site.modules | sort: 'number' -%}
+{%- assign modules = site.modules | sort: 'path' -%}
 
 <!-- HERO -->
 <section class="hero">
@@ -64,12 +64,18 @@ description: A facilitator's kit for RDM professionals running FAIR sessions –
       <a href="{{ mod.url | relative_url }}" class="card module-card">
         <div class="module-card-top">
           <div class="module-number">{% if mod.isSideRoom %}<span class="pixel-icon" data-pixel-icon="sideroom" title="Side room"></span>{% else %}{{ mod.number | prepend: '0' | slice: -2, 2 }}{% endif %}</div>
+          {% if mod.variant %}<span class="variant-chip">Version {{ mod.variant | split: ' · ' | first }}</span>{% endif %}
+          {%- assign st = site.data.statuses[mod.status] -%}{% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
         </div>
         <strong class="module-title">{{ mod.title }}</strong>
         <p class="module-summary">{{ mod.summary }}</p>
         <div class="module-meta">
+          {%- if site.data.statuses[mod.status] %}
+          <span>{{ site.data.statuses[mod.status].label | downcase }}</span>
+          {%- else %}
           {% if mod.estimatedMinutes.short %}<span>recap {{ mod.estimatedMinutes.short }}m</span><span>·</span>{% endif %}
           <span>full {{ mod.estimatedMinutes.long }}m</span>
+          {%- endif %}
         </div>
       </a>
     {% endfor %}

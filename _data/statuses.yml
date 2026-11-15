@@ -1,0 +1,10 @@
+# Module status. Leave `status:` out of a module (or set `ready`) when it has a
+# full session people can run. Anything else here gets a label on its card,
+# page and journeys, and is left out of Build a session, the promo kit and
+# certificates until it's ready.
+in-progress:
+  label: "In progress"
+  note: "This module is being written. The session plan, slides and downloads aren't ready yet."
+outline:
+  label: "Outline only"
+  note: "This module is an outline: background notes for facilitators. It isn't planned as a full session with slides, so treat it as reading or as material to build your own session from."

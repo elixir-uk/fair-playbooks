@@ -4,12 +4,12 @@ title: All modules
 permalink: /modules/
 ---
 {%- comment -%} Ports src/pages/modules/index.astro {%- endcomment -%}
-{%- assign modules = site.modules | sort: 'number' -%}
+{%- assign modules = site.modules | sort: 'path' -%}
 <h1>All modules</h1>
 <p class="muted">Every module in the playbook. Most have a short and a full version.</p>
 {% for mod in modules %}
   <a href="{{ mod.url | relative_url }}" class="card">
-    <span class="badge">Module {{ mod.number }}</span>
+    <span class="badge">Module {{ mod.number }}</span>{% if mod.variant %} <span class="variant-chip">Version {{ mod.variant }}</span>{% endif %} {%- assign st = site.data.statuses[mod.status] -%}{% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
     <strong class="card-title">{{ mod.title }}</strong>
     <span class="card-meta">{{ mod.summary }}</span>
   </a>

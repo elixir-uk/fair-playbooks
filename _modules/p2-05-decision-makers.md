@@ -1,6 +1,7 @@
 ---
 title: "Advocating FAIR to decision-makers"
 number: 15
+status: outline   # see _data/statuses.yml
 summary: "How to win over people who hold budget, policy and staff time, such as RDM leads, librarians with clout and associate deans. Built from real objections at Contentathon #3. Covers the barriers, the framings that work (ROI, risk, prioritisation, FAIR as a journey), and the activities to deliver them."
 estimatedMinutes:
   short: 10

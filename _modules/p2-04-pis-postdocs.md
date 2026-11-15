@@ -1,6 +1,7 @@
 ---
 title: "Advocating FAIR to PIs and senior postdocs"
 number: 14
+status: outline   # see _data/statuses.yml
 summary: "How to win over the people driving the science. They are short of time and engage mainly when a funder or journal forces them to. Built from real objections at Contentathon #3. Covers the barriers, the framings that work (recognition, saved time, expert support), and how to deliver them."
 estimatedMinutes:
   short: 10

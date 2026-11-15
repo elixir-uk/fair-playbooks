@@ -12,7 +12,7 @@ extra_js:
 {%- endcomment -%}
 <script id="session-data" type="application/json">
 [
-{%- assign mods = site.modules | sort: 'number' -%}
+{%- assign mods = site.modules | where_exp: "m", "m.in_builder != false and m.status != 'outline' and m.status != 'in-progress'" | sort: 'number' -%}
 {%- for m in mods -%}
 { "id": {{ m.slug | jsonify }}, "title": {{ m.title | jsonify }}, "kind": "Module {{ m.number | prepend: '0' | slice: -2, 2 }}" },
 {%- endfor -%}

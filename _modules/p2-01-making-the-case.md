@@ -1,6 +1,7 @@
 ---
 title: "Making the case for FAIR to leadership"
 number: 11
+status: outline   # see _data/statuses.yml
 summary: "How to talk about FAIR with deans, directors and PIs who control budgets and incentives. Covers the language that works (citation, reproducibility, funder requirements, risk reduction) and the framings that backfire (compliance, virtue, technical detail)."
 estimatedMinutes:
   short: 10

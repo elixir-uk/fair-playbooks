@@ -11,6 +11,11 @@ drop_in: "About 30 seconds a visitor. Two jars and a pile of tokens."
 source: "Original to this playbook. The format is a common 'FAIR or not?' engagement pattern; the scenarios are new."
 licence: "CC BY 4.0 – add your own scenarios"
 playbook: [communicate-advocate]
+# For Build a session (values in _data/choices.yml)
+audience: [researcher, phd-student, postdoc, pi, decision-maker, rdm-peer]
+scenario: [advocating-internally, training-team, starting-project]
+dataType: [n-a, mixed]
+intent: [motivate, hands-on-exercise]
 tags: [activity, game, voting, auditorium, printable]
 ---
 

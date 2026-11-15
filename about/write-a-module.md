@@ -65,6 +65,8 @@ playbook: [fairification]
 | `audience`, `scenario`, `dataType`, `intent` | How the session builder matches the module to someone's answers. Use only the values below. |
 | `playbook` | `fairification` or `communicate-advocate`. |
 | `isSideRoom` | `true` for a side-room module: it gets a side-room icon instead of a number. |
+| `status` | Leave it out when the module has a full session people can run. `in-progress` (being written) or `outline` (notes only, not planned as a full session) adds a label on its card, page and journeys, and keeps it out of Build a session, the promo kit and certificates. The labels and explanations are in `_data/statuses.yml`. |
+| `variant` | Only when a module exists in two versions side by side, e.g. `"A · as submitted"` and `"B · playbook"`. Shown as a label on both. Add `in_builder: false` to the version that shouldn't be suggested in Build a session. |
 
 Values the session builder understands. Each one is a button in [Build a session](../../recommend/):
 
@@ -335,7 +337,7 @@ A module without a `session:` still gets its page, with a "No slides yet" note.
 
 ## Games
 
-Games live in `_activities`. Their details are simpler: `title`, `summary`, `barrier` (the objection it answers), `audience_label`, `group_size`, `time`, `prep`, `materials`, `drop_in` (how it works as a foyer stand), `source`, `source_url` and `licence`. Printable sheets go in `<div class="print-sheet">` blocks at the end; add `stand-sign` to the class for a large stand sign. "Print the handouts" prints only those sheets.
+Games live in `_activities`. Their details are simpler: `title`, `summary`, `barrier` (the objection it answers), `audience_label`, `group_size`, `time`, `prep`, `materials`, `drop_in` (how it works as a foyer stand), `source`, `source_url` and `licence`. Give a game `audience`, `scenario`, `dataType` and `intent` too, with the same values as modules, and Build a session will suggest it as a game to open with. Printable sheets go in `<div class="print-sheet">` blocks at the end; add `stand-sign` to the class for a large stand sign. "Print the handouts" prints only those sheets.
 
 ## House style
 

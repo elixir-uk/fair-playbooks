@@ -53,6 +53,7 @@ layout: default
           <span class="world-level">{{ world }}-{{ forloop.index }}</span>
           <span class="world-circle">{%- if mod.isSideRoom -%}<span class="pixel-icon" data-pixel-icon="sideroom"></span>{%- else -%}{{ mod.number | prepend: '0' | slice: -2, 2 }}{%- endif -%}</span>
           <strong class="world-name">{{ mod.title }}</strong>
+          {%- assign st = site.data.statuses[mod.status] -%}{% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
           <span class="world-time">{% if step.version == 'short' %}Recap · {{ mod.estimatedMinutes.short }} min{% else %}Full · {{ mod.estimatedMinutes.long }} min{% endif %}</span>
         </a>
       </li>

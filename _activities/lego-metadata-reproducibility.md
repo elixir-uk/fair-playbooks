@@ -12,6 +12,11 @@ source: "LEGO® Metadata for Reproducibility game pack – Mary Donaldson & Matt
 source_url: "https://eprints.gla.ac.uk/196477/"
 licence: "CC BY (original pack) · this run-sheet and worksheet CC BY 4.0"
 playbook: [communicate-advocate]
+# For Build a session (values in _data/choices.yml)
+audience: [researcher, postdoc, pi, decision-maker]
+scenario: [advocating-internally, training-team, starting-project]
+dataType: [n-a, mixed]
+intent: [motivate, hands-on-exercise]
 tags: [activity, game, reproducibility, metadata, hands-on]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "What is FAIR, and why do I need it?"
 number: 0
+status: outline   # see _data/statuses.yml
 summary: "FAIR data is Findable, Accessible, Interoperable and Reusable. It describes whether data can be found, understood and reused by people and machines once you decide to share it, open or restricted. This module is a foundation primer for audiences new to the topic."
 estimatedMinutes:
   short: 5

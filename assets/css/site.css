@@ -423,6 +423,8 @@ blockquote p + p { margin-top: -0.4rem; }
 .journey-card { display: flex; flex-direction: column; min-height: 140px; }
 .journey-cta { margin-top: auto; padding-top: 1rem; font-family: var(--font-mono); font-size: var(--fs-small); color: var(--accent-text); }
 .module-card { display: flex; flex-direction: column; }
+.status-chip { display: inline-block; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; line-height: 1.4; padding: 0.25rem 0.45rem; border: 2px dashed currentColor; color: var(--muted); background: var(--surface); }
+.mod-hero .status-chip { color: var(--light-on-dark); background: transparent; }
 .module-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem; }
 .module-number { font-size: 1.8rem; line-height: 1; color: var(--ink); }
 .module-card:hover .module-number { color: var(--accent-text); }
@@ -693,6 +695,9 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 .prose img { display: block; box-sizing: border-box; width: 100%; max-width: 38rem; height: auto; padding: 0.5rem; background: var(--surface-alt); border: 3px solid var(--ink); box-shadow: 0.35rem 0.35rem 0 var(--accent); margin: 1rem 0 1.4rem; }
 .page-toc a[aria-current] { color: var(--ink); font-weight: 900; }
 .page-toc a[aria-current]::before { content: "▸ "; color: var(--accent-text); }
+/* Version label when a module exists in two versions (A as submitted, B playbook) */
+.module-card-top { display: flex; align-items: center; gap: 0.6rem; }
+.variant-chip { display: inline-block; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; line-height: 1.4; padding: 0.3rem 0.5rem; background: var(--accent); color: var(--on-accent); border: var(--outline); box-shadow: var(--shadow-sm); }
 .subnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 1.4rem; }
 .subnav a { background: var(--surface); color: var(--ink); border: var(--outline); box-shadow: var(--shadow-sm); padding: 0.5rem 0.8rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; text-decoration: none; line-height: 1.4; }
 .subnav a:hover { transform: var(--lift); }

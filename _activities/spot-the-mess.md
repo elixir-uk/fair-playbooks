@@ -12,6 +12,11 @@ source: "Data Carpentry, Spreadsheets for ecologists: \"Formatting data tables i
 source_url: "https://datacarpentry.github.io/spreadsheet-ecology-lesson/01-format-data.html"
 licence: "CC BY 4.0 (Data Carpentry lesson materials). This run-sheet and stand sign: CC BY 4.0."
 playbook: [communicate-advocate]
+# For Build a session (values in _data/choices.yml)
+audience: [phd-student, researcher, postdoc, rdm-peer]
+scenario: [starting-project, mid-project, training-team, advocating-internally]
+dataType: [spreadsheet, mixed]
+intent: [motivate, hands-on-exercise, how-to]
 tags: [activity, game, spreadsheet, hands-on]
 ---
 

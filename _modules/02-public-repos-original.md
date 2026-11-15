@@ -5,6 +5,7 @@ variant: "A · as submitted"   # shown as a label on its card and page; version 
 in_builder: false             # not suggested in Build a session, certificates or promo
 sitemap: false
 summary: "The RNA-seq module exactly as its lead submitted it: the FAIR principles explained by checking them off on a real ArrayExpress dataset. Kept for comparison with the playbook version."
+certificate: "Making research data FAIR through a public repository"   # what the certificate of attendance says was covered
 slide_title: "When submitting data to a public repository solves most of the problem"
 slide_subtitle: "A Dataset FAIRification Example explained by checking off the FAIR principles"
 estimatedMinutes:

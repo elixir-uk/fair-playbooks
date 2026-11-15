@@ -2,6 +2,7 @@
 title: "I'm late to the party"
 number: 4
 summary: "For researchers who already have, or are producing, data that isn't FAIR. Participants place their dataset on the data lifecycle, triage what is realistic from there, and leave with one Minimum Viable FAIR action for their own data."
+certificate: "Making existing research data FAIR"   # what the certificate of attendance says was covered
 estimatedMinutes:
   long: 60
 prerequisites: []

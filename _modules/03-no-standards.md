@@ -2,6 +2,7 @@
 title: "When there is no community standard or repository"
 number: 3
 summary: "A lot of research data has no dedicated repository and lives in a spreadsheet. Participants find the problems in a messy table, learn Tidy Data and the three kinds of metadata every spreadsheet needs, and work out what to consider when sharing data without a discipline repository."
+certificate: "Building FAIR spreadsheets for data with no dedicated repository"   # what the certificate of attendance says was covered
 estimatedMinutes:
   short: 44
   long: 60

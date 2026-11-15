@@ -2,6 +2,7 @@
 title: "Tools and resources to create and support FAIR data"
 number: 1
 summary: "A hands-on tour of three resources every RDM professional should know: RDMkit for orientation, the FAIR Cookbook for a specific task and FAIRsharing for standards and repositories. Participants try each one on their own discipline, then get a quick map of more specific tools for each letter of FAIR."
+certificate: "Using tools and resources for FAIR data: RDMkit, the FAIR Cookbook and FAIRsharing"   # what the certificate of attendance says was covered
 estimatedMinutes:
   long: 40  # provisional – see the timing note
 prerequisites: ["00-what-is-fair"]

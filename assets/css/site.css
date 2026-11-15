@@ -811,6 +811,7 @@ html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250
 .cert-name { font-family: var(--font-display); font-weight: 900; font-size: 5.6cqw; line-height: 1.05; letter-spacing: -0.02em; min-height: 6cqw; }
 .cert-line { font-size: 1.9cqw; color: var(--muted); margin-top: 1.2cqw !important; }
 .cert-module { font-family: var(--font-display); font-weight: 900; font-size: 3cqw; line-height: 1.15; margin-top: 0.6cqw !important; }
+.cert-source { margin-top: 0.8cqw !important; font-size: 1.5cqw; color: var(--muted); }
 .cert-blank { display: inline-block; width: 60%; border-bottom: 0.3cqw solid var(--ink); height: 5cqw; }
 .cert-blank.short { width: 22cqw; height: 3cqw; }
 .cert-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 3cqw; padding-bottom: 1cqw; }

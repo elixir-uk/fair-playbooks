@@ -19,6 +19,11 @@
   });
   var want = new URLSearchParams(location.search).get('module');
   if (want && sessions.some(function (s) { return s.id === want; })) select.value = want;
+  // "What they took part in" starts from the module's certificate wording and can be edited
+  function current() { return sessions.filter(function (x) { return x.id === select.value; })[0] || sessions[0]; }
+  function fillCovered() { var s = current(); form.covered.value = s ? (s.cert || s.title) : ''; }
+  select.addEventListener('change', fillCovered);
+  fillCovered();
   form.date.value = new Date().toISOString().slice(0, 10);
   var prof = window.FairProfile && window.FairProfile.get();
   if (prof && prof.name) form.place.value = prof.name;
@@ -31,7 +36,7 @@
   }
 
   function render() {
-    var s = sessions.filter(function (x) { return x.id === select.value; })[0] || sessions[0];
+    var s = current();
     var names = form.names.value.split('\n').map(function (n) { return n.trim(); }).filter(Boolean);
     if (!names.length) names = [''];
     var logo = prof && prof.brand && prof.brand.logo;
@@ -49,7 +54,8 @@
               '<p class="cert-level">Level complete</p>' +
               '<p class="cert-name">' + (name ? esc(name) : '<span class="cert-blank"></span>') + '</p>' +
               '<p class="cert-line">took part in</p>' +
-              '<p class="cert-module">' + esc(s.title) + '</p>' +
+              '<p class="cert-module">' + esc(form.covered.value.trim() || s.cert || s.title) + '</p>' +
+              '<p class="cert-source">FAIR-in-action Playbook · ' + esc(s.kind) + '</p>' +
               '<p class="cert-line">' + [place ? 'at ' + esc(place) : '', when ? 'on ' + esc(when) : ''].filter(Boolean).join(' ') + '</p>' +
             '</div>' +
           '</div>' +

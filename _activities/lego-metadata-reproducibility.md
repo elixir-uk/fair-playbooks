@@ -2,7 +2,7 @@
 title: "LEGO® Metadata for Reproducibility"
 summary: "Teams build a small model, document it, then try to rebuild each other's from the notes alone, which shows what 'enough metadata' means in practice. This is a published, ready-made pack; this page adds a quick run-sheet and a printable metadata worksheet."
 barrier: "\"What does 'enough metadata' even mean?\" / FAIR feels abstract"
-audience_label: "Researchers, PIs, decision-makers – hands-on"
+audience_label: "Researchers and PIs – hands-on"
 group_size: "4–24 players, in small teams"
 time: "30–45 min"
 prep: "Get the full pack and ReadMe from the link; identical small LEGO sets per team; print the worksheet."
@@ -13,7 +13,7 @@ source_url: "https://eprints.gla.ac.uk/196477/"
 licence: "CC BY (original pack) · this run-sheet and worksheet CC BY 4.0"
 playbook: [communicate-advocate]
 # For Build a session (values in _data/choices.yml)
-audience: [researcher, postdoc, pi, decision-maker]
+audience: [researcher, postdoc, pi]
 scenario: [advocating-internally, training-team, starting-project]
 dataType: [n-a, mixed]
 intent: [motivate, hands-on-exercise]

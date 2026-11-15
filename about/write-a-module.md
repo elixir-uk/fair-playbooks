@@ -56,6 +56,7 @@ playbook: [fairification]
 |---|---|
 | `title`, `number` | The module's name and number. The number sets the order and appears as "Module 03" and "Level 03". |
 | `summary` | Shown in the module list and in the session builder's suggestions. |
+| `certificate` | What the certificate of attendance says people took part in, e.g. "Making existing research data FAIR". Write it as a topic, not the module's title. If you leave it out, the certificate uses the title. |
 | `slide_title`, `slide_subtitle` | The title slide. If you leave them out, the title slide uses `title`. |
 | `benefit` | "What's in it for you" on the title slide, the module page and the downloads. Write it for participants. |
 | `hook` | Optional. "Why they'll care" on the module page. |

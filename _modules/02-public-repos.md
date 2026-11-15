@@ -3,6 +3,7 @@ title: "When a public repository solves most of the problem"
 number: 2
 variant: "B · playbook"   # version A (as submitted) is 02-public-repos-original
 summary: "For many life-science data types (sequencing, proteomics, structures), depositing in a community repository takes care of much of FAIR. Using a real RNA-seq dataset in ArrayExpress, participants see what the repository does for them and what they still have to provide themselves: rich metadata, shared vocabulary, a licence and provenance."
+certificate: "Making research data FAIR through a public repository"   # what the certificate of attendance says was covered
 estimatedMinutes:
   long: 45  # provisional – see "Timings to confirm" below
 prerequisites: ["00-what-is-fair"]

@@ -201,7 +201,8 @@
     });
 
     const matched = ranked(runnable);
-    const games = ranked(gameData).slice(0, 2);
+    // A game is only suggested when it's meant for the audience picked (e.g. none are for decision-makers).
+    const games = ranked(gameData.filter(function (g) { return (answers.audience || []).some(function (a) { return (g.audience || []).includes(a); }); })).slice(0, 2);
     const reads = ranked(reading).slice(0, 3);
     fill('game-header', 'game-results', games, renderGame);
     fill('reading-header', 'reading-results', reads, renderReading);

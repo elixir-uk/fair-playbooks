@@ -7,6 +7,7 @@ group_size: "Whole room (any size)"
 time: "10–15 min"
 prep: "Print or project the cards. Optional: a live poll (Slido/Menti) for the vote."
 materials: "Scenario cards (below), a way to vote (hands, or a live poll)"
+drop_in: "About 30 seconds a visitor. Two jars and a pile of tokens."
 source: "Original to this playbook – the format is a common 'FAIR or not?' engagement pattern; scenarios written fresh."
 licence: "CC-BY 4.0 – add your own scenarios"
 playbook: [communicate-advocate]
@@ -29,6 +30,16 @@ tags: [activity, game, voting, auditorium, printable]
 ## Facilitator tip
 
 Put the **debatable** cards in the middle – the Trusted Research Environment, the DOI-with-no-metadata, the no-licence dataset. Those split the room and produce the real conversation. The clear-cut ones are just to warm up the voting.
+
+## Run it as a drop-in stand
+
+Set it up in a faculty foyer, atrium or café and let people vote as they walk past. Nobody needs to know what FAIR is to have an opinion on "I email the Excel file to anyone who asks".
+
+- **Bring:** three or four scenario cards printed large (A3), two jars or tubs labelled FAIR and UNFAIR, a bowl of tokens (dried beans, pom-poms or sticky dots), the sign below, and something to hide the answers under, such as a folded flap of card.
+- **Set up:** one card per jar pair, or rotate cards through the day. Put the verdict and the one-line why under a flap beneath each card.
+- **A visit:** read the card, drop a token in a jar, lift the flap. If you're staffing the stand, ask "what made you pick that one?" – that's the conversation you came for.
+- **Keep it going:** the jars fill up and show how the building voted, which draws people over. Card 4 (the Trusted Research Environment) and card 3 (the DOI with no description) split people best.
+- **Follow up:** put a poster from the [promo kit]({{ '/promo/' | relative_url }}) next to the stand with a QR code for your next session.
 
 ## Make it yours
 
@@ -67,5 +78,16 @@ Add two or three scenarios from **your own** discipline or institution – a rep
 <li><strong>UNFAIR.</strong> Not findable, not accessible – author-gatekept (they leave, they don't reply), no persistent identifier. <em>[F, A]</em></li>
 <li><strong>FAIR.</strong> Open format, documented with a data dictionary, has a persistent handle. Simple, and it works. <em>[F, A, I, R]</em></li>
 <li><strong>FAIR – yes, for code too.</strong> Persistent ID, open licence, documented, archived. FAIR isn't only for data. <em>[F, A, I, R]</em></li>
+</ol>
+</div>
+
+<div class="print-sheet stand-sign">
+<div class="sheet-kicker">Stand sign – print A4 or A3</div>
+<h3>FAIR or Unfair?</h3>
+<p class="sign-sub">Is this a good way to share research data? You decide.</p>
+<ol>
+<li>Read the card.</li>
+<li>Drop a token in the FAIR jar or the UNFAIR jar.</li>
+<li>Lift the flap to see if you were right.</li>
 </ol>
 </div>

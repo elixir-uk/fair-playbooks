@@ -532,6 +532,12 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 .print-sheet table { font-size: var(--fs-small); margin: 0.8rem 0; }
 .print-sheet th, .print-sheet td { border: 1px solid var(--line-strong); padding: 0.35rem 0.5rem; vertical-align: top; }
 .print-hint { font-size: var(--fs-small); color: var(--muted); }
+/* Drop-in stand sign: readable from a few steps away */
+.stand-sign h3 { font-size: clamp(2.2rem, 7vw, 3.6rem); line-height: 1.05; margin-bottom: 0.6rem; }
+.stand-sign .sign-sub { font-size: var(--fs-lead); margin: 0 0 1rem; }
+.stand-sign ol { font-size: var(--fs-lead); font-weight: 600; padding-left: 1.6em; }
+.stand-sign li { margin: 0.5rem 0; }
+.stand-sign .sign-tally { font-size: var(--fs-lead); font-weight: 900; margin-top: 1.4rem; }
 
 /* ─── Recommender wizard ──────────────────────────────────────────────── */
 .rec-title { margin-bottom: 0.8rem; }
@@ -828,4 +834,8 @@ html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250
   .activity-body > :not(.print-sheet) { display: none !important; }
   .print-sheet { border: none !important; padding: 0 !important; margin: 0 0 1rem !important; page-break-after: always; }
   .print-sheet:last-child { page-break-after: auto; }
+  .footer-pile { display: none !important; }
+  .stand-sign h3 { font-size: 64pt; }
+  .stand-sign .sign-sub, .stand-sign .sign-tally { font-size: 24pt; }
+  .stand-sign ol { font-size: 28pt; }
 }

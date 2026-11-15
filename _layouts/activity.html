@@ -29,6 +29,7 @@ layout: default
     {% if page.time %}<div><dt>Time</dt><dd>{{ page.time }}</dd></div>{% endif %}
     {% if page.prep %}<div><dt>Prep</dt><dd>{{ page.prep }}</dd></div>{% endif %}
     {% if page.materials %}<div><dt>Materials</dt><dd>{{ page.materials }}</dd></div>{% endif %}
+    {% if page.drop_in %}<div><dt>Drop-in stand</dt><dd>{{ page.drop_in }} <a href="#run-it-as-a-drop-in-stand">How to run it</a></dd></div>{% endif %}
   </dl>
 </section>
 
@@ -43,7 +44,7 @@ layout: default
 <!-- Print button -->
 <p class="no-print act-print">
   <button type="button" class="btn btn-primary" onclick="window.print()"><span class="pixel-icon" data-pixel-icon="printer"></span>Print the handouts</button>
-  <span class="muted">The run-sheet is for your screen; printing gives you just the participant handouts &amp; answer key.</span>
+  <span class="muted">The run-sheet is for your screen; printing gives you just the handouts, the answer key and the stand sign.</span>
 </p>
 
 <div class="activity-body">

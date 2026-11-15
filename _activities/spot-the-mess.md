@@ -7,6 +7,7 @@ group_size: "Small groups of 2–5"
 time: "15–20 min"
 prep: "Print the handout (1 per group). Facilitator keeps the answer key."
 materials: "Printed dataset handout, pens; answer key on your screen"
+drop_in: "2–3 minutes a visitor. The dataset printed as a big poster, sticky notes."
 source: "In the spirit of the classic 'messy spreadsheet' exercises from Data Carpentry and EMBL-EBI / EuroBioimaging FAIR training. This dataset is original to this playbook."
 source_url: "https://datacarpentry.org/spreadsheet-ecology-lesson/"
 licence: "CC-BY 4.0 – swap the dataset for one from your own field"
@@ -30,6 +31,16 @@ tags: [activity, game, spreadsheet, hands-on, printable]
 ## Facilitator tip
 
 Don't chase the complete list – the "aha" is that a boring little spreadsheet hides *this many* problems. If a group stalls, seed one (*"look at the dates…"*) and let them run.
+
+## Run it as a drop-in stand
+
+Print the messy dataset as a big poster (A1 or A2, or tape four A3 sheets together) in a faculty foyer or atrium, and let passers-by find the problems.
+
+- **Bring:** the dataset poster, sticky notes, pens, the sign below, and the answer key printed on a separate sheet.
+- **Set up:** put the poster at eye level with sticky notes and pens next to it. Add a tally on the sign: "Problems found so far: \_\_ / 10".
+- **A visit:** spot a problem, write it on a sticky note and stick it where it is. Most people stop to read what others have found, then try to find one nobody has spotted yet.
+- **Keep it going:** update the tally through the day. Pin the answer key up at the end of the day, or at a set time ("Answers at 3pm") to bring people back.
+- **Follow up:** put a poster from the [promo kit]({{ '/promo/' | relative_url }}) next to the stand with a QR code for your next session.
 
 ## Make it yours
 
@@ -69,4 +80,16 @@ Swap in a messy example from **your own** domain or institution – imaging, seq
 <li><strong>No README / data dictionary</strong> – what <em>is</em> "Reading 1"? what does "ok" mean? → a short README tab defining every column. <em>[Reusable]</em></li>
 </ol>
 <p class="print-hint"><strong>Biggest payoff first:</strong> consistent IDs · one date format (ISO 8601) · a README. Three habits, most of the win.</p>
+</div>
+
+<div class="print-sheet stand-sign">
+<div class="sheet-kicker">Stand sign – print A4 or A3</div>
+<h3>Spot the mess</h3>
+<p class="sign-sub">A colleague sent this dataset to reuse. How many problems can you find?</p>
+<ol>
+<li>Spot a problem in the spreadsheet.</li>
+<li>Write it on a sticky note and stick it on.</li>
+<li>Found one nobody else has? Nice.</li>
+</ol>
+<p class="sign-tally">Problems found so far: ______ / 10</p>
 </div>

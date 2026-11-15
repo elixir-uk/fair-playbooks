@@ -7,6 +7,7 @@ group_size: "4–24 players, in small teams"
 time: "30–45 min"
 prep: "Get the full pack + ReadMe from the link; identical small LEGO sets per team; print the worksheet."
 materials: "Identical LEGO sets per team, the original game pack, printed metadata worksheet, pens"
+drop_in: "3–5 minutes a visitor. A hidden model, its description and a set of loose bricks."
 source: "LEGO® Metadata for Reproducibility game pack – Mary Donaldson & Matt Mahon, University of Glasgow (2019). doi:10.36399/gla.pubs.196477"
 source_url: "https://eprints.gla.ac.uk/196477/"
 licence: "CC-BY (original pack) · this run-sheet + worksheet CC-BY 4.0"
@@ -32,6 +33,16 @@ tags: [activity, game, reproducibility, metadata, hands-on]
 ## Facilitator tip
 
 Keep models small (≈10–20 bricks) and give every team **identical** sets, or it drags and the comparison gets muddy. The magic is in the debrief, not the building.
+
+## Run it as a drop-in stand
+
+Turn the game into a quick rebuild challenge for a faculty foyer or atrium.
+
+- **Bring:** two identical small LEGO sets (about 10 bricks each), a box or card screen, a 2-minute timer, the sign below, and a description of your model written on a card. Write a deliberately thin description first ("a small red and blue tower").
+- **Set up:** build one model and hide it under the box. Put the description card and the loose bricks of the second set in front of it.
+- **A visit:** read the description, rebuild the model in two minutes, then lift the box and compare. Almost nobody gets it right from the thin description.
+- **Keep it going:** ask each visitor to add one line to the description that would have helped them. By the end of the day the card is a decent metadata record, and you can point at it: that's what a README is for.
+- **Follow up:** put a poster from the [promo kit]({{ '/promo/' | relative_url }}) next to the stand with a QR code for your next session.
 
 ## Make it yours
 
@@ -67,4 +78,16 @@ Swap the closing examples for your field's metadata standards (MIAME, MIAPPE, IS
 </tbody>
 </table>
 <p class="print-hint" style="margin-top:0.8rem;"><strong>Research parallel:</strong> ID → a persistent identifier · description &amp; inventory → rich metadata · assembly steps → method/provenance · "consistent naming" → controlled vocabularies · "what they'd have to ask" → the gap that kills reuse.</p>
+</div>
+
+<div class="print-sheet stand-sign">
+<div class="sheet-kicker">Stand sign – print A4 or A3</div>
+<h3>Can you rebuild it?</h3>
+<p class="sign-sub">There's a LEGO model under the box. All you get is its description.</p>
+<ol>
+<li>Read the description card.</li>
+<li>Rebuild the model in two minutes.</li>
+<li>Lift the box and compare.</li>
+<li>Add one line to the description that would have helped you.</li>
+</ol>
 </div>

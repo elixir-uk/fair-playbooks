@@ -208,16 +208,31 @@
         if (notes.length) s.addNotes(notes.join('\n\n'));
       });
 
-      // Credits — reused material keeps its attribution
+      // Closing slide, always: what it's built from, the licence, and the partners
+      return Promise.all([toPng(base() + 'assets/branding/elixir-uk-logo.svg'), toPng(base() + 'assets/branding/BioFAIR-logo.png')]);
+    }).then(function (partners) {
+      var s = pptx.addSlide();
+      s.background = { color: 'FFFFFF' };
+      s.addText('Credits and licence', { x: 0.5, y: 0.4, w: 12, h: 0.7, fontFace: FONT, fontSize: 28, bold: true, color: b.primary });
       if (d.sources && d.sources.length) {
-        var s = pptx.addSlide();
-        s.background = { color: 'FFFFFF' };
-        s.addText('Built from', { x: 0.5, y: 0.4, w: 12, h: 0.7, fontFace: FONT, fontSize: 28, bold: true, color: b.primary });
         s.addText(d.sources.map(function (src) {
           return { text: src.name + (src.note ? ' — ' + src.note : '') + (src.url ? '  ' + src.url : ''), options: { bullet: true, breakLine: true } };
-        }), { x: 0.5, y: 1.3, w: 12.3, h: 5.4, fontFace: FONT, fontSize: 15, color: DEFAULT.ink, valign: 'top', paraSpaceAfter: 6 });
-        footer(s);
+        }), { x: 0.5, y: 1.25, w: 12.3, h: 3.5, fontFace: FONT, fontSize: 14, color: DEFAULT.ink, valign: 'top', paraSpaceAfter: 6 });
       }
+      s.addText([
+        { text: 'Licence: CC BY 4.0. ', options: { bold: true } },
+        { text: 'Reuse and adapt this deck, crediting "FAIR-in-action Playbook, ELIXIR-UK RDM Club". Reused images and materials keep their own licences, as credited above. https://creativecommons.org/licenses/by/4.0/', options: {} }
+      ], { x: 0.5, y: 4.95, w: 8.2, h: 1.1, fontFace: FONT, fontSize: 13, color: DEFAULT.ink, valign: 'top' });
+      s.addText('Built by the ELIXIR-UK RDM Club · commissioned by BioFAIR', { x: 0.5, y: 6.1, w: 8.2, h: 0.4, fontFace: FONT, fontSize: 12, color: DEFAULT.muted });
+      var lx = 9.2;
+      partners.forEach(function (lg) {
+        if (!lg) return;
+        var h = 0.85, w = h * lg.w / lg.h;
+        s.addImage({ data: lg.data, x: lx, y: 5.15, h: h, w: w });
+        lx += w + 0.35;
+      });
+      footer(s);
+      pptx.subject = 'CC BY 4.0 · FAIR-in-action Playbook · ELIXIR-UK RDM Club · commissioned by BioFAIR';
       return pptx.writeFile({ fileName: fileName(d, p, '.pptx') });
     });
   }
@@ -344,17 +359,22 @@
 
       if (session.length) {
         if (!slot) children.push(heading('The session plan', D.HeadingLevel.HEADING_1));
-        var rows = [{ header: true, cells: ['Step', 'Full', 'Short', 'If you need to cut'].map(function (t) { var e = document.createElement('span'); e.textContent = t; return e; }) }];
+        var hasShort = session.some(function (st) { return st.short !== undefined && st.short !== null; });
+        var span = function (t) { var e = document.createElement('span'); e.textContent = t; return e; };
+        var rows = [{ header: true, cells: (hasShort ? ['Step', 'Full', 'Short', 'If you need to cut'] : ['Step', 'Time', 'If you need to cut']).map(span) }];
         session.forEach(function (st, i) {
           var full = minutesOf(st.minutes);
           var short = st.short === undefined || st.short === null ? '' : (+st.short === 0 ? 'take-home' : st.short + ' min');
-          rows.push({ header: false, cells: [(i + 1) + '. ' + asText(st.title), full ? full + ' min' : '', short, st.cut ? asText(st.cut, p) : ''].map(function (t) { var e = document.createElement('span'); e.textContent = t; return e; }) });
+          var cells = [(i + 1) + '. ' + asText(st.title) + (st.optional ? ' (optional)' : ''), full ? full + ' min' : ''];
+          if (hasShort) cells.push(short);
+          cells.push(st.cut ? asText(st.cut, p) : '');
+          rows.push({ header: false, cells: cells.map(span) });
         });
         children.push(table(rows));
         children.push(heading('Running the session', D.HeadingLevel.HEADING_1));
         session.forEach(function (st, i) {
           var mins = minutesOf(st.minutes);
-          children.push(heading((i + 1) + '. ' + asText(st.title) + (mins ? '  (' + mins + ' min)' : ''), D.HeadingLevel.HEADING_2));
+          children.push(heading((i + 1) + '. ' + asText(st.title) + (mins ? '  (' + mins + ' min' + (st.optional ? ', optional' : '') + ')' : ''), D.HeadingLevel.HEADING_2));
           if (st.script) children.push(labelled('Say:', asText(st.script, p)));
           if (st.tip) children.push(labelled('Tip:', asText(st.tip, p)));
           var sl = slideOf(st);
@@ -374,6 +394,18 @@
         });
       }
 
+      children.push(heading('Licence', D.HeadingLevel.HEADING_1));
+      children.push(para([new D.TextRun({ text: 'CC BY 4.0. ', bold: true }), new D.TextRun({ text: 'Reuse and adapt this guide, crediting "FAIR-in-action Playbook, ELIXIR-UK RDM Club". Reused images and materials keep their own licences, as credited above. https://creativecommons.org/licenses/by/4.0/' })]));
+      children.push(para([new D.TextRun({ text: 'Built by the ELIXIR-UK RDM Club · commissioned by BioFAIR', color: DEFAULT.muted })]));
+      return Promise.all([toPng(base() + 'assets/branding/elixir-uk-logo.svg'), toPng(base() + 'assets/branding/BioFAIR-logo.png')]);
+    }).then(function (partners) {
+      var imgs = partners.filter(Boolean).map(function (lg) {
+        var bytes = Uint8Array.from(atob(lg.data.split(',')[1]), function (c) { return c.charCodeAt(0); });
+        return new D.ImageRun({ data: bytes, transformation: { width: Math.round(56 * lg.w / lg.h), height: 56 } });
+      });
+      var spaced = [];
+      imgs.forEach(function (im, i) { if (i) spaced.push(new D.TextRun({ text: '    ' })); spaced.push(im); });
+      if (spaced.length) children.push(new D.Paragraph({ children: spaced }));
       var doc = new D.Document({
         creator: org,
         title: asText(d.title) + ' — facilitator guide',

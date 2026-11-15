@@ -107,6 +107,9 @@
     section.title .dots .d1 { background: var(--link); opacity: .6; }
 
     .credits li { font-size: 0.6em; }
+    .s-licence { font-size: 0.5em; line-height: 1.45; margin: 1em 0 0; max-width: 40em; color: var(--text); }
+    .s-partners { display: flex; align-items: center; gap: 0.9em; margin-top: 1em; font-size: 0.42em; color: var(--muted); }
+    .s-partners img { height: 2.6em; width: auto; }
     .credits a { color: var(--link); }
 
     .brandmark { position:fixed; left:12px; bottom:8px; z-index:30; font:600 11px/1 var(--mono); color:var(--muted); background:#fff; padding:4px 8px; border-radius:6px; letter-spacing:0.04em; }
@@ -123,9 +126,8 @@
 <body>
   <div class="bar">
     Module {{ num }} · press S for the script ·
-    <button type="button" data-download="pptx"><span class="pack-dl-label">PowerPoint</span></button> ·
+    <button type="button" data-download="pptx"><span class="pack-dl-label">Download PowerPoint</span></button> ·
     <button type="button" data-download="docx"><span class="pack-dl-label">Facilitator guide</span></button> ·
-    <a href="?print-pdf">PDF</a> ·
     <span id="profile-name">ELIXIR-UK default</span> (<a href="{{ base }}branding/">change</a>) ·
     <a href="{{ mod.url | relative_url }}">back to the module</a>
   </div>
@@ -203,24 +205,33 @@
         </div>
       </section>
 
-      {%- if mod.sources.size > 0 %}
+      {%- comment -%} Closing slide, always: credits, licence and partners (matches the .pptx) {%- endcomment %}
       <section data-background-color="#ffffff">
+        <div class="dots"></div>
         <div class="s-wrap">
-          <h2 class="s-head">Built from</h2>
+          <h2 class="s-head">Credits and licence</h2>
+          {%- if mod.sources.size > 0 %}
           <ul class="s-lines credits">
             {%- for s in mod.sources %}
             <li><a href="{{ s.url }}">{{ s.name }}</a>{% if s.note %}: {{ s.note }}{% endif %}</li>
             {%- endfor %}
           </ul>
+          {%- endif %}
+          <p class="s-licence"><b>Licence: CC BY 4.0.</b> Reuse and adapt these slides, crediting "FAIR-in-action Playbook, ELIXIR-UK RDM Club". Reused images and materials keep their own licences, as credited above.</p>
+          <div class="s-partners">
+            <span>Built by the ELIXIR-UK RDM Club · commissioned by BioFAIR</span>
+            <img src="{{ base }}assets/branding/elixir-uk-logo.svg" alt="ELIXIR-UK" />
+            <img src="{{ base }}assets/branding/BioFAIR-logo.png" alt="BioFAIR" />
+          </div>
         </div>
       </section>
-      {%- endif %}
 
     </div>
   </div>
 
   {% include module-data.html mod=mod html=mod.content %}
   <script>window.__BASE__ = "{{ base }}"; if (window.__BASE__.slice(-1) !== '/') window.__BASE__ += '/';</script>
+  <script>window.__SITE_PROFILE__ = {{ site.data.profile | jsonify }};</script>
   <script src="{{ '/assets/js/profile.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/pixel-icons.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/decks.js' | relative_url }}"></script>
@@ -249,9 +260,6 @@
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
   <script>
     window.Reveal.initialize({ hash: true, center: false, width: 1280, height: 720, margin: 0, slideNumber: 'c/t', transition: 'fade', plugins: [ window.RevealNotes ] });
-    if (/print-pdf/gi.test(window.location.search)) {
-      window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 900); });
-    }
   </script>
   <script>
     // Hands-up poll. Click an option (or press its number) to count a hand;

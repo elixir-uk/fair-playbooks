@@ -3,7 +3,6 @@ title: "I'm late to the party"
 number: 4
 summary: "For researchers who already have, or are producing, data that isn't FAIR. Participants place their dataset on the data lifecycle, triage what is realistic from there, and leave with one Minimum Viable FAIR action for their own data."
 estimatedMinutes:
-  short: 5
   long: 60
 prerequisites: []
 tags: [legacy-data, post-project, motivation, lifecycle, triage]
@@ -33,7 +32,6 @@ sources:
 session:
   - title: "It's not too late"
     minutes: "0–8"
-    short: 5
     cut: "Skip the horror stories; keep the reassurance."
     script: "Welcome. If you're here, you probably have data that isn't as FAIR as you'd like, and that's exactly who this session is for. This isn't about how you should have started. It's about what is realistic from where you are now. Look at this lifecycle: imagine joining it at the very end, with everything gone wrong. Sound familiar? That was deliberately the worst case. You've probably already done some things right, a methods section or a key to your columns. Being late is normal."
     tip: "Deliver the reassurance as the point, not as a caveat, even when short of time. Run the poll for the use cases: ask for hands and click each option (or press its number) to count. The result tells you which examples to lean on later. Invite one or two horror stories, keep them light."
@@ -48,7 +46,6 @@ session:
         credit: "“Imaging Data Lifecycle”, NFDI4BIOIMAGE Consortium (2024): NFDI4BIOIMAGE data management illustrations by Henning Falk, Zenodo, https://doi.org/10.5281/zenodo.14186100, CC-BY 4.0"
   - title: "Where are you on the lifecycle?"
     minutes: "8–18"
-    short: 8
     cut: "Cover only the stages people in the room are at."
     principles: ["R1.2"]
     script: "Wherever you join the lifecycle, some things are still realistic and some are hard or impossible to recover. Let's go stage by stage. If you're at planning, you're not late at all. At collecting, the person who gathered the data can still explain it, so capture that now. If you share processed data or results without explaining what was done, share the raw data instead: an undocumented transformation is worse than none."
@@ -62,7 +59,7 @@ session:
         options: ["Planning", "Collecting", "Processing", "Analysing", "Preserving", "Sharing", "Reusing"]
   - title: "Before you start"
     minutes: "18–23"
-    short: 0
+    optional: true
     cut: "Set as take-home."
     script: "A few questions before deciding what to do. Work on your own dataset, or a realistic one if you don't have it to hand. Metadata only, or the data too? Could you describe it to someone else? What metadata already exists: sequencing providers and core facilities often supply some. Who owns it, and who can you still contact? Any legal or ethical limits? And where will it go?"
     tip: "Works as quiet individual work or in pairs, or as a take-home. FAIR is not the same as open: make sure that point lands. Before the session, check whether the project already has a data management plan (ask your research office or look in DMPonline): it often answers half of these questions. Point people to <a href='https://rdmkit.elixir-europe.org/data_management_plan'>RDMkit on data management plans</a> and the <a href='https://ds-wizard.org'>Data Stewardship Wizard</a>."
@@ -79,7 +76,6 @@ session:
         credit: "“Datasets Anonymous”, NFDI4BIOIMAGE Consortium (2024): NFDI4BIOIMAGE data management illustrations by Henning Falk, Zenodo, https://doi.org/10.5281/zenodo.14186100, CC-BY 4.0"
   - title: "Triage: quick wins vs deeper retrofit"
     minutes: "23–28"
-    short: 5
     cut: "Never cut."
     principles: ["F1", "F2", "R1.1"]
     script: "With limited time, the most useful skill is triage: what gives the most FAIRness for the least effort? A few minutes buys a DOI from a generalist repository, keywords, a named licence and a list of what your abbreviations mean. Days of work buy a domain repository, a community metadata standard, ontology mapping and a full provenance chain. And remember that depositing in a repository does most of the work of making data findable and accessible for you: identifiers, indexing and download."
@@ -93,7 +89,6 @@ session:
       prompt: "Start with the minutes"
   - title: "Minimum Viable FAIR"
     minutes: "28–33"
-    short: 5
     cut: "Never cut."
     principles: ["F1", "A1.1", "I2", "R1.1"]
     script: "When you can't do full FAIR, here is an honest target. A persistent identifier from a repository. An open format, within legal and ethical limits. Standard terms, or at least your own terms clearly defined. Enough metadata to show where the data came from, plus a licence. It won't make a fully FAIR dataset, but it makes it FAIR enough. Then turn it round: if you were the one reusing this dataset, what would you need?"
@@ -108,7 +103,6 @@ session:
       prompt: "If you were reusing this dataset, what would you need?"
   - title: "Your priority worksheet"
     minutes: "33–48"
-    short: 12
     cut: "Run the persistent-ID case as a whole-group discussion only."
     principles: ["F1", "R1.2"]
     script: "Take the four Minimum Viable FAIR actions and rate each for your own dataset: a priority, a quick win, or not possible. Let's do two together. A persistent ID is almost always possible: a generalist repository mints a DOI in minutes. Provenance for legacy data is the hard one: sometimes nothing can be recovered, and deciding not to share is an honest outcome, not a failure."
@@ -123,7 +117,6 @@ session:
         options: ["A persistent ID", "An open format", "Your terms, defined", "A README and a licence"]
   - title: "Who can help here"
     minutes: "48–53"
-    short: 5
     cut: "Show the slide; don't discuss it."
     script: "You don't have to do this alone. Here is who to contact here for each kind of gap."
     tip: "Fill in your institution profile before the session so these lines show your own services."
@@ -136,8 +129,7 @@ session:
         - "Ethics and legal: <span class='repo-slot' data-profile-help='ethics'>[ ethics or legal office ]</span>"
         - "Everything else: <span class='repo-slot' data-profile-team>[ set up your institution profile ]</span>"
   - title: "Better, not perfect"
-    minutes: "53–58"
-    short: 2
+    minutes: "53–60"
     cut: "Skip discussion; keep the commitment."
     script: "Sometimes you won't have the time, information or resources to be perfectly FAIR, and that's fine. Nearly every principle has a minimum for exactly this situation. FAIR enough is better than unFAIR. Before you leave: one quick win you'll do this week."
     tip: "Say it as a statement of values, not a bullet list. Going round the room for commitments makes them more likely to happen."
@@ -168,7 +160,7 @@ One outcome must be presented as legitimate: for some legacy data nothing can be
 
 ## The session plan
 
-The full version runs 58 minutes, leaving 2 minutes of slack. The short version runs 42. About 30–40 minutes of it is core content; the rest is activity and discussion. Everything below, the live slides and both downloads are built from the same steps. Slides show only each step's headline, a few short lines and a prompt for the room; the script and timings stay with you.
+The session runs an hour. Step 3 is optional: if you're short of time, set it as take-home. About 30–40 minutes of it is core content; the rest is activity and discussion. Everything below, the live slides and both downloads are built from the same steps. Slides show only each step's headline, a few short lines and a prompt for the room; the script and timings stay with you.
 
 <div class="session-slot"></div>
 

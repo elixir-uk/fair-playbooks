@@ -135,7 +135,7 @@
     const hasShort = mod.short !== undefined && mod.short !== null;
     const useShort = preferShort && hasShort;
     const minutes = useShort ? mod.short : mod.long;
-    const versionLabel = useShort ? 'Quick recap' : (preferShort && !hasShort ? 'Full module (no recap available)' : 'Full module');
+    const versionLabel = useShort ? 'Quick recap' : (preferShort && !hasShort ? 'Full module only, no shorter version' : 'Full module');
     return '' +
       '<div class="primary-card">' +
       '<div class="primary-tag"><span class="pixel-icon" data-pixel-icon="star"></span>Main quest · ' + band.label + '</div>' +

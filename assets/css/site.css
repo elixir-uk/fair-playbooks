@@ -629,10 +629,18 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 .is-optional .level-num { color: var(--muted); }
 .level-start, .level-goal { flex: none; align-self: flex-end; font-family: var(--font-pixel); font-size: var(--fs-pixel); color: var(--muted); padding: 0 0.4rem 0.8rem; }
 .level-goal .pixel-icon { width: 2rem; height: 2rem; }
+.level-switch { display: inline-flex; margin-top: 0.4rem; border: var(--outline); box-shadow: var(--shadow-sm); }
+.level-switch button { background: var(--surface); color: var(--ink); border: 0; padding: 0.5rem 0.9rem; cursor: pointer; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; }
+.level-switch button + button { border-left: var(--outline); }
+.level-switch button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.level-step.is-skipped .level-block { background: var(--surface); border-style: dashed; box-shadow: none; opacity: 0.6; }
+.level-step.is-skipped .level-num { color: var(--muted); }
+.fac-plan[data-length="short"] td:nth-child(3), .fac-plan[data-length="short"] th:nth-child(3) { background: var(--soft); font-weight: 700; }
 .level-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: var(--fs-small); color: var(--muted); margin: 0.2rem 0 1.4rem; }
 .level-legend .pixel-icon { width: 1.1rem; height: 1.1rem; }
 .level-legend-opt { display: inline-block; width: 0.9rem; height: 0.9rem; border: 2px dashed var(--ink); margin-left: 1rem; }
 .fac-check { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); color: var(--accent-text); text-transform: uppercase; }
+.fac-optional { display: inline-block; padding: 0.15rem 0.5rem; border: 2px dashed var(--line-strong); font-family: var(--font-pixel); font-size: var(--fs-pixel); color: var(--muted); text-transform: uppercase; }
 .fac-check .pixel-icon { width: 1.2rem; height: 1.2rem; }
 
 /* Recommender results as a quest */

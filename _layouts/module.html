@@ -95,11 +95,8 @@ layout: default
     {% if present_page %}
       <a class="pack-dl pack-dl-primary" href="{{ present_page.url | relative_url }}">Present live<span class="pack-dl-ext">in the browser · press S for the script</span></a>
     {% endif %}
-    <button type="button" class="pack-dl" data-download="pptx"><span class="pack-dl-label">Editable slides</span><span class="pack-dl-ext">.pptx · PowerPoint / Google Slides</span></button>
-    <button type="button" class="pack-dl" data-download="docx"><span class="pack-dl-label">Facilitator guide</span><span class="pack-dl-ext">.docx · Word / Google Docs</span></button>
-    {% if present_page %}
-      <a class="pack-dl" href="{{ present_page.url | relative_url }}?print-pdf">PDF slides<span class="pack-dl-ext">print / save as PDF</span></a>
-    {% endif %}
+    <button type="button" class="pack-dl" data-download="pptx"><span class="pack-dl-label">Download PowerPoint</span><span class="pack-dl-ext">.pptx · edit or save as PDF in PowerPoint, Keynote or Google Slides</span></button>
+    <button type="button" class="pack-dl" data-download="docx"><span class="pack-dl-label">Download facilitator guide</span><span class="pack-dl-ext">.docx · Word / Google Docs</span></button>
     <a class="pack-dl" href="{{ '/promo/' | relative_url }}?module={{ id }}">Promo poster<span class="pack-dl-ext">slide · square · A4 flyer</span></a>
     <a class="pack-dl" href="{{ '/certificate/' | relative_url }}?module={{ id }}">Certificates<span class="pack-dl-ext">print one per participant</span></a>
   </div>
@@ -111,43 +108,74 @@ layout: default
 
   {%- comment -%} The session as a game level: one block per step, width by
     minutes. Flags mark checkpoints (never cut); dashed blocks are optional. {%- endcomment -%}
+  {%- assign full_total = 0 -%}{%- assign short_total = 0 -%}
+  {%- for step in page.session -%}
+    {%- assign parts = step.minutes | split: '–' -%}
+    {%- assign mins = 5 -%}{%- if parts.size >= 2 -%}{%- assign mins = parts[1] | plus: 0 | minus: parts[0] -%}{%- endif -%}
+    {%- assign full_total = full_total | plus: mins -%}
+    {%- if step.short == nil -%}{%- assign short_total = short_total | plus: mins -%}{%- else -%}{%- assign short_total = short_total | plus: step.short -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if short_total < full_total %}
+  <div class="level-switch" role="group" aria-label="Session length">
+    <button type="button" data-length="full" aria-pressed="true">Full · {{ full_total }} min</button>
+    <button type="button" data-length="short" aria-pressed="false">Short · {{ short_total }} min</button>
+  </div>
+  {%- endif %}
   <ol class="level" aria-label="The session as a level">
     <li class="level-start" aria-hidden="true">Start</li>
     {%- for step in page.session %}
       {%- assign parts = step.minutes | split: '–' -%}
       {%- assign mins = 5 -%}{%- if parts.size >= 2 -%}{%- assign mins = parts[1] | plus: 0 | minus: parts[0] -%}{%- endif -%}
       {%- assign cp = false -%}{%- if step.cut == 'Never cut.' -%}{%- assign cp = true -%}{%- endif -%}
-      <li class="level-step{% if cp %} is-checkpoint{% endif %}{% if step.short == 0 %} is-optional{% endif %}" style="--min: {{ mins }}">
+      {%- assign smins = mins -%}{%- if step.short != nil -%}{%- assign smins = step.short -%}{%- endif -%}
+      <li class="level-step{% if cp %} is-checkpoint{% endif %}{% if step.short == 0 or step.optional %} is-optional{% endif %}" style="--min: {{ mins }}" data-full="{{ mins }}" data-short="{{ smins }}">
         <a href="#step-{{ forloop.index }}" title="{{ step.title }}">
           {%- if cp %}<span class="pixel-icon level-flag" data-pixel-icon="flag"></span>{% endif -%}
           <span class="level-block"><span class="level-num">{{ forloop.index }}</span></span>
           <span class="level-time">{{ mins }}'</span>
-          <span class="sr-only">Step {{ forloop.index }}: {{ step.title }}, {{ mins }} minutes{% if cp %}, checkpoint: never cut{% endif %}{% if step.short == 0 %}, optional{% endif %}</span>
+          <span class="sr-only">Step {{ forloop.index }}: {{ step.title }}, {{ mins }} minutes{% if cp %}, checkpoint: never cut{% endif %}{% if step.short == 0 or step.optional %}, optional{% endif %}</span>
         </a>
       </li>
     {%- endfor %}
     <li class="level-goal" aria-hidden="true"><span class="pixel-icon" data-pixel-icon="star"></span></li>
   </ol>
   <p class="level-legend"><span class="pixel-icon" data-pixel-icon="flag"></span> checkpoint: never cut <span class="level-legend-opt"></span> optional or take-home</p>
+  <script>
+    // Full / Short: resize the level to the short timings (take-home = 0 min).
+    // Links ending in #short (e.g. from "Under 15 minutes" in the recommender) open short.
+    (function () {
+      var sw = document.querySelector('.level-switch'); if (!sw) return;
+      function set(len) {
+        sw.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-length') === len)); });
+        document.querySelectorAll('.level-step').forEach(function (li) {
+          var m = +li.getAttribute(len === 'short' ? 'data-short' : 'data-full');
+          li.style.setProperty('--min', Math.max(m, 1));
+          li.classList.toggle('is-skipped', len === 'short' && m === 0);
+          var t = li.querySelector('.level-time'); if (t) t.textContent = m === 0 ? 'home' : m + "'";
+        });
+        var plan = document.querySelector('.fac-plan'); if (plan) plan.setAttribute('data-length', len);
+      }
+      sw.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) set(b.getAttribute('data-length')); });
+      if (location.hash === '#short' && sw.querySelector('[data-length="short"]')) set('short');
+    })();
+  </script>
 
   {%- assign has_short = false -%}
   {%- for step in page.session -%}{%- if step.short != nil -%}{%- assign has_short = true -%}{%- endif -%}{%- endfor -%}
-  {% if has_short %}
   <table class="fac-plan">
-    <thead><tr><th>Step</th><th>Full</th><th>Short</th><th>If you need to cut</th></tr></thead>
+    <thead><tr><th>Step</th><th>{% if has_short %}Full{% else %}Time{% endif %}</th>{% if has_short %}<th>Short</th>{% endif %}<th>If you need to cut</th></tr></thead>
     <tbody>
     {% for step in page.session %}
       {%- assign parts = step.minutes | split: '–' -%}
       <tr>
-        <td>{{ forloop.index }}. {{ step.title }}</td>
+        <td>{{ forloop.index }}. {{ step.title }}{% if step.optional %} <span class="fac-optional">optional</span>{% endif %}</td>
         <td>{% if parts.size >= 2 %}{{ parts[1] | plus: 0 | minus: parts[0] }} min{% endif %}</td>
-        <td>{% if step.short == 0 %}take-home{% elsif step.short %}{{ step.short }} min{% endif %}</td>
+        {% if has_short %}<td>{% if step.short == 0 %}take-home{% elsif step.short %}{{ step.short }} min{% endif %}</td>{% endif %}
         <td{% if step.cut == 'Never cut.' %} class="never"{% endif %}>{{ step.cut }}</td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
-  {% endif %}
 
   <div class="fac-track">
   {% for step in page.session %}
@@ -163,6 +191,7 @@ layout: default
         <div class="fac-step-top">
           <h3 class="fac-step-title">{{ step.title }}</h3>
           {%- if step.cut == 'Never cut.' %}<span class="fac-check"><span class="pixel-icon" data-pixel-icon="flag"></span>Checkpoint</span>{% endif %}
+          {%- if step.optional %}<span class="fac-optional">Optional</span>{% endif %}
           {%- if step.minutes -%}
             {%- assign parts = step.minutes | split: '–' -%}
             {%- if parts.size >= 2 -%}
@@ -212,6 +241,10 @@ layout: default
 {% include module-data.html mod=page html=content %}
 <script src="{{ '/assets/js/decks.js' | relative_url }}"></script>
 {% else %}
+<div class="info-block">
+  <strong>No slides yet</strong>
+  This module doesn't have a step-by-step session plan, so there are no slides, facilitator guide or PDF to download yet. Want to help write one? <a href="https://github.com/elixir-uk/fair-playbooks/issues">Suggest it on GitHub</a>.
+</div>
 <article class="prose mod-prose">
   {{ content }}
 </article>

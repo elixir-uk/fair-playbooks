@@ -4,14 +4,21 @@
    window.FairProfile, live-recolours via CSS variables, swaps the header logo,
    and hydrates institutional-help / repo / team slots on every page.
    Expects window.__BASE__ to be set (baseurl-aware) before this runs.
+
+   Site default: a fork or local copy can ship its institution's profile as
+   _data/profile.json (the same file the set-up page exports). Jekyll builds
+   it into window.__SITE_PROFILE__; a profile saved in the browser wins.
    ═══════════════════════════════════════════════════════════════════════ */
 (function () {
   var KEY = 'fair:profile';
-  function read() {
+  function local() {
     try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; }
   }
+  function read() { return local() || window.__SITE_PROFILE__ || null; }
   window.FairProfile = {
     get: read,
+    // 'browser' (saved here), 'site' (built in from _data/profile.json) or null
+    source: function () { return local() ? 'browser' : (window.__SITE_PROFILE__ ? 'site' : null); },
     set: function (p) {
       localStorage.setItem(KEY, JSON.stringify(p));
       document.dispatchEvent(new CustomEvent('fair:profile-change', { detail: p }));
@@ -41,7 +48,8 @@
       el.dataset.active = 'true';
       el.innerHTML =
         '<span>Showing <strong>' + esc(p.name) + '</strong> contacts and branding.</span> ' +
-        '<a href="' + BASE + 'branding/">Edit</a> &middot; <button type="button" id="profile-clear">Remove</button>';
+        '<a href="' + BASE + 'branding/">Edit</a>' +
+        (window.FairProfile.source() === 'browser' ? ' &middot; <button type="button" id="profile-clear">Remove</button>' : '');
       var c = document.getElementById('profile-clear');
       if (c) c.addEventListener('click', function () { window.FairProfile.clear(); });
     } else {

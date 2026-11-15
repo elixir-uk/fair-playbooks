@@ -118,18 +118,33 @@
     .reveal .slide-number { background: var(--ink); font-family: var(--pixel); font-size: 10px; padding: 6px 8px; }
 
     .bar { position:fixed; top:0; left:0; right:0; z-index:40; background:var(--ink); color:#fff; font:12px/1.5 var(--mono); padding:0.35rem 1rem; text-align:center; }
+    /* The bar shows on the title slide, then gets out of the way while presenting.
+       It slides back on a mouse at the top edge, in the overview (Esc / O),
+       or when you return to the title slide. */
+    .bar { transition: transform .2s ease; }
+    body.is-presenting .bar { transform: translateY(-100%); }
+    body.is-presenting.bar-peek .bar { transform: none; }
+    @media (prefers-reduced-motion: reduce) { .bar { transition: none; } }
     .bar a, .bar button { color:var(--accent-on-dark); }
     .bar button { background:none; border:0; font:inherit; text-decoration:underline; cursor:pointer; padding:0; }
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; text-align: left; }
+    .bar-keys { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; }
+    .bar kbd { display: inline-block; min-width: 1.5em; padding: 0 0.35em; margin-right: 0.3em; border: 1px solid rgba(255,255,255,.5); border-bottom-width: 2px; border-radius: 3px; font: inherit; text-align: center; color: #fff; }
     @media print { .bar, .brandmark { display:none; } }
   </style>
 </head>
 <body>
   <div class="bar">
-    Module {{ num }} · press S for the script ·
-    <button type="button" data-download="pptx"><span class="pack-dl-label">Download PowerPoint</span></button> ·
-    <button type="button" data-download="docx"><span class="pack-dl-label">Facilitator guide</span></button> ·
-    <span id="profile-name">ELIXIR-UK default</span> (<a href="{{ base }}branding/">change</a>) ·
-    <a href="{{ mod.url | relative_url }}">back to the module</a>
+    <a href="{{ mod.url | relative_url }}" class="bar-back">&larr; Module {{ num }}</a>
+    <span class="bar-keys" aria-label="Keyboard shortcuts">
+      <span><kbd>&rarr;</kbd> next</span>
+      <span><kbd>S</kbd> script</span>
+      <span><kbd>F</kbd> full screen</span>
+      <span><kbd>Esc</kbd> all slides</span>
+      <span><kbd>B</kbd> pause</span>
+      <span><kbd>1</kbd>–<kbd>9</kbd> count hands</span>
+      <span><kbd>?</kbd> all shortcuts</span>
+    </span>
   </div>
   <div class="brandmark"><span id="brand-org">ELIXIR-UK RDM Club</span></div>
 
@@ -251,7 +266,6 @@
       }
       if (b.logo) document.querySelectorAll('.t-logo').forEach(function (img) { img.src = b.logo; img.alt = p.name || ''; });
       if (p.name) {
-        document.getElementById('profile-name').textContent = 'branded for ' + p.name;
         document.getElementById('brand-org').textContent = p.name;
       }
     })();
@@ -260,6 +274,17 @@
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
   <script>
     window.Reveal.initialize({ hash: true, center: false, width: 1280, height: 720, margin: 0, slideNumber: 'c/t', transition: 'fade', plugins: [ window.RevealNotes ] });
+    // Hide the top bar once you're past the title slide; bring it back on demand.
+    (function () {
+      var body = document.body, bar = document.querySelector('.bar');
+      function sync() { body.classList.toggle('is-presenting', Reveal.getIndices().h > 0 && !Reveal.isOverview()); }
+      ['ready', 'slidechanged', 'overviewshown', 'overviewhidden'].forEach(function (ev) { Reveal.on(ev, sync); });
+      // Peek: show while the pointer is near the top edge, hide again once it moves away
+      document.addEventListener('mousemove', function (e) {
+        var limit = body.classList.contains('bar-peek') ? bar.offsetHeight + 12 : 14;
+        body.classList.toggle('bar-peek', e.clientY <= limit);
+      });
+    })();
   </script>
   <script>
     // Hands-up poll. Click an option (or press its number) to count a hand;

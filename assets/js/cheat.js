@@ -15,7 +15,7 @@
   function activate() {
     var html = document.documentElement;
     html.classList.add('eightbit');
-    var scene = document.querySelector('.header-scene');
+    var scene = document.querySelector('body > header, header');
     var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (scene && !calm && !scene.querySelector('.cheat-runner')) {
       var r = document.createElement('span');

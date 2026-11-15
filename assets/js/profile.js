@@ -39,24 +39,20 @@
 
   var BASE = window.__BASE__ || '/';
 
-  // ── "Viewing as" indicator bar ──
+  // ── Band under the header: "Showing <institution>" or the set-up prompt ──
   function renderIndicator() {
     var el = document.getElementById('profile-indicator');
     if (!el) return;
     var p = window.FairProfile.get();
     if (p && p.name) {
-      el.dataset.active = 'true';
       el.innerHTML =
-        '<span>Showing <strong>' + esc(p.name) + '</strong> contacts and branding.</span> ' +
+        'Showing <strong>' + esc(p.name) + '</strong> contacts and branding. ' +
         '<a href="' + BASE + 'branding/">Edit</a>' +
         (window.FairProfile.source() === 'browser' ? ' &middot; <button type="button" id="profile-clear">Remove</button>' : '');
       var c = document.getElementById('profile-clear');
       if (c) c.addEventListener('click', function () { window.FairProfile.clear(); });
     } else {
-      el.dataset.active = 'false';
-      el.innerHTML =
-        'Running this at your institution? ' +
-        '<a href="' + BASE + 'branding/">Add your contacts and branding &rarr;</a>';
+      el.innerHTML = 'Running this at your institution? <a href="' + BASE + 'branding/">Add your contacts and branding &rarr;</a>';
     }
     el.hidden = false;
   }

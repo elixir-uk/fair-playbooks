@@ -24,12 +24,11 @@ layout: default
     {% if page.benefit %}<p class="mod-hero-benefit"><span>What's in it for participants</span>{{ page.benefit }}</p>{% endif %}
     {% if page.hook %}<p class="mod-hero-benefit"><span>Why they'll care</span>{{ page.hook }}</p>{% endif %}
 
-    {%- comment -%} Game-style counter, echoing the "RESOURCES · REUSED" HUD on the poster {%- endcomment -%}
+    {%- comment -%} Game-style counter: steps, time and the short version {%- endcomment -%}
     <p class="mod-hud" aria-label="At a glance">
       {%- if page.session %}<span>Steps <b>{{ page.session.size | prepend: '0' | slice: -2, 2 }}</b></span>{% endif -%}
       <span>Time <b>{{ page.estimatedMinutes.long }}</b> min</span>
       {%- if page.estimatedMinutes.short %}<span>Short <b>{{ page.estimatedMinutes.short }}</b> min</span>{% endif -%}
-      {%- if page.sources %}<span>Resources <b>{{ page.sources.size | prepend: '0' | slice: -2, 2 }}</b></span>{% endif -%}
     </p>
 
   </div>

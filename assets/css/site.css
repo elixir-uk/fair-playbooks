@@ -146,22 +146,21 @@ th { font-family: var(--font-display); font-weight: 600; background: var(--surfa
 main { max-width: 980px; margin: 0 auto; padding: 3rem 1.5rem 4rem; counter-reset: modsec; }
 
 header {
-  position: relative; overflow: hidden;
-  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-deep) 100%);
-  color: #fff; padding: 1.5rem 2rem 1.2rem;
+  position: relative; z-index: 5; overflow-x: clip;   /* clip sideways only, so the pixel edge can hang below */
+  background: var(--ink);
+  color: #fff; padding: 1.2rem 2rem;
 }
-/* Pixel strip along the bottom of the header (assets/js/pixel-icons.js scene):
-   resources → the missing middle → the FAIR flag. 3 screen px per art px. */
-header { padding-bottom: 5.4rem; }
-.header-scene { position: absolute; left: 0; right: 0; bottom: 0; height: 72px; pointer-events: none; display: flex; justify-content: flex-end; }
-/* the ground carries on to the left of the art (art rows 18–24 at 3px each) */
-.header-scene::before {
-  content: ''; position: absolute; left: 0; right: 720px; bottom: 0; height: 18px;
-  background: linear-gradient(to bottom, var(--light) 0 3px, var(--p1) 3px 12px, color-mix(in srgb, var(--ink) 60%, var(--p1)) 12px 15px, var(--p1) 15px);
+/* Bottom edge: the navy breaks up into uneven pixel steps, with a few stray
+   pixels below, before the band. The mask only gives the shape; the colour
+   is --ink, so it follows the institution brand. 6px = one pixel. */
+header::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 36px; pointer-events: none;
+  background: var(--ink);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='288' height='36' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='6' height='12'/%3E%3Crect x='6' y='0' width='6' height='12'/%3E%3Crect x='12' y='0' width='6' height='6'/%3E%3Crect x='18' y='0' width='6' height='6'/%3E%3Crect x='24' y='0' width='6' height='12'/%3E%3Crect x='30' y='0' width='6' height='18'/%3E%3Crect x='36' y='0' width='6' height='18'/%3E%3Crect x='42' y='0' width='6' height='12'/%3E%3Crect x='48' y='0' width='6' height='6'/%3E%3Crect x='54' y='0' width='6' height='6'/%3E%3Crect x='66' y='0' width='6' height='6'/%3E%3Crect x='72' y='0' width='6' height='6'/%3E%3Crect x='78' y='0' width='6' height='12'/%3E%3Crect x='84' y='0' width='6' height='12'/%3E%3Crect x='90' y='0' width='6' height='6'/%3E%3Crect x='96' y='0' width='6' height='12'/%3E%3Crect x='102' y='0' width='6' height='18'/%3E%3Crect x='108' y='0' width='6' height='12'/%3E%3Crect x='114' y='0' width='6' height='12'/%3E%3Crect x='120' y='0' width='6' height='6'/%3E%3Crect x='138' y='0' width='6' height='6'/%3E%3Crect x='144' y='0' width='6' height='12'/%3E%3Crect x='150' y='0' width='6' height='12'/%3E%3Crect x='156' y='0' width='6' height='18'/%3E%3Crect x='162' y='0' width='6' height='18'/%3E%3Crect x='168' y='0' width='6' height='12'/%3E%3Crect x='174' y='0' width='6' height='6'/%3E%3Crect x='180' y='0' width='6' height='6'/%3E%3Crect x='186' y='0' width='6' height='6'/%3E%3Crect x='192' y='0' width='6' height='12'/%3E%3Crect x='198' y='0' width='6' height='6'/%3E%3Crect x='210' y='0' width='6' height='6'/%3E%3Crect x='216' y='0' width='6' height='12'/%3E%3Crect x='222' y='0' width='6' height='12'/%3E%3Crect x='228' y='0' width='6' height='6'/%3E%3Crect x='234' y='0' width='6' height='6'/%3E%3Crect x='240' y='0' width='6' height='12'/%3E%3Crect x='246' y='0' width='6' height='18'/%3E%3Crect x='252' y='0' width='6' height='12'/%3E%3Crect x='258' y='0' width='6' height='6'/%3E%3Crect x='264' y='0' width='6' height='6'/%3E%3Crect x='270' y='0' width='6' height='12'/%3E%3Crect x='276' y='0' width='6' height='12'/%3E%3Crect x='282' y='0' width='6' height='12'/%3E%3Crect x='24' y='30' width='6' height='6'/%3E%3Crect x='66' y='18' width='6' height='6'/%3E%3Crect x='114' y='24' width='6' height='6'/%3E%3Crect x='162' y='30' width='6' height='6'/%3E%3Crect x='198' y='12' width='6' height='6'/%3E%3Crect x='246' y='30' width='6' height='6'/%3E%3Crect x='276' y='24' width='6' height='6'/%3E%3C/svg%3E") 0 0 / 288px 36px repeat-x;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='288' height='36' shape-rendering='crispEdges'%3E%3Crect x='0' y='0' width='6' height='12'/%3E%3Crect x='6' y='0' width='6' height='12'/%3E%3Crect x='12' y='0' width='6' height='6'/%3E%3Crect x='18' y='0' width='6' height='6'/%3E%3Crect x='24' y='0' width='6' height='12'/%3E%3Crect x='30' y='0' width='6' height='18'/%3E%3Crect x='36' y='0' width='6' height='18'/%3E%3Crect x='42' y='0' width='6' height='12'/%3E%3Crect x='48' y='0' width='6' height='6'/%3E%3Crect x='54' y='0' width='6' height='6'/%3E%3Crect x='66' y='0' width='6' height='6'/%3E%3Crect x='72' y='0' width='6' height='6'/%3E%3Crect x='78' y='0' width='6' height='12'/%3E%3Crect x='84' y='0' width='6' height='12'/%3E%3Crect x='90' y='0' width='6' height='6'/%3E%3Crect x='96' y='0' width='6' height='12'/%3E%3Crect x='102' y='0' width='6' height='18'/%3E%3Crect x='108' y='0' width='6' height='12'/%3E%3Crect x='114' y='0' width='6' height='12'/%3E%3Crect x='120' y='0' width='6' height='6'/%3E%3Crect x='138' y='0' width='6' height='6'/%3E%3Crect x='144' y='0' width='6' height='12'/%3E%3Crect x='150' y='0' width='6' height='12'/%3E%3Crect x='156' y='0' width='6' height='18'/%3E%3Crect x='162' y='0' width='6' height='18'/%3E%3Crect x='168' y='0' width='6' height='12'/%3E%3Crect x='174' y='0' width='6' height='6'/%3E%3Crect x='180' y='0' width='6' height='6'/%3E%3Crect x='186' y='0' width='6' height='6'/%3E%3Crect x='192' y='0' width='6' height='12'/%3E%3Crect x='198' y='0' width='6' height='6'/%3E%3Crect x='210' y='0' width='6' height='6'/%3E%3Crect x='216' y='0' width='6' height='12'/%3E%3Crect x='222' y='0' width='6' height='12'/%3E%3Crect x='228' y='0' width='6' height='6'/%3E%3Crect x='234' y='0' width='6' height='6'/%3E%3Crect x='240' y='0' width='6' height='12'/%3E%3Crect x='246' y='0' width='6' height='18'/%3E%3Crect x='252' y='0' width='6' height='12'/%3E%3Crect x='258' y='0' width='6' height='6'/%3E%3Crect x='264' y='0' width='6' height='6'/%3E%3Crect x='270' y='0' width='6' height='12'/%3E%3Crect x='276' y='0' width='6' height='12'/%3E%3Crect x='282' y='0' width='6' height='12'/%3E%3Crect x='24' y='30' width='6' height='6'/%3E%3Crect x='66' y='18' width='6' height='6'/%3E%3Crect x='114' y='24' width='6' height='6'/%3E%3Crect x='162' y='30' width='6' height='6'/%3E%3Crect x='198' y='12' width='6' height='6'/%3E%3Crect x='246' y='30' width='6' height='6'/%3E%3Crect x='276' y='24' width='6' height='6'/%3E%3C/svg%3E") 0 0 / 288px 36px repeat-x;
 }
-.header-scene svg { display: block; flex: none; width: 720px; height: 72px; }
 /* On navy, icon outlines (ink) switch to light so the flag pole and outlines show */
-.header-scene svg, .world .pixel-icon, .mod-hero .pixel-icon:not(.mod-hero-number .pixel-icon) { --ink: var(--light); }
+.world .pixel-icon, .mod-hero .pixel-icon:not(.mod-hero-number .pixel-icon) { --ink: var(--light); }
 .header-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; }
 /* Logo + title = home */
 .header-home { display: flex; align-items: center; gap: 0.9rem; color: #fff; text-decoration: none; }
@@ -188,16 +187,34 @@ header nav a.nav-start {
 }
 header nav a.nav-start::before { display: none; }
 header nav a.nav-start:hover, header nav a.nav-start[aria-current="page"] { color: var(--on-accent); transform: var(--lift); }
+/* Phone menu: a pixel "Menu" button folds the links away (header.html script) */
+.nav-toggle { display: none; }
+@media (max-width: 760px) {
+  .has-nav-toggle .nav-toggle {
+    display: inline-flex; align-items: center; gap: 0.7rem; margin-left: auto;
+    background: transparent; color: #fff; border: 2px solid var(--light-on-dark); box-shadow: 3px 3px 0 var(--ink-deep);
+    padding: 0.6rem 0.8rem; font-family: var(--font-pixel); font-size: var(--fs-pixel); text-transform: uppercase; cursor: pointer;
+  }
+  .has-nav-toggle .nav-toggle:hover { color: var(--accent-on-dark); border-color: var(--accent-on-dark); }
+  /* three pixel bars, 3px each */
+  .nav-toggle-bars { width: 18px; height: 3px; background: currentColor; box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor; }
+  .nav-open .nav-toggle-bars { box-shadow: none; }   /* open: one bar = "close" */
+  header { padding: 1rem; }
+  .has-nav-toggle .header-inner { flex-wrap: wrap; gap: 0 0.8rem; }
+  .has-nav-toggle .header-home { gap: 0.6rem; }
+  .has-nav-toggle .header-logo { height: 38px; }
+  .has-nav-toggle .header-title { font-size: 0.7rem; }
+  .has-nav-toggle nav { display: none; }
+  .has-nav-toggle.nav-open nav { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: 100%; padding-top: 0.6rem; }
+  .has-nav-toggle.nav-open nav a { padding: 0.9rem 0; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: var(--fs-pixel); }
+  .has-nav-toggle.nav-open nav a.nav-start { justify-content: center; margin-top: 0.9rem; padding: 0.9rem 1rem; border-top: 2px solid var(--ink-deep); }
+}
 
-/* Banner under the header: canonical kit, or "viewing as <institution>" */
-.source-banner { background: var(--light); color: var(--ink-on-light); padding: 0.7rem 2rem; font-size: var(--fs-ui); font-weight: 500; text-align: center; }
-.source-banner code { background: var(--line); }
-#profile-indicator a { color: inherit; font-weight: 600; }
-#profile-indicator[data-active="true"] { background: var(--ink); color: #fff; }
-#profile-indicator[data-active="true"] a { color: var(--light-on-dark); }
-#profile-indicator .indicator-sub { font-family: var(--font-mono); font-size: var(--fs-small); margin-left: 0.4rem; }
-#profile-indicator #profile-clear { background: transparent; border: 1px solid rgba(255, 255, 255, 0.4); color: #fff; font-family: var(--font-mono); font-size: var(--fs-small); padding: 0.15rem 0.6rem; border-radius: var(--r-pill); cursor: pointer; }
-#profile-indicator #profile-clear:hover { border-color: var(--light-on-dark); color: var(--light-on-dark); }
+/* Band under the header: the set-up prompt, or the institution in use.
+   Its top padding leaves room for the header's pixel fade to fall onto it. */
+.source-banner { background: var(--light); color: var(--ink-on-light); padding: calc(36px + 0.4rem) 2rem 0.7rem; font-size: var(--fs-ui); font-weight: 500; text-align: center; }
+.source-banner a { color: inherit; font-weight: 600; }
+#profile-clear { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: inherit; text-decoration: underline; cursor: pointer; }
 
 /* Pile of data above the footer (pixel-icons.js pile): columns rise into view once */
 .footer-pile { margin-top: 4rem; height: 72px; overflow: hidden; display: flex; justify-content: center; border-bottom: 3px solid var(--ink); }
@@ -733,7 +750,7 @@ html.eightbit body { font-size: 11px; line-height: 2.1; }
 html.eightbit h1, html.eightbit .hero-title, html.eightbit .mod-hero-title { font-size: 1.6rem !important; line-height: 1.5 !important; }
 html.eightbit img, html.eightbit svg { image-rendering: pixelated; }
 html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(2, 20, 34, 0.07) 0 2px, transparent 2px 4px); }
-.cheat-runner { position: absolute; bottom: 15px; left: -48px; width: 48px; height: 48px; z-index: 2; animation: cheat-run 7s linear forwards, cheat-hop 0.32s steps(2) infinite; }
+.cheat-runner { position: absolute; bottom: 0; left: -48px; width: 48px; height: 48px; z-index: 2; animation: cheat-run 7s linear forwards, cheat-hop 0.32s steps(2) infinite; }
 @keyframes cheat-run { to { left: 100%; } }
 @keyframes cheat-hop { 50% { transform: translateY(-6px); } }
 @media (prefers-reduced-motion: reduce) {
@@ -821,7 +838,7 @@ html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250
 
 /* ═══ 6. Print ══════════════════════════════════════════════════════════ */
 @media print {
-  header, footer, nav, .source-banner, #profile-indicator, .no-print { display: none !important; }
+  header, footer, nav, .source-banner, .no-print { display: none !important; }
   body { background: #fff !important; }
   main { max-width: none !important; padding: 0 !important; }
   /* Module page prints just the facilitator session */

@@ -6,7 +6,7 @@ permalink: /modules/
 {%- comment -%} Ports src/pages/modules/index.astro {%- endcomment -%}
 {%- assign modules = site.modules | sort: 'number' -%}
 <h1>All modules</h1>
-<p class="muted">Five modules covering the FAIR-in-action playbook. Each has a short and long version.</p>
+<p class="muted">Five modules covering the FAIR-in-action playbook. Most have a short and a full version.</p>
 {% for mod in modules %}
   <a href="{{ mod.url | relative_url }}" class="card">
     <span class="badge">Module {{ mod.number }}</span>

@@ -111,25 +111,28 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('brand-demo').addEventListener('click', function () {
+    // Demo: Earlham Institute. Colours are taken from earlham.ac.uk (logo red
+    // and wordmark charcoal). Team names are generic placeholders: replace
+    // them with Earlham's real contacts before using this as a showcase.
     var demo = {
-      name: 'University of Wessex',
-      shortName: 'Wessex',
-      contactEmail: 'researchdata@wessex.ac.uk',
-      contactTeam: 'Wessex Research Data Service',
-      policiesUrl: 'https://wessex.ac.uk/research-data-policy',
+      name: 'Earlham Institute',
+      shortName: 'Earlham',
+      contactEmail: '',
+      contactTeam: 'Earlham research data team',
+      policiesUrl: 'https://www.earlham.ac.uk',
       help: {
-        repository: { contact: 'Wessex Data Repository (DSpace) — library data team', url: 'https://data.wessex.ac.uk' },
-        dmp: { contact: 'Research Office — DMP clinic, Tuesdays 2pm', url: 'https://wessex.ac.uk/dmp' },
-        ethics: { contact: 'Faculty Research Ethics Committee', url: 'https://wessex.ac.uk/ethics' },
-        licensing: { contact: 'Library scholarly communications team', url: '' },
-        it: { contact: 'Research Computing — large-data transfer & conversion', url: 'https://wessex.ac.uk/research-computing' },
-        training: { contact: 'Wessex Carpentries chapter — monthly RDM workshops', url: '' }
+        repository: { contact: 'Earlham research data team', url: '' },
+        dmp: { contact: 'Research office: DMP advice', url: '' },
+        ethics: { contact: 'Ethics and governance', url: '' },
+        licensing: { contact: 'Library and scholarly communications', url: '' },
+        it: { contact: 'Research computing', url: '' },
+        training: { contact: 'Earlham training team', url: 'https://www.earlham.ac.uk' }
       },
-      brand: { primary: '#1f6feb', accent: '#e9a23b', logo: '' }
+      brand: { primary: '#4e515a', accent: '#c61f16', logo: '' }
     };
     fillForm(demo);
     window.FairProfile.set(demo);
-    flash('✓ Loaded a demo institution. Browse to any module — the local-help boxes now say "Wessex". (Clear when done.)');
+    flash('✓ Loaded the Earlham Institute demo. Open any module: the local-help boxes and colours now show Earlham. Clear it when you are done.');
   });
 
   document.getElementById('brand-export').addEventListener('click', function () {

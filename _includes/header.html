@@ -1,19 +1,22 @@
+{%- comment -%}
+  Site header, styled as a game title screen: the logo and title are the way
+  home, the menu marks the current page with a pixel cursor, and "Build a
+  session" is the START button. The pixel strip at the bottom is drawn by
+  assets/js/pixel-icons.js (scene).
+{%- endcomment -%}
+{%- assign u = page.url -%}
 <header>
   <div class="header-inner">
-    <div class="header-brand">
+    <a href="{{ '/' | relative_url }}" class="header-home"{% if u == '/' %} aria-current="page"{% endif %}>
       <img src="{{ '/assets/branding/elixir-uk-logo-negative.svg' | relative_url }}" alt="ELIXIR-UK" class="header-logo" id="header-logo-img" />
-      <a href="{{ '/' | relative_url }}" class="header-title">FAIR-in-action Playbook</a>
-    </div>
-    <div class="header-org">
-      Canonical source · {{ site.brand.org_name }} · commissioned by {{ site.brand.commissioner }}
-    </div>
-    <nav>
-      <a href="{{ '/' | relative_url }}">Home</a>
-      <a href="{{ '/recommend/' | relative_url }}">Build a session</a>
-      <a href="{{ '/modules/' | relative_url }}">All modules</a>
-      <a href="{{ '/activities/' | relative_url }}">Activities &amp; games</a>
-      <a href="{{ '/journeys/' | relative_url }}">Suggested journeys</a>
-      <a href="{{ '/flashcards/' | relative_url }}">Flashcards</a>
+      <span class="header-title">FAIR-in-action<br />Playbook</span>
+    </a>
+    <nav aria-label="Main">
+      <a href="{{ '/modules/' | relative_url }}"{% if u contains '/modules/' %} aria-current="page"{% endif %}>Modules</a>
+      <a href="{{ '/journeys/' | relative_url }}"{% if u contains '/journeys/' %} aria-current="page"{% endif %}>Journeys</a>
+      <a href="{{ '/activities/' | relative_url }}"{% if u contains '/activities/' %} aria-current="page"{% endif %}>Games</a>
+      <a href="{{ '/recommend/' | relative_url }}" class="nav-start"{% if u contains '/recommend/' %} aria-current="page"{% endif %}>Build a session</a>
     </nav>
   </div>
+  <div class="header-scene" data-pixel-scene aria-hidden="true"></div>
 </header>

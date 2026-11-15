@@ -14,7 +14,7 @@ dataType: [n-a]
 intent: [motivate, hands-on-exercise]
 ---
 
-> **Playbook 2 · v1 — drafted from Contentathon #3 (1 July 2026).** Grounded in real objections from students, PhDs and the RDM professionals who support them. To be tested and refined at the October rollouts.
+> **v1 — drafted from Contentathon #3 (1 July 2026).** Grounded in real objections from students, PhDs and the RDM professionals who support them. To be tested and refined at the October rollouts.
 
 **Who you're advocating to.** Someone doing the actual work, generating the data, never formally taught FAIR — and it isn't graded. Their honest inner voice: *"What? Another thing I need to do? My supervisor knows nothing about this, so where do I start?"*
 

@@ -4,6 +4,7 @@ title: Build a recommended journey
 description: Answer five questions and the playbook suggests a tailored path
 permalink: /recommend/
 extra_js:
+  - /assets/js/pixel-people.js
   - /assets/js/recommend.js
 ---
 {%- comment -%}
@@ -28,7 +29,9 @@ extra_js:
 "audience": {% if m.audience %}{{ m.audience | jsonify }}{% else %}[]{% endif %},
 "scenario": {% if m.scenario %}{{ m.scenario | jsonify }}{% else %}[]{% endif %},
 "dataType": {% if m.dataType %}{{ m.dataType | jsonify }}{% else %}[]{% endif %},
-"intent": {% if m.intent %}{{ m.intent | jsonify }}{% else %}[]{% endif %}
+"intent": {% if m.intent %}{{ m.intent | jsonify }}{% else %}[]{% endif %},
+"steps": {% if m.session %}{{ m.session.size }}{% else %}0{% endif %},
+"sources": [{% for s in m.sources %}{{ s.name | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}]
 }{% unless forloop.last %},{% endunless %}
 {%- endfor -%}
 ]
@@ -38,7 +41,7 @@ extra_js:
 <h1 class="rec-title">Build <em>your</em> session</h1>
 <p class="rec-sub">
   Tell us about the people you're facilitating and what you need to achieve.
-  The kit surfaces activities from both playbooks — and tells you <strong>why</strong> each one fits,
+  The kit suggests modules and games that fit, and tells you <strong>why</strong> each one fits,
   so you can assemble a session you're confident to run.
 </p>
 
@@ -55,12 +58,12 @@ extra_js:
     <h2>1. Who are you supporting?</h2>
     <p class="muted">Pick the closest match. You'll get to pick more than one in some questions.</p>
     <div class="choices">
-      <button class="choice" data-value="phd-student">A PhD student / new researcher</button>
-      <button class="choice" data-value="postdoc">A postdoc mid-career</button>
-      <button class="choice" data-value="pi">A PI / group leader</button>
-      <button class="choice" data-value="decision-maker">A decision-maker (head of department, dean)</button>
-      <button class="choice" data-value="rdm-peer">Another RDM professional</button>
-      <button class="choice" data-value="researcher">A generic researcher (any career stage)</button>
+      <button class="choice" data-value="phd-student"><span class="choice-person" data-person="phd-student"></span>A PhD student / new researcher</button>
+      <button class="choice" data-value="postdoc"><span class="choice-person" data-person="postdoc"></span>A postdoc mid-career</button>
+      <button class="choice" data-value="pi"><span class="choice-person" data-person="pi"></span>A PI / group leader</button>
+      <button class="choice" data-value="decision-maker"><span class="choice-person" data-person="decision-maker"></span>A decision-maker (head of department, dean)</button>
+      <button class="choice" data-value="rdm-peer"><span class="choice-person" data-person="rdm-peer"></span>Another RDM professional</button>
+      <button class="choice" data-value="researcher"><span class="choice-person" data-person="researcher"></span>A generic researcher (any career stage)</button>
     </div>
   </section>
 
@@ -117,13 +120,13 @@ extra_js:
   </section>
 
   <section class="results" hidden>
-    <div class="results-eyebrow">your tailored path →</div>
-    <h2 class="results-title">Start here</h2>
+    <div class="results-eyebrow">Quest unlocked</div>
+    <h2 class="results-title">Your quest</h2>
     <div id="primary-result"></div>
 
     <div class="results-secondary-header" id="secondary-header" hidden>
-      <h3>Then consider</h3>
-      <p class="muted">Supporting modules that fit your scenario, in order of relevance.</p>
+      <h3>Side quests</h3>
+      <p class="muted">More modules that fit, best match first.</p>
     </div>
     <div id="secondary-results"></div>
 

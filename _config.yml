@@ -14,7 +14,7 @@ lang: en
 # OR set `baseurl: "/fair-playbooks"` here before deploying.
 # Every internal link uses {{ '...' | relative_url }} so it adapts to baseurl.
 baseurl: ""
-url: "https://sitjart.github.io"
+url: "https://elixir-uk.github.io"
 
 # ── ELIXIR Toolkit Theme (ETT) — lineage, not a hard dependency ──────────
 # ETT is the community-maintained Jekyll theme behind RDMkit, the FAIR Cookbook
@@ -38,8 +38,6 @@ collections:
   activities:
     output: true
     permalink: /activities/:name/
-  flashcards:
-    output: false   # rendered as a list on /flashcards/, no standalone pages
 
 # Default layout per collection
 defaults:

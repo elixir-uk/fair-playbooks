@@ -114,6 +114,21 @@
     return parts.join(' · ');
   }
 
+  // Game-style stats and the resources you take into the room ("loot")
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const two = (n) => ('0' + n).slice(-2);
+  function questHud(mod, minutes) {
+    return '<p class="quest-hud">' +
+      (mod.steps ? '<span>Steps <b>' + two(mod.steps) + '</b></span>' : '') +
+      '<span>Time <b>' + minutes + '</b> min</span>' +
+      (mod.sources && mod.sources.length ? '<span>Loot <b>' + two(mod.sources.length) + '</b></span>' : '') + '</p>';
+  }
+  function loot(mod) {
+    if (!mod.sources || !mod.sources.length) return '';
+    return '<ul class="quest-loot" aria-label="Resources this module is built from">' +
+      mod.sources.map((n) => '<li><span class="pixel-icon" data-pixel-icon="floppy"></span>' + esc(n) + '</li>').join('') + '</ul>';
+  }
+
   function renderPrimary(item, preferShort) {
     const mod = item.mod, score = item.score, matched = item.matched;
     const band = matchBand(score);
@@ -121,17 +136,16 @@
     const useShort = preferShort && hasShort;
     const minutes = useShort ? mod.short : mod.long;
     const versionLabel = useShort ? 'Quick recap' : (preferShort && !hasShort ? 'Full module (no recap available)' : 'Full module');
-    const pbBadges = mod.playbook.map((p) => '<span class="pb-badge" data-pb="' + p + '">' + (p === 'fairification' ? 'P1 · FAIRification' : 'P2 · Advocate') + '</span>').join(' ');
     return '' +
       '<div class="primary-card">' +
-      '<div class="primary-tag">★ Your top match · ' + band.label + '</div>' +
-      '<div class="primary-meta">' + pbBadges + '</div>' +
+      '<div class="primary-tag"><span class="pixel-icon" data-pixel-icon="star"></span>Main quest · ' + band.label + '</div>' +
       '<h3 class="primary-title">' + mod.title + '</h3>' +
       '<p class="primary-summary">' + mod.summary + '</p>' +
       '<div class="primary-reason">' + reasoningSentence(matched) + '</div>' +
+      questHud(mod, minutes) + loot(mod) +
       '<div class="primary-foot">' +
       '<span class="primary-time">' + versionLabel + ' · ' + minutes + ' min</span>' +
-      '<a href="' + mod.url + '#' + (useShort ? 'short' : 'long') + '" class="btn btn-primary">Open this module →</a>' +
+      '<a href="' + mod.url + '#' + (useShort ? 'short' : 'long') + '" class="btn btn-primary">Start this quest →</a>' +
       '</div></div>';
   }
 
@@ -142,12 +156,11 @@
     const useShort = preferShort && hasShort;
     const minutes = useShort ? mod.short : mod.long;
     const versionLabel = useShort ? 'recap' : 'full';
-    const pb = mod.playbook[0] === 'fairification' ? 'P1' : 'P2';
     return '' +
       '<a class="secondary-card" href="' + mod.url + '#' + (useShort ? 'short' : 'long') + '">' +
       '<div class="secondary-band" data-tone="' + band.tone + '">' + band.label + '</div>' +
       '<div class="secondary-body">' +
-      '<div class="secondary-meta"><span class="pb-badge" data-pb="' + mod.playbook[0] + '">' + pb + '</span> <span class="secondary-time">' + versionLabel + ' ' + minutes + 'm</span></div>' +
+      '<div class="secondary-meta"><span class="secondary-time">' + versionLabel + ' ' + minutes + 'm</span></div>' +
       '<strong class="secondary-title">' + mod.title + '</strong>' +
       '<div class="secondary-reason">' + reasoningSentence(matched) + '</div>' +
       '</div>' +
@@ -182,7 +195,7 @@
       return;
     }
 
-    document.querySelector('.results-title').textContent = 'Start here';
+    document.querySelector('.results-title').textContent = 'Your quest';
     primary.innerHTML = renderPrimary(matched[0], preferShort);
 
     const supporting = matched.slice(1, 5);
@@ -193,10 +206,9 @@
       secondaryHeader.hidden = true;
     }
 
-    const p1 = matched.filter((s) => s.mod.playbook.includes('fairification')).length;
-    const p2 = matched.filter((s) => s.mod.playbook.includes('communicate-advocate')).length;
-    summary.innerHTML = '<span class="results-summary-mono">// ' + matched.length + ' match' + (matched.length === 1 ? '' : 'es') + ' · P1 FAIRification: ' + p1 + ' · P2 Advocate: ' + p2 + '</span>';
+    summary.innerHTML = '<span class="results-summary-mono">// ' + matched.length + ' match' + (matched.length === 1 ? '' : 'es') + '</span>';
     document.querySelector('.results').hidden = false;
+    if (window.PixelIcons) window.PixelIcons.hydrate(document.querySelector('.results'));
   }
 
   document.querySelector('.restart').addEventListener('click', () => {

@@ -14,7 +14,7 @@ dataType: [n-a]
 intent: [motivate, signpost]
 ---
 
-> **Playbook #2 — placeholder module.** This module will be drafted in Contentathon #3.
+> **Placeholder module.** This module will be drafted in Contentathon #3.
 > The frontmatter and summary are real (used by the recommender) but the body is a stub.
 
 The cultural barrier from the proposal — *"RDM is often perceived as an administrative requirement"* — lands hardest when RDM professionals are talking to leadership. This module is about the language and framings that move that conversation.

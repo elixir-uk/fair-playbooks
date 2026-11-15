@@ -137,7 +137,6 @@ src/
   content/
     modules/        # the activities — Markdown + front-matter (the `session:` source)
     journeys/       # pre-made paths through the activities
-    flashcards/
   content.config.ts # content schema (incl. the session: schema)
   pages/
     index.astro            # home — choose · adapt · deploy

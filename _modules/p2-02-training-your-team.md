@@ -14,7 +14,7 @@ dataType: [n-a]
 intent: [motivate, how-to]
 ---
 
-> **Playbook #2 — placeholder module.** This module will be drafted in Contentathon #3.
+> **Placeholder module.** This module will be drafted in Contentathon #3.
 
 **What this module will cover when drafted:**
 

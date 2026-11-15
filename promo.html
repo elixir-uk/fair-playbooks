@@ -1,0 +1,81 @@
+---
+layout: default
+title: Promo poster
+description: Make a game-style poster to advertise your session, as a slide, a square for social media or an A4 flyer.
+permalink: /promo/
+extra_js:
+  - /assets/js/pixel-people.js
+  - /assets/js/promo.js
+---
+{%- comment -%}
+  Promo kit: a game-poster generator. The poster is one SVG (fonts and logos
+  embedded), drawn by assets/js/promo.js, so preview, PNG and print match.
+  Data below lists what can be advertised.
+{%- endcomment -%}
+<script id="promo-data" type="application/json">
+{
+"modules": [
+{%- assign mods = site.modules | sort: 'number' -%}
+{%- for m in mods -%}
+{ "id": {{ m.slug | jsonify }}, "title": {{ m.slide_title | default: m.title | jsonify }}, "tagline": {{ m.benefit | default: m.slide_subtitle | default: m.summary | jsonify }}, "kind": "Module {{ m.number | prepend: '0' | slice: -2, 2 }}", "minutes": {{ m.estimatedMinutes.long | default: 0 }}, "audience": {% if m.audience %}{{ m.audience | jsonify }}{% else %}[]{% endif %} }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+],
+"journeys": [
+{%- for j in site.journeys -%}
+{ "id": {{ j.slug | jsonify }}, "title": {{ j.title | jsonify }}, "tagline": {{ j.scenario | jsonify }}, "kind": "World {{ forloop.index }}", "minutes": 0, "audience": ["researcher", "postdoc", "phd-student"] }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+],
+"games": [
+{%- for a in site.activities -%}
+{ "id": {{ a.slug | jsonify }}, "title": {{ a.title | jsonify }}, "tagline": {{ a.summary | jsonify }}, "kind": "Game", "minutes": 0, "audience": ["rdm-peer", "researcher", "phd-student"] }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
+}
+</script>
+
+<p class="eyebrow">Promo kit</p>
+<h1>Make a poster for your session</h1>
+<p class="brand-sub">Pick what you're running, add when and where, and download a game-style poster: a slide for screens, a square for social media, or an A4 flyer to print. It uses your institution's colours and logo if you've <a href="{{ '/branding/' | relative_url }}">set them up</a>.</p>
+
+<div class="promo">
+  <form class="brand-form promo-form" id="promo-form">
+    <fieldset>
+      <legend>What you're running</legend>
+      <label>Session <select name="session" id="promo-session"></select></label>
+      <label>Title <input type="text" name="title" maxlength="80" /></label>
+      <label>One line about it <textarea name="tagline" rows="3" maxlength="160"></textarea></label>
+    </fieldset>
+    <fieldset>
+      <legend>When and where</legend>
+      <label>Date <input type="text" name="date" placeholder="Wed 3 December" maxlength="28" /></label>
+      <label>Time <input type="text" name="time" placeholder="10:00–11:00" maxlength="20" /></label>
+      <label>Place <input type="text" name="place" placeholder="Room 2.14 or online" maxlength="36" /></label>
+      <label>Sign-up link <input type="text" name="book" placeholder="go.example.ac.uk/fair" maxlength="40" /></label>
+      <label>QR code for sign-up <span class="brand-hint">Optional. Upload a PNG, JPG or SVG of your QR code; it goes next to the BOOK YOUR PLACE button.</span>
+        <input type="file" name="qr" id="promo-qr" accept="image/png,image/jpeg,image/svg+xml" />
+      </label>
+      <button type="button" class="brand-text-btn" id="promo-qr-clear" hidden>Remove QR code</button>
+    </fieldset>
+    <fieldset>
+      <legend>Who it's for</legend>
+      <p class="brand-hint">Pick up to three characters for the poster.</p>
+      <div class="promo-cast" id="promo-cast"></div>
+    </fieldset>
+  </form>
+
+  <div class="promo-out">
+    <div class="promo-formats" role="radiogroup" aria-label="Format">
+      <label><input type="radio" name="format" value="slide" checked /> Slide 16:9</label>
+      <label><input type="radio" name="format" value="square" /> Square 1:1</label>
+      <label><input type="radio" name="format" value="a4" /> A4 flyer</label>
+    </div>
+    <div class="promo-preview" id="promo-preview" aria-live="polite"></div>
+    <div class="brand-actions">
+      <button type="button" class="btn btn-primary" id="promo-png">Download PNG</button>
+      <button type="button" class="btn" id="promo-svg" title="Editable in Figma, Illustrator, Inkscape or Canva">Download SVG to edit</button>
+      <button type="button" class="btn" id="promo-print"><span class="pixel-icon" data-pixel-icon="printer"></span>Print A4</button>
+      <button type="button" class="brand-text-btn" id="promo-copy">Copy announcement text</button>
+    </div>
+    <p class="muted" id="promo-status"></p>
+  </div>
+</div>

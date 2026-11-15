@@ -14,7 +14,7 @@ dataType: [n-a]
 intent: [motivate, signpost]
 ---
 
-> **Playbook 2 · v1 — drafted from Contentathon #3 (1 July 2026).** Grounded in real objections from RDM leads, librarians and research-office decision-makers. To be tested and refined at the October rollouts.
+> **v1 — drafted from Contentathon #3 (1 July 2026).** Grounded in real objections from RDM leads, librarians and research-office decision-makers. To be tested and refined at the October rollouts.
 
 **Who you're advocating to.** Holds budget, policy or staff time; under funder pressure but wary of who pays for the upkeep. Sees themselves as *"the bridge that frees up researchers' time,"* not the enforcer.
 

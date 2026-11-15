@@ -40,16 +40,15 @@
     if (p && p.name) {
       el.dataset.active = 'true';
       el.innerHTML =
-        '<span>Viewing as <strong>' + esc(p.name) + '</strong> — local details filled from your institution profile.</span> ' +
-        '<a href="' + BASE + 'branding/">edit</a> &middot; <button type="button" id="profile-clear">view canonical</button>';
+        '<span>Showing <strong>' + esc(p.name) + '</strong> contacts and branding.</span> ' +
+        '<a href="' + BASE + 'branding/">Edit</a> &middot; <button type="button" id="profile-clear">Remove</button>';
       var c = document.getElementById('profile-clear');
       if (c) c.addEventListener('click', function () { window.FairProfile.clear(); });
     } else {
       el.dataset.active = 'false';
       el.innerHTML =
-        "You're viewing the <strong>canonical ELIXIR-UK kit</strong>. " +
-        '<a href="' + BASE + 'branding/">Set up your institution &rarr;</a> ' +
-        '<span class="indicator-sub">fills local details everywhere — no fork</span>';
+        'Running this at your institution? ' +
+        '<a href="' + BASE + 'branding/">Add your contacts and branding &rarr;</a>';
     }
     el.hidden = false;
   }
@@ -158,17 +157,24 @@
     var p = window.FairProfile.get();
     var b = (p && p.brand) || {};
     var root = document.documentElement;
-    var vars = ['--text', '--coral', '--p2', '--coral-text', '--on-coral', '--coral-on-dark', '--ink-on-lime', '--lime-on-dark'];
+    // Token names match assets/css/site.css section 1. Lines, tints, shadows
+    // and --p2 are mixed from --ink and --accent in CSS, so they follow along.
+    var tokens = {};
     if (b.primary || b.accent) {
       var c = colours(p);
-      root.style.setProperty('--text', c.dark);
-      root.style.setProperty('--coral', c.accent);
-      root.style.setProperty('--p2', c.accent);
-      root.style.setProperty('--coral-text', c.accentText);
-      root.style.setProperty('--on-coral', c.onAccent);
-      root.style.setProperty('--coral-on-dark', c.accentOnDark);
-      root.style.setProperty('--ink-on-lime', c.inkOnLime);
-      root.style.setProperty('--lime-on-dark', c.limeOnDark);
+      tokens = {
+        '--ink': c.dark,
+        '--accent': c.accent,
+        '--accent-text': c.accentText,
+        '--on-accent': c.onAccent,
+        '--accent-on-dark': c.accentOnDark,
+        '--ink-on-light': c.inkOnLime,
+        '--light-on-dark': c.limeOnDark
+      };
+    }
+    var vars = ['--ink', '--accent', '--accent-text', '--on-accent', '--accent-on-dark', '--ink-on-light', '--light-on-dark'];
+    if (b.primary || b.accent) {
+      Object.keys(tokens).forEach(function (k) { root.style.setProperty(k, tokens[k]); });
     } else {
       vars.forEach(function (v) { root.style.removeProperty(v); });
     }

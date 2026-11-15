@@ -24,26 +24,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Module {{ num }}: {{ mod.title }} · present mode</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@500;600&family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
   <style>
     :root {
-      --ink:#023452; --accent:#f47d20; --on-accent:#023452; --accent-on-dark:#f47d20; --blue:#026a91; --light:#9bcbdd;
-      --text:#0f2233; --muted:#4a6577; --soft:#fdf0e4; --soft-ink:#8a4a0f;
-      --display:'Lato',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+      /* Same token names as assets/css/site.css section 1 (profile overrides
+         --ink, --accent, --on-accent, --accent-on-dark at runtime). */
+      --ink:#023452; --accent:#f47d20; --on-accent:#023452; --accent-on-dark:#f47d20; --link:#026a91; --light:#9bcbdd;
+      --text:#0f2233; --muted:#4a6577;
+      --soft: color-mix(in srgb, var(--accent) 12%, #fff); --soft-ink: color-mix(in srgb, var(--accent) 55%, #000);
+      --display:'Lato',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace; --pixel:'Press Start 2P','JetBrains Mono',monospace;
     }
     .reveal { font-family: var(--display); color: var(--text); font-size: 32px; }
     .reveal .slides { text-align: left; }
     .reveal .slides section { height: 100%; }
     .reveal strong { color: var(--ink); }
-    .reveal em { color: var(--blue); font-style: normal; font-weight: 700; }
+    .reveal em { color: var(--link); font-style: normal; font-weight: 700; }
 
-    /* ELIXIR-UK circles, cropped by the slide edge */
-    .dots { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .dots i { position: absolute; border-radius: 50%; display: block; }
-    .dots .d1 { width: 15em; height: 15em; right: -5em; top: -6em; background: var(--light); opacity: .35; }
-    .dots .d2 { width: 4.5em; height: 4.5em; right: 7.5em; top: 5.2em; background: var(--accent); }
-    .dots .d3 { width: 1.4em; height: 1.4em; right: 5.4em; top: 10.6em; background: var(--blue); }
+    /* Pixel ground along the bottom of every slide (replaces the circles) */
+    .dots { position: absolute; left: 0; right: 0; bottom: 0; height: 0.42em; pointer-events: none;
+      background: linear-gradient(to bottom, var(--light) 0 22%, var(--link) 22% 64%, var(--ink) 64% 80%, var(--link) 80%); }
+    .dots i { display: none; }
+    /* Game HUD, top right of content slides */
+    .s-hud { position: absolute; top: 5em; right: 4.4em; z-index: 2; font-family: var(--pixel); font-size: 0.32em; letter-spacing: 0.04em; color: var(--muted); text-transform: uppercase; }
+    .s-hud b { color: var(--ink); font-weight: 400; }
+    /* Title slide: stars and PRESS START */
+    section.title { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='120' shape-rendering='crispEdges'%3E%3Cg fill='%239bcbdd'%3E%3Crect x='14' y='12' width='3' height='3'/%3E%3Crect x='96' y='30' width='3' height='3' opacity='.5'/%3E%3Crect x='150' y='8' width='3' height='3' opacity='.7'/%3E%3Crect x='60' y='70' width='3' height='3' opacity='.4'/%3E%3Crect x='128' y='92' width='3' height='3'/%3E%3Crect x='30' y='104' width='3' height='3' opacity='.6'/%3E%3C/g%3E%3C/svg%3E"); }
+    .t-start { margin: 1.6em 0 0; font-family: var(--pixel); font-size: 0.42em; letter-spacing: 0.06em; color: var(--accent-on-dark); animation: blink 1.1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .t-start { animation: none; } }
+    /* Level complete slide */
+    .lc-wrap { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 0.5em; }
+    .lc-star { width: 3.2em; height: 3.2em; display: block; }
+    .lc-star svg { width: 100%; height: 100%; display: block; }
+    .lc-title { font-family: var(--pixel); font-size: 1.15em; line-height: 1.5; color: #fff; margin: 0.3em 0 0; }
+    .lc-sub { color: rgba(255,255,255,.85); font-size: 0.75em; max-width: 26em; margin: 0; }
+    .lc-ask { margin: 0.8em 0 0; display: inline-block; background: var(--accent); color: var(--on-accent); font-weight: 900; font-size: 0.8em; padding: 0.5em 1.1em; }
 
     .s-wrap { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0.6em 1.6em 0 1.6em; }
     .s-grid { display: grid; grid-template-columns: 1fr; gap: 1.2em; align-items: center; }
@@ -52,7 +68,7 @@
     .s-head { font-family: var(--display); font-weight: 900; font-size: 2.1em; line-height: 1.04; letter-spacing: -0.025em; color: var(--ink); margin: 0 0 0.45em; max-width: 13em; text-transform: none; }
     .s-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45em; }
     .s-lines li { font-size: 0.95em; line-height: 1.3; padding-left: 1.1em; position: relative; }
-    .s-lines li::before { content: ""; position: absolute; left: 0; top: 0.42em; width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--accent); }
+    .s-lines li::before { content: ""; position: absolute; left: 0; top: 0.42em; width: 0.5em; height: 0.5em; border-radius: 0; background: var(--accent); }
     .s-lines.dense li { font-size: 0.75em; }
     .s-prompt { display: inline-block; margin: 1em 0 0; background: var(--ink); color: #fff; font-weight: 700; font-size: 0.8em; padding: 0.5em 1em; border-radius: 999px; }
     .s-fig { margin: 0; }
@@ -67,16 +83,16 @@
     .poll-opt { width: 100%; display: grid; grid-template-columns: 1.6em 11em 1fr 2.2em; align-items: center; gap: 0.5em; background: none; border: 0; padding: 0.15em 0; font: inherit; font-size: 0.72em; color: var(--text); text-align: left; cursor: pointer; }
     .poll-opts.dense .poll-opt { font-size: 0.55em; }
     .s-grid.two .poll-opt { grid-template-columns: 1.6em 8em 1fr 1.6em; font-size: 0.62em; }
-    .poll-key { width: 1.6em; height: 1.6em; border-radius: 50%; display: grid; place-items: center; background: var(--light); color: var(--ink); font-weight: 900; font-size: 0.8em; }
+    .poll-key { width: 1.6em; height: 1.6em; border-radius: 0; font-family: var(--pixel); font-size: 0.6em; display: grid; place-items: center; background: var(--light); color: var(--ink); font-weight: 900; font-size: 0.8em; }
     .poll-label { font-weight: 700; line-height: 1.15; }
-    .poll-bar { height: 0.9em; background: #eef3f6; border-radius: 999px; overflow: hidden; }
-    .poll-bar i { display: block; height: 100%; width: 0; background: var(--light); border-radius: 999px; transition: width .35s ease; }
-    .poll-opt.lead .poll-bar i { background: var(--accent); }
+    .poll-bar { height: 0.9em; background: #eef3f6; border: 2px solid var(--ink); overflow: hidden; }
+    .poll-bar i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, var(--light) 0 0.55em, transparent 0.55em 0.7em); border-radius: 0; transition: width .35s ease; }
+    .poll-opt.lead .poll-bar i { background: repeating-linear-gradient(90deg, var(--accent) 0 0.55em, transparent 0.55em 0.7em); }
     .poll-opt.lead .poll-key { background: var(--accent); color: var(--on-accent); }
-    .poll-count { font-family: var(--mono); font-weight: 600; text-align: right; }
+    .poll-count { font-family: var(--pixel); font-size: 0.6em; font-weight: 600; text-align: right; }
     .poll-opt:hover .poll-bar { background: #e2ecf1; }
     .poll-foot { margin: 0.6em 0 0; font-size: 0.4em; color: var(--muted); }
-    .poll-reset { background: none; border: 0; font: inherit; color: var(--blue); text-decoration: underline; cursor: pointer; padding: 0; margin-left: 0.6em; }
+    .poll-reset { background: none; border: 0; font: inherit; color: var(--link); text-decoration: underline; cursor: pointer; padding: 0; margin-left: 0.6em; }
     @media (prefers-reduced-motion: reduce) { .poll-bar i { transition: none; } }
 
     .repo-slot { background: var(--soft); color: var(--soft-ink); border: 2px solid var(--accent); padding: 0 0.35em; border-radius: 8px; font-weight: 700; }
@@ -86,17 +102,17 @@
     .t-logo { height: 2em; max-width: 8em; object-fit: contain; object-position: left; margin-bottom: 1.2em; display: block; }
     .t-head { color: #fff; font-weight: 900; font-size: 2.3em; line-height: 1.04; letter-spacing: -0.025em; margin: 0 0 0.4em; max-width: 12em; text-transform: none; }
     .t-sub { color: rgba(255,255,255,.82); font-size: 0.8em; max-width: 24em; line-height: 1.45; margin: 0; }
-    .t-benefit { margin: 1.1em 0 0; max-width: 24em; color: #fff; font-size: 0.68em; line-height: 1.4; border-left: 4px solid var(--accent); padding-left: 0.8em; }
-    .t-benefit span { display: block; font-family: var(--mono); font-size: 0.6em; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-on-dark); margin-bottom: 0.2em; }
-    section.title .dots .d1 { background: var(--blue); opacity: .6; }
+    .t-benefit { margin: 1.1em 0 0; max-width: 24em; color: #fff; font-size: 0.68em; line-height: 1.5; font-weight: 700; }
+    .t-benefit span { display: table; margin-bottom: 0.5em; padding: 0.2em 0.8em; border-radius: 999px; background: #4dd9ef; color: var(--ink); box-shadow: 0.15em 0.15em 0 #011c2d; font-family: var(--mono); font-size: 0.6em; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    section.title .dots .d1 { background: var(--link); opacity: .6; }
 
     .credits li { font-size: 0.6em; }
-    .credits a { color: var(--blue); }
+    .credits a { color: var(--link); }
 
     .brandmark { position:fixed; left:12px; bottom:8px; z-index:30; font:600 11px/1 var(--mono); color:var(--muted); background:#fff; padding:4px 8px; border-radius:6px; letter-spacing:0.04em; }
     .reveal .progress { color: var(--accent); height:5px; }
     .reveal .controls { color: var(--accent); }
-    .reveal .slide-number { background: var(--ink); font-family: var(--mono); }
+    .reveal .slide-number { background: var(--ink); font-family: var(--pixel); font-size: 10px; padding: 6px 8px; }
 
     .bar { position:fixed; top:0; left:0; right:0; z-index:40; background:var(--ink); color:#fff; font:12px/1.5 var(--mono); padding:0.35rem 1rem; text-align:center; }
     .bar a, .bar button { color:var(--accent-on-dark); }
@@ -110,7 +126,7 @@
     <button type="button" data-download="pptx"><span class="pack-dl-label">PowerPoint</span></button> ·
     <button type="button" data-download="docx"><span class="pack-dl-label">Facilitator guide</span></button> ·
     <a href="?print-pdf">PDF</a> ·
-    <span id="profile-name">canonical kit</span> (<a href="{{ base }}branding/">change</a>) ·
+    <span id="profile-name">ELIXIR-UK default</span> (<a href="{{ base }}branding/">change</a>) ·
     <a href="{{ mod.url | relative_url }}">back to the module</a>
   </div>
   <div class="brandmark"><span id="brand-org">ELIXIR-UK RDM Club</span></div>
@@ -125,6 +141,7 @@
           <h1 class="t-head">{{ mod.slide_title | default: mod.title }}</h1>
           {%- if mod.slide_subtitle %}<p class="t-sub">{{ mod.slide_subtitle }}</p>{% endif %}
           {%- if mod.benefit %}<p class="t-benefit"><span>What's in it for you</span>{{ mod.benefit }}</p>{% endif %}
+          <p class="t-start">Press &rarr; to start</p>
         </div>
       </section>
 
@@ -136,7 +153,8 @@
       {%- assign s_img = sl.image | default: step.image %}
       {%- assign s_poll = sl.poll %}
       <section data-background-color="#ffffff">
-        <div class="dots"><i class="d1"></i>{% unless s_img or s_poll %}<i class="d2"></i><i class="d3"></i>{% endunless %}</div>
+        <div class="dots"></div>
+        <div class="s-hud">Level <b>{{ num }}</b> · Step <b>{{ forloop.index }}/{{ session.size }}</b></div>
         <div class="s-wrap">
           <div class="s-grid{% if s_img %} two{% endif %}">
             <div>
@@ -175,6 +193,16 @@
       </section>
       {%- endfor %}
 
+      <section class="title lc" data-background-color="#023452">
+        <div class="dots"></div>
+        <div class="lc-wrap">
+          <span class="lc-star" data-pixel-icon="star"></span>
+          <p class="lc-title">Level complete</p>
+          <p class="lc-sub">Thanks for playing. Before you go, write down one quick win you'll do this week.</p>
+          <p class="lc-ask">Your one quick win?</p>
+        </div>
+      </section>
+
       {%- if mod.sources.size > 0 %}
       <section data-background-color="#ffffff">
         <div class="s-wrap">
@@ -194,6 +222,7 @@
   {% include module-data.html mod=mod html=mod.content %}
   <script>window.__BASE__ = "{{ base }}"; if (window.__BASE__.slice(-1) !== '/') window.__BASE__ += '/';</script>
   <script src="{{ '/assets/js/profile.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/pixel-icons.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/decks.js' | relative_url }}"></script>
   <script>
     // Apply the institution profile to the deck before Reveal paints it.

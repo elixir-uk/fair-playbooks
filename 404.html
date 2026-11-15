@@ -1,0 +1,36 @@
+---
+layout: default
+title: No signal
+permalink: /404.html
+---
+{%- comment -%}
+  Page not found. GitHub Pages serves /404.html for any missing URL.
+  The static is drawn on a canvas in the brand colours (read from CSS, so it
+  follows the institution profile); it holds still for reduced motion.
+{%- endcomment -%}
+<section class="nosignal">
+  <canvas class="nosignal-static" width="48" height="27" aria-hidden="true"></canvas>
+  <div class="nosignal-card">
+    <p class="eyebrow">Error 404 · no signal</p>
+    <h1>This page has no persistent identifier.</h1>
+    <p>The link may be old, or the page moved when the kit was reorganised. That's exactly why FAIR asks for identifiers that don't break.</p>
+    <p class="nosignal-actions">
+      <a class="btn btn-primary" href="{{ '/' | relative_url }}"><span class="pixel-icon" data-pixel-icon="flag"></span>Back to the start</a>
+      <a class="btn" href="{{ '/modules/' | relative_url }}">All modules</a>
+    </p>
+  </div>
+</section>
+<script>
+(function () {
+  var c = document.querySelector('.nosignal-static'); if (!c) return;
+  var ctx = c.getContext('2d'), cs = getComputedStyle(document.documentElement);
+  var col = ['--ink', '--accent', '--light', '--pop', '--link', '--surface'].map(function (v) { return cs.getPropertyValue(v).trim() || '#023452'; });
+  function frame() {
+    for (var y = 0; y < c.height; y++) for (var x = 0; x < c.width; x++) {
+      ctx.fillStyle = col[Math.floor(Math.random() * col.length)]; ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  frame();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(frame, 140);
+})();
+</script>

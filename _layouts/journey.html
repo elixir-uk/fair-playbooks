@@ -9,10 +9,10 @@ layout: default
 
 <h1>{{ page.title }}</h1>
 <p class="muted">For: {{ page.audience }}</p>
-<div class="card">
+<div class="info-block">
   <strong>Scenario:</strong> {{ page.scenario }}
 </div>
-<article style="margin: 1.5rem 0;">
+<article class="journey-body">
   {{ content }}
 </article>
 
@@ -34,23 +34,30 @@ layout: default
   {%- endif -%}
 {%- endfor -%}
 
-<h2>The path ({{ total }} min total)</h2>
-<ol class="journey-path">
-  {% for step in page.journey_path %}
-    {%- assign mod = nil -%}
-    {%- for m in site.modules -%}
-      {%- if m.slug == step.module -%}{%- assign mod = m -%}{%- break -%}{%- endif -%}
-    {%- endfor -%}
-    {% if mod %}
-      <li>
+{%- comment -%} World number = this journey's position in the list of journeys {%- endcomment -%}
+{%- assign world = 1 -%}
+{%- for j in site.journeys -%}{%- if j.url == page.url -%}{%- assign world = forloop.index -%}{%- endif -%}{%- endfor -%}
+
+<section class="world" aria-labelledby="world-title">
+  <p class="world-hud">World <b>{{ world }}</b> · <b>{{ page.journey_path.size }}</b> levels · <b>{{ total }}</b> min</p>
+  <h2 id="world-title" class="world-title">The path</h2>
+  <ol class="world-map">
+    {%- for step in page.journey_path %}
+      {%- assign mod = nil -%}
+      {%- for m in site.modules -%}
+        {%- if m.slug == step.module -%}{%- assign mod = m -%}{%- break -%}{%- endif -%}
+      {%- endfor -%}
+      {%- if mod %}
+      <li class="world-node">
         <a href="{{ mod.url | relative_url }}#{{ step.version }}">
-          <span class="badge">Module {{ mod.number }}</span>
-          <strong style="margin-left:0.6rem;">{{ mod.title }}</strong>
+          <span class="world-level">{{ world }}-{{ forloop.index }}</span>
+          <span class="world-circle">{%- if mod.isSideRoom -%}<span class="pixel-icon" data-pixel-icon="sideroom"></span>{%- else -%}{{ mod.number | prepend: '0' | slice: -2, 2 }}{%- endif -%}</span>
+          <strong class="world-name">{{ mod.title }}</strong>
+          <span class="world-time">{% if step.version == 'short' %}Recap · {{ mod.estimatedMinutes.short }} min{% else %}Full · {{ mod.estimatedMinutes.long }} min{% endif %}</span>
         </a>
-        <div class="muted" style="margin-top:0.3rem;">
-          {% if step.version == 'short' %}Quick recap · {{ mod.estimatedMinutes.short }} min{% else %}Full module · {{ mod.estimatedMinutes.long }} min{% endif %}
-        </div>
       </li>
-    {% endif %}
-  {% endfor %}
-</ol>
+      {%- endif %}
+    {%- endfor %}
+    <li class="world-goal" aria-hidden="true"><span class="pixel-icon" data-pixel-icon="flag"></span></li>
+  </ol>
+</section>

@@ -16,11 +16,19 @@ extra_js:
   to these details.
 </p>
 
-<div class="brand-callout">
+<div class="callout">
   <strong>Why not just fork the repo?</strong>
   Because a fork freezes the day you make it — every new module and fix upstream would pass you by.
-  This profile lives in your browser and rides on top of the always-current kit. Export it to share
-  one profile across your whole RDM team.
+  This profile lives in your browser and rides on top of the always-current kit.
+</div>
+
+<div class="brand-share">
+  <h2>Share one profile across your team</h2>
+  <p class="muted">If a colleague has already set this up, import their profile file and you're done. Once you've saved your own, export it and send the file to your team.</p>
+  <div class="brand-actions">
+    <label class="btn brand-import-label">↑ Import profile<input type="file" id="brand-import" accept="application/json" hidden /></label>
+    <button type="button" id="brand-export" class="btn">↓ Export profile</button>
+  </div>
 </div>
 
 <form id="brand-form" class="brand-form">
@@ -93,14 +101,5 @@ extra_js:
   </div>
   <div id="brand-status" class="brand-status" hidden></div>
 </form>
-
-<div class="brand-share">
-  <h2>Share one profile across your team</h2>
-  <p class="muted">Export your profile as a small file and send it to colleagues — they import it instead of re-typing. (This is the lightweight stand-in for a future hosted institution profile.)</p>
-  <div class="brand-actions">
-    <button type="button" id="brand-export" class="btn">↓ Export profile</button>
-    <label class="btn brand-import-label">↑ Import profile<input type="file" id="brand-import" accept="application/json" hidden /></label>
-  </div>
-</div>
 
 <p class="brand-back"><a href="{{ '/' | relative_url }}">← back to the kit</a> · then open any activity and watch the "local help" boxes fill in.</p>

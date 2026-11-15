@@ -14,7 +14,7 @@ dataType: [n-a]
 intent: [motivate, how-to]
 ---
 
-> **Playbook 2 · v1 — drafted from Contentathon #3 (1 July 2026).** Grounded in real objections from PIs, senior postdocs and the RDM professionals who support them. To be tested and refined at the October rollouts.
+> **v1 — drafted from Contentathon #3 (1 July 2026).** Grounded in real objections from PIs, senior postdocs and the RDM professionals who support them. To be tested and refined at the October rollouts.
 
 **Who you're advocating to.** Driving the science, chronically short on time, thinks about FAIR mainly when a funder or journal makes them. Honest inner voice: *"Everyone around me seems to be winging it."*
 

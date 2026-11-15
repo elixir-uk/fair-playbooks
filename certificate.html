@@ -1,0 +1,50 @@
+---
+layout: default
+title: Certificates
+description: Print a certificate of attendance for everyone who took part in a session.
+permalink: /certificate/
+extra_js:
+  - /assets/js/certificate.js
+---
+{%- comment -%}
+  Certificate of attendance: one A4 landscape page per participant.
+  Everything happens in the browser; names are never stored or sent.
+{%- endcomment -%}
+<script id="session-data" type="application/json">
+[
+{%- assign mods = site.modules | sort: 'number' -%}
+{%- for m in mods -%}
+{ "id": {{ m.slug | jsonify }}, "title": {{ m.title | jsonify }}, "kind": "Module {{ m.number | prepend: '0' | slice: -2, 2 }}" },
+{%- endfor -%}
+{%- for a in site.activities -%}
+{ "id": {{ a.slug | jsonify }}, "title": {{ a.title | jsonify }}, "kind": "Game" }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
+</script>
+
+<div class="no-print">
+  <p class="eyebrow">Level complete</p>
+  <h1>Certificates</h1>
+  <p class="brand-sub">Give everyone who took part a certificate of attendance. Paste the names, check the preview, then print: one A4 page per person. Names stay on your computer.</p>
+
+  <form class="brand-form cert-form" id="cert-form">
+    <fieldset>
+      <legend>The session</legend>
+      <label>Module or game <select name="session" id="cert-session"></select></label>
+      <div class="cert-row">
+        <label>Date <input type="date" name="date" /></label>
+        <label>Where <input type="text" name="place" placeholder="e.g. Earlham Institute, Norwich" /></label>
+        <label>Facilitator <input type="text" name="facilitator" placeholder="Your name" /></label>
+      </div>
+      <label>Participants, one per line <span class="brand-hint">Leave empty to print one certificate with a blank name line.</span>
+        <textarea name="names" rows="6" placeholder="Ada Lovelace&#10;Rosalind Franklin"></textarea>
+      </label>
+    </fieldset>
+    <div class="brand-actions">
+      <button type="button" class="btn btn-primary" id="cert-print"><span class="pixel-icon" data-pixel-icon="printer"></span>Print certificates</button>
+      <span class="muted" id="cert-count"></span>
+    </div>
+  </form>
+</div>
+
+<div class="certs" id="certs" aria-label="Certificate preview"></div>

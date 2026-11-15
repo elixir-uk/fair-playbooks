@@ -4,17 +4,24 @@ title: User journeys
 permalink: /journeys/
 ---
 {%- comment -%} Ports src/pages/journeys/index.astro {%- endcomment -%}
-<h1>User journeys</h1>
+<h1>Journeys</h1>
 <p class="muted">
   Pre-built paths through the modules, designed for common scenarios. Each journey picks the
   right modules in the right order, at the right length.
 </p>
+<div class="module-grid">
 {% for journey in site.journeys %}
-  <a href="{{ journey.url | relative_url }}" class="card" style="display:block; text-decoration:none; color:inherit;">
-    <strong>{{ journey.title }}</strong>
-    <div class="muted" style="margin-top:0.3rem;">{{ journey.scenario }}</div>
-    <div class="muted" style="margin-top:0.5rem; font-size:0.85rem;">
-      For: {{ journey.audience }} · {{ journey.journey_path.size }} modules
-    </div>
+  {%- assign total = 0 -%}
+  {%- for step in journey.journey_path -%}
+    {%- for m in site.modules -%}{%- if m.slug == step.module -%}
+      {%- if step.version == 'short' -%}{%- assign total = total | plus: m.estimatedMinutes.short -%}{%- else -%}{%- assign total = total | plus: m.estimatedMinutes.long -%}{%- endif -%}
+    {%- endif -%}{%- endfor -%}
+  {%- endfor -%}
+  <a href="{{ journey.url | relative_url }}" class="card world-card">
+    <span class="eyebrow">World {{ forloop.index }}</span>
+    <strong class="card-title">{{ journey.title }}</strong>
+    <span class="card-meta">{{ journey.scenario }}</span>
+    <span class="module-meta">{{ journey.journey_path.size }} levels · {{ total }} min</span>
   </a>
 {% endfor %}
+</div>

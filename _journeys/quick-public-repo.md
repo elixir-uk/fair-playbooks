@@ -1,6 +1,6 @@
 ---
 title: "Standard data + standard repository = quick win"
-scenario: "A researcher has a recognised data type (e.g. RNA-seq, proteomics) and just needs to know where to put it."
+scenario: "A researcher has a recognised data type (e.g. RNA-seq, proteomics) and only needs to know where to put it."
 audience: "Researchers preparing data for paper submission"
 journey_path:
   - module: 00-what-is-fair
@@ -9,4 +9,4 @@ journey_path:
     version: long
 ---
 
-Use this when the researcher is already motivated and just needs the practical "where do I deposit this" answer. Short FAIR primer, then go.
+Use this when the researcher is already motivated and only needs a practical answer to "where do I deposit this?". Give them the short FAIR primer, then move on.

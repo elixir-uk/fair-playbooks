@@ -286,6 +286,7 @@ footer { max-width: 980px; margin: 0 auto 2rem; padding: 2rem 1.5rem; color: var
 .fac-time { background: var(--surface-alt); color: var(--ink); }
 .fac-pill { background: var(--surface-alt); color: var(--muted); border: 1px solid var(--line); }
 .fac-slide-prompt { background: var(--soft); color: var(--soft-ink); font-family: var(--font-body); font-size: var(--fs-ui); font-weight: 700; letter-spacing: 0; white-space: normal; padding: 0.3rem 0.8rem; margin: 0.6rem 0 0; }
+.fac-slide-then { margin: 0.3rem 0 0; font-size: var(--fs-small); color: var(--muted); }
 .secondary-band { text-transform: uppercase; text-align: center; width: max-content; }
 .secondary-band[data-tone="strong"] { background: var(--ink); color: var(--light-on-dark); }
 .secondary-band[data-tone="good"] { background: var(--surface-alt); color: var(--ink); border: 1px solid var(--ink); }

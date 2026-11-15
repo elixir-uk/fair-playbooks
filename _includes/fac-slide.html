@@ -1,0 +1,36 @@
+{%- comment -%} Preview of one slide on the module page. Params: sl, step, first. {%- endcomment -%}
+{%- assign sl = include.sl -%}
+{%- assign step = include.step -%}
+{%- assign s_head = sl.headline | default: step.title -%}
+{%- if include.first -%}
+  {%- assign s_lines = sl.lines | default: step.points -%}{%- assign s_prompt = sl.prompt | default: step.exercise -%}{%- assign s_img = sl.image | default: step.image -%}
+{%- else -%}
+  {%- assign s_lines = sl.lines -%}{%- assign s_prompt = sl.prompt -%}{%- assign s_img = sl.image -%}
+{%- endif -%}
+{%- assign s_poll = sl.poll -%}
+        <div class="fac-slide">
+          <span class="fac-label">On the slide</span>
+          <p class="fac-slide-head">{{ s_head }}</p>
+          {% if sl.intro %}<p class="fac-slide-then">{{ sl.intro }}</p>{% endif %}
+          {% if sl.cards %}<ul class="fac-points">{% for c in sl.cards %}<li>{% if c.title %}<strong>{{ c.title }}</strong>{% if c.text or c.items %}: {% endif %}{% endif %}{{ c.text }}{% if c.items %}{{ c.items | join: '; ' }}{% endif %}</li>{% endfor %}</ul>{% endif %}
+          {% if s_lines and s_lines.size > 0 %}<ul class="fac-points">{% for pt in s_lines %}<li>{{ pt }}</li>{% endfor %}</ul>{% endif %}
+          {% if s_poll %}
+            <p class="fac-slide-prompt">Hands-up poll: {{ s_poll.question }}</p>
+            <ol class="fac-poll">{% for opt in s_poll.options %}<li>{{ opt }}</li>{% endfor %}</ol>
+          {% elsif sl.task %}
+            <p class="fac-slide-prompt">Your turn{% if sl.task.who %} · {{ sl.task.who }}{% endif %}{% if sl.task.minutes %} · {{ sl.task.minutes }} min (timer on the slide){% endif %}</p>
+            <ol class="fac-poll">{% for t in sl.task.steps %}<li>{{ t }}</li>{% endfor %}</ol>
+            {% if sl.task.then %}<p class="fac-slide-then">Then: {{ sl.task.then }}</p>{% endif %}
+          {% elsif s_prompt %}<p class="fac-slide-prompt">{{ s_prompt }}</p>{% endif %}
+          {% if sl.table %}<p class="fac-slide-then">Shows the data table{% if sl.table.credit %} ({{ sl.table.credit }}){% endif %}.</p>{% endif %}
+          {% if sl.answers %}
+            <p class="fac-slide-prompt">Next slide: {{ sl.answers.headline | default: 'Answers' }}</p>
+            <ul class="fac-points">{% for x in sl.answers.lines %}<li>{{ x }}</li>{% endfor %}</ul>
+          {% endif %}
+          {% if s_img %}
+          <figure class="fac-figure">
+            <img class="fac-img" src="{{ s_img.src | relative_url }}" alt="{{ s_img.alt }}" loading="lazy" onerror="this.closest('figure').hidden=true" />
+            {% if s_img.credit %}<figcaption>{{ s_img.credit }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+        </div>

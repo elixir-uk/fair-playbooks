@@ -1,146 +1,204 @@
 ---
 title: "When a public repository solves most of the problem"
 number: 2
-summary: "For many data types in life sciences (sequencing, proteomics, structures), depositing in the appropriate community repository handles 80% of FAIR automatically. This module covers how to recognise that situation and guide researchers to the right home."
+summary: "For many life-science data types (sequencing, proteomics, structures), depositing in a community repository takes care of much of FAIR. Using a real RNA-seq dataset in ArrayExpress, participants see what the repository does for them and what they still have to provide themselves: rich metadata, shared vocabulary, a licence and provenance."
 estimatedMinutes:
-  short: 10
-  long: 40
+  long: 45  # provisional – see "Timings to confirm" below
 prerequisites: ["00-what-is-fair"]
+timing_note: "Timings are provisional while the module lead confirms them. The steps follow the section times in the source guide. There is no short version yet."
 sources:
-  - name: "Galaxy Training Network – RNAseq FAIR tutorial"
-    url: "https://training.galaxyproject.org"
-    note: "Hands-on submission workflow this activity is built around"
-  - name: "RDMkit"
-    url: "https://rdmkit.elixir-europe.org"
-    note: "Repository-selection and metadata guidance"
+  - name: "Galaxy Training Network – FAIRification of an RNAseq dataset"
+    url: "https://training.galaxyproject.org/training-material/topics/fair/tutorials/fair-rna/tutorial.html"
+    note: "The tutorial this module is built from. It covers all 15 FAIR principles; this session uses seven."
+  - name: "EMBL-EBI ArrayExpress – E-MTAB-8316"
+    url: "https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8316"
+    note: "The worked example: bulk RNA-seq from Alivernini et al. (2020), Nature Medicine"
+  - name: "Alivernini et al. (2020), Nature Medicine"
+    url: "https://doi.org/10.1038/s41591-020-0939-8"
+    note: "The paper participants search for the accession in exercise 1"
+  - name: "Ontology Lookup Service (OLS)"
+    url: "https://www.ebi.ac.uk/ols4/"
+    note: "Used in exercise 2 to look up an ontology term"
+  - name: "MAGE-TAB specification"
+    url: "https://www.fged.org/projects/mage-tab/"
+    note: "The metadata format ArrayExpress uses (IDF and SDRF files)"
+  - name: "FAIR Pointers"
+    url: "https://elixir-uk.github.io/FAIR-Pointers/"
+    note: "Overview of the FAIR principles to point participants to"
+  - name: "GO FAIR – FAIR principles"
+    url: "https://www.go-fair.org/fair-principles/"
+    note: "The principles with practical examples"
   - name: "FAIRsharing"
     url: "https://fairsharing.org"
-    note: "Finding the endorsed community repository for a data type"
-  - name: "EMBL-EBI ArrayExpress"
-    url: "https://www.ebi.ac.uk/biostudies/arrayexpress/studies/"
-    note: "Worked example dataset (E-MTAB-9224) and MAGE-TAB standard"
-tags: [repositories, sequencing, proteomics]
+    note: "Finding the community repository and standards for other data types"
+tags: [repositories, sequencing, metadata, ontologies]
 playbook: [fairification]
-audience: [researcher, postdoc, phd-student]
+audience: [researcher, postdoc, phd-student, rdm-peer]
 scenario: [mid-project, ending-project]
 dataType: [sequencing, proteomics]
 intent: [how-to, hands-on-exercise]
+slide_title: "Let the repository do the heavy lifting"
+slide_subtitle: "What it does for you, and what it can't"
+benefit: "See what a public repository does for your data automatically, and what only you can add."
 session:
-  - title: "Introduction & FAIR principles"
+  - title: "What a repository can and can't do"
     minutes: "0–10"
     principles: ["F", "A", "I", "R"]
-    objectives:
-      - "Participants can name the four FAIR principles"
-      - "Participants understand that FAIR has both infrastructure and content dimensions"
-    tip: "If attendees haven't seen FAIR before, spend 2 extra minutes pointing to each letter and asking the group what they think it means before you give the definition. This draws on what they already know."
-    script: "Welcome. Today we'll work through a real, published dataset and look at how the FAIR principles show up in its files and metadata decisions. The main point is that a repository gives you F and A almost for free. The I and R are up to you."
-    points:
-      - "FAIR = Findable, Accessible, Interoperable, Reusable (Wilkinson 2016)"
-      - "The repository handles the infrastructure and the researcher supplies the content"
+    script: "Welcome. Today we'll look at a real, published dataset and see how FAIR works in practice: actual files, accession numbers and metadata. FAIR stands for Findable, Accessible, Interoperable and Reusable. The principles were published in 2016 as a framework for making research outputs useful to people and to machines. One thing to keep in mind all session: depositing your data does some of this for you. A repository gives you a permanent web address and makes your data downloadable. It can't write good descriptions of your data for you, and it can't make you use the right terms, although the repository we'll look at has a curation team that helps. We'll focus on seven of the fifteen principles. The Galaxy training this session is built from covers all fifteen, and the link is in your handout."
+    tip: "If the group hasn't met FAIR before, spend two extra minutes on the letters and ask what they think each means before you explain. If they are experienced RDM practitioners, move quickly and give the time to the exercises. This module assumes people have done What is FAIR? or know the principles already."
+    slide:
+      headline: "Deposit it, and you're partly done"
+      lines:
+        - "The repository gives you an address and a download"
+        - "You still have to describe the data"
+      poll:
+        question: "Have you deposited data in a public repository?"
+        options: ["Yes, it went fine", "Yes, it was painful", "Not yet"]
   - title: "The dataset"
     minutes: "10–15"
-    objectives:
-      - "Participants know what RNA-seq data consists of and why batch effects matter"
-      - "Participants can identify the three components of a repository submission"
-    tip: "If the group includes non-bioinformaticians, draw the count matrix on a whiteboard (rows = genes, columns = samples, values = read counts). Spending a minute on this helps for the rest of the session."
-    script: "RNA-seq makes a good worked example. Three things go into the repository: metadata, raw FASTQ files and the count matrix. Batch effects can hide the biological signal, so record them in the metadata from day one."
-    points:
-      - "Worked dataset: Alivernini et al. 2020 · <code>E-MTAB-9224</code>"
-      - "Same structure for scRNA-seq, proteomics (PRIDE), metabolomics (MetaboLights)"
-    image:
-      src: "/assets/modules/02/img/components.svg"
-      alt: "Three components of an RNA-seq submission: metadata, raw FASTQ, count matrix"
-  - title: "Finding the data"
+    script: "RNA sequencing is one of the most widely used assays in the life sciences, so it makes a good example. The main output is a count matrix you could open in Excel: genes as rows, samples as columns, and each number is how many RNA molecules from that gene were detected in that sample. A bulk RNA-seq submission to ArrayExpress has three parts. First, the metadata: which samples, under what conditions, with which reagents. Second, the raw FASTQ files, the reads as they came off the sequencer. Third, the count matrix produced from them. Our dataset is from Alivernini and colleagues, Nature Medicine 2020, on macrophages in the joints of people with rheumatoid arthritis. Its accession is E-MTAB-8316. The biology doesn't matter today. We're looking at how ArrayExpress supports FAIR."
+    tip: "If the room works with other data types, name their equivalents: the Human Cell Atlas for single-cell RNA-seq, PRIDE for proteomics, MetaboLights for metabolomics. The structure is the same. If people don't know RNA-seq, sketch the count matrix and draw parallels with their own data."
+    slide:
+      headline: "One real dataset"
+      lines:
+        - "Alivernini et al. (2020), Nature Medicine"
+        - "ArrayExpress · E-MTAB-8316"
+        - "Metadata · raw FASTQ files · count matrix"
+      image:
+        src: "/assets/modules/02/img/components.svg"
+        alt: "The three components of an RNA-seq submission: metadata, raw FASTQ files and a count matrix"
+  - title: "Find it: what the repository gave you"
     minutes: "15–25"
-    principles: ["F1", "F4", "A1"]
-    objectives:
-      - "Participants can explain what a persistent identifier is and why it matters"
-      - "Participants can locate a dataset in ArrayExpress by accession number"
-      - "Participants understand that open HTTPS access satisfies A1 and A1.1"
-    tip: "If attendees struggle to find the accession in the paper, point them to the Data Availability section at the end. It's a useful reminder that accession numbers aren't always easy to find in a paper."
-    script: "F1: the accession is a permanent, citable ID. F4: the dataset is indexed and searchable by keyword. You can download it in one click over HTTPS without logging in, which covers A1/A1.1. Then point them to your institution's preferred repository."
-    points:
-      - "Accession <code>E-MTAB-9224</code> is globally unique and persistent"
-      - "Where your researchers deposit: <span class=\"repo-slot\" data-profile-repo>[ your institution's preferred repository ]</span>"
-    exercise: "Exercise 1 (5 min): find the accession in the Alivernini paper, then locate it in ArrayExpress. What's visible before you download anything?"
-  - title: "Metadata & community standards"
-    minutes: "25–40"
-    principles: ["F2", "F3", "R1.3", "I1"]
-    objectives:
-      - "Participants can describe what MAGE-TAB (IDF + SDRF) is and what each file contains"
-      - "Participants can critically assess whether metadata is sufficient for reuse"
-      - "Participants understand the role of ontologies in making metadata interoperable"
-    tip: "Allow 2–3 minutes for pairs to discuss before opening up to the group. If time is short, skip the hands-on element and walk through a single SDRF row together, pointing out fields that are and aren't present."
-    script: "Most of the FAIR work happens here. MAGE-TAB = IDF (study-level) + SDRF (per-sample + file links). Use ontology terms (EFO, OBI, UBERON) instead of free text so that machines can read the metadata."
-    points:
-      - "F2 rich metadata · F3 SDRF links each sample to its FASTQ"
-      - "R1.3 community standard (MAGE-TAB) · I1 controlled vocabularies"
-    exercise: "Exercise 2 (8 min): open the SDRF for E-MTAB-9224. Clear variable names? Batch info recorded? Ontology URIs or free text? Could you reuse it without contacting the authors?"
-  - title: "Building a FAIR metadata spreadsheet"
-    minutes: "40–50"
-    principles: ["F2", "R1", "R1.2"]
-    objectives:
-      - "Participants can complete a minimum-viable RNA-seq metadata spreadsheet"
-      - "Participants understand that good FAIR practice begins at experimental design rather than at submission"
-    tip: "Most metadata cannot be recovered after the event. Batch information in particular is often lost if it isn't recorded at the bench. For advanced groups, ask them to look up the EFO term for 'rheumatoid arthritis' at ebi.ac.uk/ols4."
-    script: "Everything we've discussed comes from a spreadsheet you fill in as you run the experiment, and that spreadsheet becomes the SDRF. Annotare can't add information that was never recorded. Batch information in particular is lost if it isn't captured at the bench."
-    points:
-      - "Compulsory: sample IDs, condition, replicates, platform, reference genome + version, protocol"
-      - "Strongly recommended: batch (run/date/operator), RIN, QC, confounders, software versions"
-  - title: "Licensing, provenance & wrap-up"
-    minutes: "50–60"
+    principles: ["F1", "F4", "A1", "A1.1"]
+    script: "When a dataset goes into ArrayExpress, it gets an accession number like E-MTAB-8316. No other dataset anywhere has that number, and it won't change or break when a server is updated. That's what lets people cite data the way they cite a paper. Everything in the record is also indexed, so you can find it by typing keywords into the search box and come across datasets you didn't know existed. And once you've found it, you can download it straight away over the web, with no login, no paywall and no special software. The researcher did none of this. The repository did. Let's try it."
+    tip: "Expected answers: the accession is in the paper's Data Availability statement, the last of three listed (one per assay). Before downloading anything, the record shows the title, organism, experiment type, submission date, number of samples, licence and download links, all without logging in. If people can't find the accession, point them to Data Availability and use it as a talking point: accessions are often hard to find in papers. For fast finishers: how many assays are in this entry, and what file types are listed?"
+    slide:
+      headline: "Find the dataset"
+      lines:
+        - "A. Find the bulk RNA-seq accession in the paper: doi.org/10.1038/s41591-020-0939-8"
+        - "B. Search for it on ArrayExpress"
+      prompt: "What can you see before you download anything?"
+  - title: "Read the metadata: what only you can provide"
+    minutes: "25–35"
+    cut: "Never cut."
+    principles: ["F2", "R1", "R1.3", "I1"]
+    script: "Now the metadata. This is where most of the FAIR work happens, and where most of it goes wrong. ArrayExpress uses a standard called MAGE-TAB, with two files. The IDF covers the study: title, authors, design and protocols. The SDRF is a spreadsheet with one row per sample, its characteristics, and links to its raw files. Rich metadata means more than a title and a date: organism, tissue, disease, treatment, time points, and any confounders you recorded. It's also what makes the data findable. Search for synovial macrophage rheumatoid arthritis and you find this dataset because those words are in its metadata. Using a community format means tools and other databases can read it and compare it with datasets from around the world. Ontologies can sound daunting. They're dictionaries of terms a community has agreed on. If you describe the disease with a term from a disease ontology, such as rheumatic disease, your dataset can be merged with others that use the same term, without anyone chasing synonyms."
+    tip: "Give pairs 2–3 minutes before opening it up. People usually find that some fields use ontology terms and others use inconsistent free text for the same thing. A good discussion question: who is responsible for the quality of this metadata, the researcher, the repository or the journal? If time is short, skip the hands-on part and talk through one SDRF row together, pointing out what is and isn't there."
+    slide:
+      headline: "Could you reuse this?"
+      lines:
+        - "Open the SDRF file for E-MTAB-8316"
+        - "Which variables are recorded? Are they named consistently?"
+        - "Controlled terms, or free text?"
+        - "Look up rheumatic disease in OLS. Which ontology is it from?"
+      prompt: "Discuss in pairs, then share"
+  - title: "Licence and provenance"
+    minutes: "35–40"
     principles: ["R1.1", "R1.2"]
-    objectives:
-      - "Participants understand why a data licence is required and know the common options"
-      - "Participants can articulate the most common failures in FAIR practice"
-      - "Participants can map each FAIR principle to the correct lifecycle stage"
-    tip: "The 'one specific change' prompt asks people to commit to something before they leave. People are more likely to act on a concrete commitment they came up with themselves than on a general instruction. Signpost the Galaxy RNA-seq FAIR tutorial as follow-up."
-    script: "Without a licence, others can't legally reuse the data (use CC0 or CC-BY). For provenance, record the genome build and software versions. To sum up: repositories handle F/A, you supply I/R, and FAIR starts at experimental design. Ask everyone for one specific change they'll make."
-    points:
-      - "Repository handles F1, F3, F4, A1, A2 · you must provide F2, I1, R1"
-      - "Local support: <span data-profile-team>[ set up your institution profile ]</span>"
-workshopAssets:
-  - title: "Facilitator's Workshop Guide"
-    type: facilitator-guide
-    file: "/assets/modules/02/FAIR_RNAseq_Facilitator_Guide.pdf"
-    description: "45–60 min hands-on workshop for FAIRifying bulk RNAseq. Includes scripts, exercises with expected solutions, timing guidance, and a minimum-metadata checklist."
-    pages: 12
-    duration: "45–60 min"
-  - title: "Workshop Slide Deck"
-    type: slides
-    file: "/assets/modules/02/FAIR_RNAseq_Workshop_Slides.pdf"
-    description: "11 slides that follow the facilitator guide section by section, for use alongside it."
-    pages: 11
-    duration: "45–60 min"
+    script: "Two things are easy to overlook. First, the licence. It tells people how they can share, copy, adapt or build on the data, including commercially. CC0 waives all rights and is the most open. CC BY requires attribution. When you deposit, your data takes the licence the repository applies. FAIR also allows controlled or closed access for ethical reasons, and some repositories support that: the metadata is public and the data is restricted. Second, provenance: the full history of the data, from the lab to the analysis. Which protocols? Which reference genome did you align to? Which software version did you run? Without that, nobody can reproduce or properly evaluate the results. So who does what? The repository handles the identifier, the indexing, the download and keeping the metadata even if the data is removed. The researcher provides the rich descriptions, the ontology terms, the provenance and the domain standard. A curation team can help with quality. Where there isn't one, quality is down to the researcher."
+    tip: "Use your own institution's licensing advice here if you've set it up. Make sure people understand that FAIR does not mean open."
+    slide:
+      headline: "Who does what?"
+      lines:
+        - "Repository: identifier, search, download, keeping the record"
+        - "You: descriptions, shared terms, licence, provenance"
+  - title: "Where it goes wrong"
+    minutes: "40–45"
+    cut: "Never cut."
+    script: "The most common failure is leaving FAIR to the end. The data is deposited the week before the paper goes in, under time pressure, with whatever metadata can be scraped together. Batch information is gone. Sample names are inconsistent. The SDRF is incomplete. The fix is to keep a metadata spreadsheet like a lab notebook. Start it on day one and add to it as you go. By the time you submit, it's already done. Not every repository helps you like this one, and not every data type has a metadata standard. Metadata quality can't be automated, so use ontologies and define your variables."
+    tip: "Ask: what does this tell you about when FAIR practice needs to start? Then point people to your preferred repository and to FAIRsharing for other data types."
+    slide:
+      headline: "Start the spreadsheet on day one"
+      lines:
+        - "Metadata you didn't record can't be recovered later"
+        - "Not every repository curates, and not every data type has a standard"
+      prompt: "What's one thing you'll record from now on?"
+  - title: "Build your metadata spreadsheet"
+    minutes: "45–53"
+    optional: true
+    cut: "Add-on. Run it if you have time and the room wants it."
+    script: "Everything we've talked about, the rich metadata, the controlled terms, the batch information, has to come from somewhere. It comes from a spreadsheet you fill in while you run your experiment. In ArrayExpress, that spreadsheet becomes the SDRF and IDF files, which you generate through the Annotare submission tool. Bioinformaticians who analyse RNA-seq regularly ask for these: batch information such as sequencing run, extraction date and operator; which samples are biological and which are technical replicates; RNA quality metrics; the covariates identified when designing the experiment, such as age, sex, BMI or time point, where they apply; and workflow and software parameters and versions. Look at the SDRF and IDF files. What would you routinely record yourself? What would you have missed? What's still missing?"
+    tip: "Start from the SDRF file and let people add what they think is missing. The point to reach: most metadata can't be recovered afterwards. Batch information in particular is lost if nobody records it at the bench."
+    slide:
+      headline: "What would you have missed?"
+      lines:
+        - "Batch: sequencing run, extraction date, operator"
+        - "Biological vs technical replicates"
+        - "RNA quality metrics"
+        - "Covariates from your design: age, sex, time point"
+        - "Software parameters and versions"
+      prompt: "Compare with the SDRF and IDF files"
 ---
 
-If researchers deposit their data in the right repository, most of the FAIR work is already done. This is often overlooked. The repository enforces metadata standards, assigns identifiers, ensures long-term access, and surfaces your data to search engines.
+## The situation
 
-## Worked example: RNA-seq
+Run this module with researchers whose data type has a well-established public repository: sequencing, proteomics, metabolomics, structures. They often think of deposition as an admin step at the end of a project, or don't know how much of FAIR the repository already handles for them.
 
-A researcher comes to you with RNA-seq data they want to share alongside a paper.
+The session follows one published RNA-seq dataset in ArrayExpress from the paper to the metadata files. It uses RNA-seq as the example; you don't need to teach an RNA-seq workflow, and the same structure applies to other data types with a community repository.
 
-- **Findable** → ENA/GEO assigns a stable accession (e.g. `GSE12345`, `PRJEB12345`)
-- **Accessible** → public download via standard protocols (FTP, REST API)
-- **Interoperable** → SRA/ENA metadata schema enforces consistent fields
-- **Reusable** → community-recognised format (FASTQ), licensing handled by the repository's terms
+This module assumes people know what FAIR is. If they don't, run [What is FAIR?](../00-what-is-fair/) first. For data with no community repository, use [When there is no community standard or repository](../03-no-standards/) instead.
 
-The researcher needs to prepare a good metadata sheet and upload the data. The repository does the rest.
+## The decision
 
-## How to spot a "repository solves it" case
+Participants leave knowing which parts of FAIR the repository takes care of, which parts are their job, and that their part starts with a metadata spreadsheet on day one of the experiment.
 
-Ask three questions:
+## The session plan
 
-1. Is this a standard data type (sequencing, proteomics, structures, imaging, etc.)?
-2. Is there an endorsed community repository (check FAIRsharing if unsure)?
-3. Are there no exceptional access restrictions (patient data with consent constraints, etc.)?
+{{ page.timing_note }}
 
-If the answer to all three is yes, your advice is almost certainly to deposit there. Spend the conversation on metadata quality instead of designing a bespoke FAIR strategy.
+<div class="session-slot"></div>
 
-## When this doesn't apply
+## Participant materials
 
-Move to Module 3 if:
+| Material | Source | Status |
+|---|---|---|
+| The dataset and its metadata files (IDF, SDRF) | [ArrayExpress E-MTAB-8316](https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8316) | **Linked**, used live in exercises 1 and 2 |
+| The paper | [Alivernini et al. (2020), Nature Medicine](https://doi.org/10.1038/s41591-020-0939-8) | **Linked**, exercise 1 |
+| Ontology lookup | [Ontology Lookup Service](https://www.ebi.ac.uk/ols4/) | **Linked**, exercise 2 |
+| All 15 principles, worked through on this dataset | [Galaxy Training Network tutorial](https://training.galaxyproject.org/training-material/topics/fair/tutorials/fair-rna/tutorial.html) | **Reused**: the basis of this module. Send it afterwards for people who want the full picture. |
+| Who does what, principle by principle | The FAIR mapping table below | **Handout**: send it after the session |
 
-- The data type has no community repository
-- The data is heterogeneous (mixed types, custom assays)
-- The data is bespoke spreadsheets, internal databases, etc.
+## What to adapt locally
+
+- **Your preferred repository**: <span class="repo-slot" data-profile-repo>[ your institution's preferred repository ]</span>
+- **Licensing advice**: <span class="repo-slot" data-profile-help="licensing">[ library scholarly communications ]</span>
+- **Research data support**: <span class="repo-slot" data-profile-team>[ set up your institution profile ]</span>
+- **Swap the example** for a dataset in your audience's repository (PRIDE, MetaboLights, the Human Cell Atlas, ENA) if RNA-seq is too far from their work. Keep the same three questions: what did the repository do, what did the researcher provide, what's missing?
+
+Before the session, check that ArrayExpress and OLS load on the venue's network, since institutional firewalls sometimes block them. Participants need a laptop or a phone with internet access; pairs can share one. Have the [SDRF file](https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-8316) open in a tab in case the download is slow.
+
+## What goes wrong
+
+**People can't find the accession in the paper.** Point them to the Data Availability section at the end, and say it's the last of three. It shows how hard accession numbers can be to find.
+
+**The venue network blocks ArrayExpress or OLS.** Run the exercises on your own screen and talk the room through one SDRF row.
+
+**The room doesn't work with sequencing data.** Name their repository and say the structure is the same. Spend less time on RNA-seq and more on who does what.
+
+**The metadata exercise runs long.** Cap the discussion and move on. The "Where it goes wrong" step is a checkpoint.
+
+**"The repository does it all for me."** Use the SDRF: the curators help, but the researcher still has to record the batch, the covariates and the provenance at the bench.
+
+## FAIR mapping
+
+<details markdown="1">
+<summary><strong>For the facilitator:</strong> who does what for each principle, using ArrayExpress as the example. Use as a lookup, and send it as a handout afterwards.</summary>
+
+| Principle | Meaning | ArrayExpress's role |
+|---|---|---|
+| **F1** persistent identifier | Globally unique identifier that never changes, for data and metadata | Assigns the accession number (e.g. E-MTAB-8316) |
+| **F2** rich metadata | Descriptive metadata that makes discovery possible | Researcher writes it; the repository indexes it |
+| **F3** metadata names the data | Metadata explicitly names the data it describes | The SDRF links sample metadata to data files |
+| **F4** searchable | Metadata registered in a searchable resource | ArrayExpress search index |
+| **A1** retrievable | Data retrievable by a standard protocol | HTTPS download links |
+| **A1.1** open protocol | The protocol is open, free and universal | HTTPS, no login needed |
+| **A2** metadata outlives data | Metadata stays accessible even if the data is removed | Records of removed data are kept |
+| **I1** formal language | Shared, machine-readable vocabulary | Ontologies such as EFO, OBI and UBERON |
+| **R1** richly described | Many accurate, relevant attributes | Supplied by the researcher |
+| **R1.1** licence | Clear data usage licence | Licence adopted at submission |
+| **R1.2** provenance | Detailed origin and processing information | Protocol and processing metadata |
+| **R1.3** community standards | Meets domain standards | MAGE-TAB, checked by the curation team |
+
+The session covers F1, F2, F4, I1, R1, R1.1 and R1.2 directly, with A1 and A1.1 in passing.
+
+</details>

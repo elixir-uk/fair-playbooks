@@ -1,5 +1,5 @@
 ---
-title: "A project is ending – what can we still do?"
+title: "A project is ending. What can we still do?"
 scenario: "A PhD is wrapping up, a grant is closing, or a researcher is leaving. There's a pile of data with no FAIR plan."
 audience: "Late-stage projects and retiring researchers"
 journey_path:
@@ -9,4 +9,4 @@ journey_path:
     version: long
 ---
 
-The most resonant of the four journeys. Leads with reassurance ("it's not too late"), then gives the concrete 80/20 actions that fit in a few hours of work.
+Of the four journeys, this is the one that resonates most. It starts with reassurance ("it's not too late"), then gives the practical 80/20 actions that fit into a few hours of work.

@@ -89,22 +89,41 @@
 
   // What the ROOM sees for a step: its `slide:` block, falling back to
   // title / points / exercise for modules that don't have one yet.
-  function slideOf(st) {
-    var sl = st.slide || {};
-    var lines = (sl.lines && sl.lines.length) ? sl.lines.slice() : (st.points || []).slice();
-    var prompt = sl.prompt || st.exercise || '';
+  function slideOf(st, blk, first) {
+    var sl = blk || st.slide || {};
+    if (first === undefined) first = true;
+    var lines = (sl.lines && sl.lines.length) ? sl.lines.slice() : (first ? (st.points || []).slice() : []);
+    var prompt = sl.prompt || (first ? st.exercise : '') || '';
     // A hands-up poll becomes numbered options plus its question as the prompt
     if (sl.poll && sl.poll.options) {
       lines = lines.concat(sl.poll.options.map(function (o, i) { return (i + 1) + '.  ' + o; }));
       prompt = 'Hands up: ' + sl.poll.question;
     }
+    // A "your turn" task becomes numbered steps, a label and a "Then" prompt
+    var label = '';
+    if (sl.task && !sl.poll) {
+      lines = (sl.task.steps || []).map(function (t, i) { return (i + 1) + '.  ' + t; });
+      prompt = sl.task.then ? 'Then: ' + sl.task.then : '';
+      label = ['YOUR TURN', sl.task.who, sl.task.minutes ? sl.task.minutes + ' MIN' : ''].filter(Boolean).join(' · ').toUpperCase();
+    }
     return {
       headline: sl.headline || st.title,
+      intro: sl.intro || '',
+      cards: sl.cards || null,
+      numbered: !!sl.numbered,
       lines: lines,
       prompt: prompt,
+      label: label,
+      table: sl.table || null,
+      answers: sl.answers || null,
       poll: !!sl.poll,
-      image: sl.image || st.image || null
+      image: sl.image || (first ? st.image : null) || null
     };
+  }
+  // Every slide a step shows: `slides:` (several) or `slide:` (one)
+  function slidesOf(st) {
+    var list = (st.slides && st.slides.length) ? st.slides : [st.slide || {}];
+    return list.map(function (blk, k) { return slideOf(st, blk, k === 0); });
   }
 
   // Rasterise any same-origin image (SVG included) to PNG so Office renders it everywhere.
@@ -170,26 +189,61 @@
       footer(s, 'AEBCC6');
 
       // One slide per step (images load first so the order holds)
-      return Promise.all(session.map(function (st) {
-        var im = slideOf(st).image;
+      var flat = [];
+      session.forEach(function (st) { slidesOf(st).forEach(function (sl, k) { flat.push({ st: st, sl: sl, first: k === 0 }); }); });
+      return Promise.all(flat.map(function (f) {
+        var im = f.sl.image;
         return im ? toPng(assetUrl(im.src)) : Promise.resolve(null);
-      }));
-    }).then(function (images) {
-      session.forEach(function (st, i) {
-        var sl = slideOf(st), img = images[i];
+      })).then(function (images) { return { flat: flat, images: images }; });
+    }).then(function (res) {
+      res.flat.forEach(function (f, i) {
+        var st = f.st, sl = f.sl, img = res.images[i];
         var s = pptx.addSlide();
         s.background = { color: 'FFFFFF' };
-        dots(s, false); if (!img) smallDots(s);
+        dots(s, false); if (!img && !sl.table && !sl.cards) smallDots(s);
         var textW = img ? 5.0 : 9.4;
-        s.addText(asText(sl.headline, p), { x: 0.7, y: 0.6, w: textW, h: 1.9, fontFace: FONT, fontSize: img ? 32 : 38, bold: true, color: b.primary, valign: 'bottom' });
-        if (sl.lines.length) {
+        if (sl.label) {
+          s.addText(sl.label, { x: 0.7, y: 0.35, w: 6, h: 0.4, fontFace: FONT, fontSize: 12, bold: true, charSpacing: 2,
+            color: 'FFFFFF', fill: { color: b.primary }, margin: 6 });
+        }
+        if (sl.table || sl.cards) {
+          // Headline, then the table or the cards, then the task steps underneath
+          s.addText(asText(sl.headline, p), { x: 0.7, y: 0.8, w: 11.9, h: 0.8, fontFace: FONT, fontSize: 30, bold: true, color: b.primary, valign: 'top' });
+          var top = 1.7;
+          if (sl.intro) { s.addText(asText(sl.intro, p), { x: 0.7, y: 1.55, w: 11.9, h: 0.5, fontFace: FONT, fontSize: 14, color: DEFAULT.muted, valign: 'top' }); top = 2.1; }
+          var ty;
+          if (sl.table) {
+            var rows = [sl.table.head.map(function (h) { return { text: String(h), options: { bold: true, color: 'FFFFFF', fill: { color: b.primary } } }; })]
+              .concat(sl.table.rows.map(function (r) { return r.map(function (c) { return { text: String(c == null ? '' : c) }; }); }));
+            s.addTable(rows, { x: 0.7, y: top, w: 11.9, fontFace: FONT, fontSize: 12, color: DEFAULT.ink, border: { type: 'solid', pt: 1, color: b.primary } });
+            ty = top + rows.length * 0.42 + 0.35;
+          } else {
+            var n = sl.cards.length, cols = n > 4 ? 3 : n, rowsN = Math.ceil(n / cols), gap = 0.25;
+            var hasBelow = sl.lines.length || sl.prompt;
+            var cw = (11.9 - (cols - 1) * gap) / cols, areaH = (hasBelow ? 3.3 : 4.5), ch = (areaH - (rowsN - 1) * gap) / rowsN;
+            sl.cards.forEach(function (c, k) {
+              var cx = 0.7 + (k % cols) * (cw + gap), cy = top + Math.floor(k / cols) * (ch + gap);
+              var runsC = [];
+              if (sl.numbered) runsC.push({ text: String(k + 1) + '  ', options: { bold: true, color: b.accentText || b.primary, fontSize: 16 } });
+              if (c.title) runsC.push({ text: asText(c.title, p), options: { bold: true, fontSize: 16, color: b.primary, breakLine: true } });
+              if (c.text) runsC.push({ text: asText(c.text, p), options: { fontSize: 12, breakLine: true } });
+              (c.items || []).forEach(function (it) { runsC.push({ text: asText(it, p), options: { fontSize: 12, bullet: { indent: 12 }, breakLine: true } }); });
+              s.addText(runsC, { x: cx, y: cy, w: cw, h: ch, fontFace: FONT, color: DEFAULT.ink, valign: 'top', margin: 8,
+                fill: { color: 'F4F7F9' }, line: { color: b.primary, width: 1.5 }, paraSpaceAfter: 4 });
+            });
+            ty = top + areaH + 0.25;
+          }
+          if (sl.lines.length) s.addText(sl.lines.map(function (t) { return { text: asText(t, p), options: { breakLine: true } }; }),
+            { x: 0.7, y: ty, w: 11.9, h: 6.4 - ty - (sl.prompt ? 0.6 : 0), fontFace: FONT, fontSize: 16, color: DEFAULT.ink, valign: 'top', paraSpaceAfter: 4 });
+          if (sl.prompt) s.addText(asText(sl.prompt, p), { x: 0.7, y: 6.0, w: 11.9, h: 0.55, fontFace: FONT, fontSize: 16, bold: true, color: b.primary });
+        } else if (sl.lines.length) {
           s.addText(sl.lines.map(function (pt) {
             var t = asText(pt, p);
             return { text: t, options: /^\d+\.\s/.test(t) ? { breakLine: true } : { bullet: { indent: 22 }, breakLine: true } };
           }), { x: 0.7, y: 2.7, w: textW, h: sl.prompt ? 3.0 : 3.9, fontFace: FONT, fontSize: sl.lines.length > 4 ? 18 : 24,
             color: DEFAULT.ink, valign: 'top', paraSpaceAfter: 10 });
         }
-        if (sl.prompt) {
+        if (sl.prompt && !sl.table && !sl.cards) {
           s.addText(asText(sl.prompt, p), { shape: pptx.ShapeType.roundRect, rectRadius: 0.35, x: 0.7, y: 5.95, w: textW, h: 0.7,
             fill: { color: b.primary }, line: { type: 'none' }, color: 'FFFFFF', fontFace: FONT, fontSize: 18, bold: true, valign: 'middle', margin: 12 });
         }
@@ -204,9 +258,19 @@
         }
         footer(s);
         var notes = [];
-        if (st.script) notes.push(asText(st.script, p));
-        if (st.tip) notes.push('Tip: ' + asText(st.tip, p));
+        if (f.first && st.script) notes.push(asText(st.script, p));
+        if (f.first && st.tip) notes.push('Tip: ' + asText(st.tip, p));
         if (notes.length) s.addNotes(notes.join('\n\n'));
+        if (sl.answers) {
+          var a = pptx.addSlide();
+          a.background = { color: 'FFFFFF' };
+          dots(a, false);
+          a.addText(asText(sl.answers.headline || 'Answers', p), { x: 0.7, y: 0.5, w: 11.9, h: 0.9, fontFace: FONT, fontSize: 32, bold: true, color: b.primary, valign: 'top' });
+          a.addText((sl.answers.lines || []).map(function (t) { return { text: asText(t, p), options: { bullet: { indent: 18 }, breakLine: true } }; }),
+            { x: 0.7, y: 1.5, w: 11.9, h: 4.6, fontFace: FONT, fontSize: 16, color: DEFAULT.ink, valign: 'top', paraSpaceAfter: 6 });
+          if (sl.answers.prompt) a.addText(asText(sl.answers.prompt, p), { x: 0.7, y: 6.15, w: 11.9, h: 0.55, fontFace: FONT, fontSize: 16, bold: true, color: b.primary });
+          footer(a);
+        }
       });
 
       // Closing slide, always: what it's built from, the licence, and the partners
@@ -377,11 +441,18 @@
           children.push(heading((i + 1) + '. ' + asText(st.title) + (mins ? '  (' + mins + ' min' + (st.optional ? ', optional' : '') + ')' : ''), D.HeadingLevel.HEADING_2));
           if (st.script) children.push(labelled('Say:', asText(st.script, p)));
           if (st.tip) children.push(labelled('Tip:', asText(st.tip, p)));
-          var sl = slideOf(st);
-          children.push(para([new D.TextRun({ text: 'On the slide: ', bold: true, color: b.accentText }), new D.TextRun({ text: asText(sl.headline, p), bold: true })]));
-          sl.lines.forEach(function (pt) { children.push(para(runs(parse(pt, p)), { bullet: { level: 0 } })); });
-          if (sl.prompt) children.push(labelled('Prompt for the room:', asText(sl.prompt, p)));
-          if (sl.image && sl.image.credit) children.push(labelled('Image:', asText(sl.image.credit)));
+          slidesOf(st).forEach(function (sl) {
+            children.push(para([new D.TextRun({ text: 'On the slide: ', bold: true, color: b.accentText }), new D.TextRun({ text: asText(sl.headline, p), bold: true })]));
+            (sl.cards || []).forEach(function (c) {
+              var t = (c.title ? c.title + (c.text || (c.items && c.items.length) ? ': ' : '') : '') + (c.text || '') + ((c.items || []).join('; '));
+              children.push(para(runs(parse(t, p)), { bullet: { level: 0 } }));
+            });
+            if (sl.table) children.push(labelled('Table:', sl.table.head.join(' | ') + ' (' + sl.table.rows.length + ' rows)'));
+            sl.lines.forEach(function (pt) { children.push(para(runs(parse(pt, p)), { bullet: { level: 0 } })); });
+            if (sl.prompt) children.push(labelled('Prompt for the room:', asText(sl.prompt, p)));
+            if (sl.answers) children.push(labelled((sl.answers.headline || 'Answers') + ':', (sl.answers.lines || []).join(' · ')));
+            if (sl.image && sl.image.credit) children.push(labelled('Image:', asText(sl.image.credit)));
+          });
           if (st.principles && st.principles.length) children.push(labelled('FAIR principles:', st.principles.join(', ')));
         });
       }

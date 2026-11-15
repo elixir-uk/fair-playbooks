@@ -196,21 +196,11 @@ layout: default
         {% if step.tip %}
           <div class="fac-script fac-tip"><span class="fac-label">Tip</span><p>{{ step.tip }}</p></div>
         {% endif %}
-        <div class="fac-slide">
-          <span class="fac-label">On the slide</span>
-          <p class="fac-slide-head">{{ s_head }}</p>
-          {% if s_lines and s_lines.size > 0 %}<ul class="fac-points">{% for pt in s_lines %}<li>{{ pt }}</li>{% endfor %}</ul>{% endif %}
-          {% if s_poll %}
-            <p class="fac-slide-prompt">Hands-up poll: {{ s_poll.question }}</p>
-            <ol class="fac-poll">{% for opt in s_poll.options %}<li>{{ opt }}</li>{% endfor %}</ol>
-          {% elsif s_prompt %}<p class="fac-slide-prompt">{{ s_prompt }}</p>{% endif %}
-          {% if s_img %}
-          <figure class="fac-figure">
-            <img class="fac-img" src="{{ s_img.src | relative_url }}" alt="{{ s_img.alt }}" loading="lazy" onerror="this.closest('figure').hidden=true" />
-            {% if s_img.credit %}<figcaption>{{ s_img.credit }}</figcaption>{% endif %}
-          </figure>
-          {% endif %}
-        </div>
+        {%- if step.slides %}
+          {%- for blk in step.slides %}{% include fac-slide.html sl=blk step=step first=forloop.first %}{% endfor %}
+        {%- else %}
+          {%- include fac-slide.html sl=step.slide step=step first=true %}
+        {%- endif %}
         {% if step.principles and step.principles.size > 0 %}
           <div class="fac-principles" title="FAIR principles this step addresses (facilitator reference)">{% for pr in step.principles %}<span class="fac-pill">{{ pr }}</span>{% endfor %}</div>
         {% endif %}

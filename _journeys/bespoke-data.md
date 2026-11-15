@@ -1,6 +1,6 @@
 ---
 title: "Helping a researcher with non-standard data"
-scenario: "A researcher has a bespoke dataset – say, custom assay outputs in a spreadsheet – with no obvious community repository. They want to share it."
+scenario: "A researcher has a bespoke dataset, such as custom assay outputs in a spreadsheet, with no obvious community repository. They want to share it."
 audience: "Mid-project researchers with non-standard data types"
 journey_path:
   - module: 00-what-is-fair
@@ -11,4 +11,4 @@ journey_path:
     version: long
 ---
 
-This journey skips the long FAIR primer (the researcher is already engaged enough to ask) and goes deep on the actually-hard part: making bespoke data FAIR when no community standard applies.
+This journey skips the long FAIR primer, because the researcher is already engaged enough to ask. It spends its time on the hard part, which is making bespoke data FAIR when no community standard applies.

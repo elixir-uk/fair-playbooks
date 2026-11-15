@@ -26,7 +26,7 @@ dataType: [n-a]
 intent: [motivate, signpost]
 ---
 
-This module gives the foundational vocabulary for everything that follows. **Don't rewrite what others have said well** – instead, draw from trusted resources and contextualise them for your audience.
+This module sets out the basic vocabulary used in the rest of the playbook. Don't rewrite what others have already explained well. Draw on trusted resources and adapt them for your audience.
 
 ## The four principles
 
@@ -37,15 +37,15 @@ This module gives the foundational vocabulary for everything that follows. **Don
 
 ## Common misconceptions to surface
 
-- "FAIR means open" – no, it means *clear about how to access*
-- "FAIR is just for big repositories" – applies to your spreadsheet too
-- "FAIR is a checklist" – it's a set of principles, implemented through judgement and tools
+- "FAIR means open" – no. It means being clear about how the data can be accessed
+- "FAIR is just for big repositories" – it applies to your spreadsheet too
+- "FAIR is a checklist" – FAIR is a set of principles that you apply using judgement and tools
 
 ## Recommended further reading
 
-Signpost (don't reproduce):
+Link to these rather than reproducing them:
 
 - [GO FAIR – FAIR principles](https://www.go-fair.org/fair-principles/)
 - [RDMkit – FAIR foundations](https://rdmkit.elixir-europe.org/)
 
-> Facilitator note: Use the short version when running another module that needs a quick FAIR primer. Use the long version when this *is* the workshop.
+> Facilitator note: Use the short version when running another module that needs a quick FAIR primer. Use the long version when this module is the whole workshop.

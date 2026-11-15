@@ -1,7 +1,7 @@
 ---
 title: "FAIRification of GitHub repositories"
 number: 5
-summary: "How to make code and analytical pipelines deposited on GitHub genuinely FAIR – beyond just being open. Covers the minimum-viable checklist (licence, README, citation, archived release) and the aspirational best-practice layer (containers, workflow standards, machine-readable metadata)."
+summary: "How to make code and analytical pipelines shared on GitHub FAIR as well as open. Covers the minimum-viable checklist (licence, README, citation, archived release) and the aspirational best-practice layer (containers, workflow standards, machine-readable metadata)."
 estimatedMinutes:
   long: 60  # no short version – this is a reference checklist, doesn't recap meaningfully
 prerequisites: []
@@ -15,19 +15,19 @@ dataType: [code]
 intent: [how-to, hands-on-exercise]
 ---
 
-When the community deposits code on GitHub to share methodology, we're often good at *Open Science* but less good at *FAIR*. Repositories without licences, READMEs or DOIs make FAIRification effectively unattainable. The good news: small, well-targeted changes have outsized impact.
+When the community puts code on GitHub to share methods, we tend to do well on Open Science and less well on FAIR. A repository without a licence, README or DOI is very hard to make FAIR. Small, targeted changes can make a big difference.
 
-This module is a **side room** – a one-hour parallel session, not part of the main playbook path. Use it when you're working with researchers who share code as well as data.
+This module is a side room. It runs as a one-hour parallel session outside the main playbook path. Use it when you're working with researchers who share code as well as data.
 
 ## What is GitHub (in this context)?
 
 GitHub is a web-based platform for hosting and collaboratively developing digital materials – most commonly code, but also documentation, workflows and data-management resources. Built around Git (a version-control system), it records every change with attribution and timestamp.
 
-For research, GitHub supports reproducibility and transparency by giving teams a structured place to manage analysis code, documentation, and review of workflows. But **GitHub is not a data repository** – it should be used alongside trusted data repositories (Zenodo, Figshare) and persistent identifiers (DOIs) for the actual data.
+For research, GitHub supports reproducibility and transparency by giving teams a structured place to manage analysis code, documentation, and review of workflows. GitHub is not a data repository. For the data itself, use it alongside trusted data repositories (Zenodo, Figshare) and persistent identifiers (DOIs).
 
 ## What researchers need when they reach for someone else's code
 
-For code to be useful, it must be more than available – it must be understandable, executable, reproducible and reusable. That requires:
+Code is only useful if people can understand it, run it, reproduce the results and reuse it. That requires:
 
 - Clear documentation (README +, where appropriate, vignettes)
 - Version information and dependency management
@@ -36,36 +36,36 @@ For code to be useful, it must be more than available – it must be understanda
 - A citation
 - Enough context for someone to judge whether the code suits their research question
 
-A FAIR GitHub repository is **citable, versioned, licensed, documented, executable, tested, and connected to persistent scholarly infrastructure**.
+A FAIR GitHub repository is citable, versioned, licensed, documented, executable, tested and connected to persistent scholarly infrastructure.
 
 ## The practical checklist
 
-Items marked **essential** are the minimum-viable baseline. Items marked *aspirational* improve reuse meaningfully but take longer.
+Items marked Essential are the minimum-viable baseline. Items marked Aspirational make the code noticeably easier to reuse but take longer.
 
 ### Findable
 
 - **Essential:** clear repository name and description; meaningful topics/tags
 - **Essential:** a strong `README.md` (purpose, scope, installation, inputs, outputs, example usage)
 - **Essential:** archive releases in Zenodo to mint a DOI (GitHub alone is not the persistent scholarly record)
-- *Aspirational:* `CITATION.cff` so GitHub displays a citation button
-- *Aspirational:* semantic versioning (`v1.0.0`, `v1.1.0`, …) and ORCIDs for contributors
-- *Aspirational:* link code → data → publication → workflow via DOIs
+- Aspirational: `CITATION.cff` so GitHub displays a citation button
+- Aspirational: semantic versioning (`v1.0.0`, `v1.1.0`, …) and ORCIDs for contributors
+- Aspirational: link code → data → publication → workflow via DOIs
 
 ### Accessible
 
-- **Essential:** add a `LICENSE` – without it, others have no legal permission to reuse
+- **Essential:** add a `LICENSE` file. Without one, others have no legal permission to reuse the code
 - **Essential:** installation instructions that work from a clean environment
-- *Aspirational:* explicit dependency pinning (e.g. `renv` for R, `pyproject.toml` for Python)
-- *Aspirational:* state what happens if the project becomes inactive
+- Aspirational: explicit dependency pinning (e.g. `renv` for R, `pyproject.toml` for Python)
+- Aspirational: state what happens if the project becomes inactive
 
 ### Interoperable
 
 - **Essential:** open standard input/output formats where possible (CSV, TSV, JSON, FASTQ, etc.)
 - **Essential:** provide example input and output files
 - **Essential:** avoid hard-coded local paths, institution-specific assumptions and hidden credentials
-- *Aspirational:* document expected schema of input files
-- *Aspirational:* containerise with Docker / Apptainer / Conda
-- *Aspirational:* use workflow standards (Nextflow, Snakemake, CWL) where appropriate
+- Aspirational: document expected schema of input files
+- Aspirational: containerise with Docker / Apptainer / Conda
+- Aspirational: use workflow standards (Nextflow, Snakemake, CWL) where appropriate
 
 ### Reusable
 
@@ -73,8 +73,8 @@ Items marked **essential** are the minimum-viable baseline. Items marked *aspira
 - **Essential:** include test data with a clearly delineated data folder
 - **Essential:** pin dependencies
 - **Essential:** document expected runtime, memory requirements, OS assumptions
-- *Aspirational:* automated tests via GitHub Actions
-- *Aspirational:* changelog, contribution guidance, provenance metadata
+- Aspirational: automated tests via GitHub Actions
+- Aspirational: changelog, contribution guidance, provenance metadata
 
 ## A good README skeleton
 
@@ -116,7 +116,7 @@ Maintainer and support route.
 
 - No README – if you don't have a link, you don't know it exists
 - No licence – well-intentioned but legally ambiguous
-- README that doubles as a full vignette (table of contents help; better to split out vignettes)
+- A README that doubles as a full vignette (a table of contents helps, but it's better to split vignettes out)
 - Hard-coded paths from one institution's filesystem
 - Code that requires version-specific dependencies without saying which
 
@@ -125,4 +125,4 @@ Maintainer and support route.
 - Module 1 (tools and resources) – Zenodo and FAIRsharing are referenced throughout
 - Module 2 (public repos) – code that processes a public-repo dataset belongs in a FAIR GitHub repo paired with that dataset
 
-> Facilitator note: this module was developed in a single 1-hour parallel session at Contentathon #2 (May 2026). It's intentionally checklist-shaped rather than narrative – works well as a structured walkthrough exercise where participants score their own (or a chosen public) repo against the checklist.
+> Facilitator note: this module was developed in a single 1-hour parallel session at Contentathon #2 (May 2026). It's deliberately written as a checklist. It works well as a structured walkthrough exercise where participants score their own repository (or a chosen public one) against the checklist.

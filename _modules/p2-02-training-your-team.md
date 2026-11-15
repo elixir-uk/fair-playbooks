@@ -1,7 +1,7 @@
 ---
 title: "Training your team to think FAIR"
 number: 12
-summary: "Patterns for embedding FAIR thinking in a research team without turning it into a compliance exercise. Covers onboarding rituals, lab meeting prompts, and how to handle the 'we don't have time' objection."
+summary: "Ways to build FAIR thinking into a research team without turning it into a compliance exercise. Covers onboarding routines, lab meeting prompts, and how to handle the 'we don't have time' objection."
 estimatedMinutes:
   short: 10
   long: 50
@@ -16,11 +16,11 @@ intent: [motivate, how-to]
 
 > **Placeholder module.** This module will be drafted in Contentathon #3.
 
-**What this module will cover when drafted:**
+When drafted, this module will cover:
 
-- The onboarding ritual: what every new lab member should learn about RDM in their first week
-- Lab meeting prompts that surface FAIR conversations without scheduling extra meetings
-- Handling the "we don't have time" objection (spoiler: it's usually about priority, not time)
+- Onboarding: what every new lab member should learn about RDM in their first week
+- Lab meeting prompts that start FAIR conversations without scheduling extra meetings
+- Handling the "we don't have time" objection (usually this is a question of priority)
 - How to introduce FAIR practice without sounding like compliance
 - Templates for team-level RDM agreements
 

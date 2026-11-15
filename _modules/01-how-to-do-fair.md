@@ -1,14 +1,14 @@
 ---
 title: "How to do FAIR: signposting resources in context"
 number: 1
-summary: "A guided tour of the four resources every RDM professional should know – RDMkit, FAIR Cookbook, FAIRsharing, and one FAIR maturity framework (we recommend FAIR-PLUS). The goal is contextualised signposting, not a resource dump."
+summary: "A guided tour of four resources every RDM professional should know: RDMkit, FAIR Cookbook, FAIRsharing and one FAIR maturity framework (we recommend FAIR-PLUS). The aim is to introduce each resource through a real question a researcher has."
 estimatedMinutes:
   long: 45  # no short version – this module's value is in the depth and worked example
 prerequisites: ["00-what-is-fair"]
 sources:
   - name: "RDMkit"
     url: "https://rdmkit.elixir-europe.org"
-    note: "\"Where do I start?\" – the spine of this signposting tour"
+    note: "Answers \"Where do I start?\" and anchors this signposting tour"
   - name: "FAIR Cookbook"
     url: "https://faircookbook.elixir-europe.org"
     note: "Recipe-style how-to for specific FAIRification steps"
@@ -23,7 +23,7 @@ dataType: [mixed]
 intent: [signpost, how-to]
 ---
 
-The temptation in this module is to list every FAIR resource you've ever heard of. **Resist it.** Researchers tune out when handed a wall of links. Contextualise each resource against a concrete question they actually have.
+In this module it's tempting to list every FAIR resource you've heard of. Try to avoid that. Researchers stop listening when they're handed a long list of links. Instead, tie each resource to a concrete question they have.
 
 ## The four resources to know (and when to reach for each)
 
@@ -37,16 +37,16 @@ The temptation in this module is to list every FAIR resource you've ever heard o
 
 ### FAIRsharing – "Which standard / repository / policy applies here?"
 
-[FAIRsharing](https://fairsharing.org) is the authoritative registry of standards, databases and policies. Use it when you need to *recommend* a specific standard or repository to a researcher.
+[FAIRsharing](https://fairsharing.org) is the authoritative registry of standards, databases and policies. Use it when you need to recommend a specific standard or repository to a researcher.
 
 ### One maturity framework – pick one and stick with it
 
-We recommend [FAIR-PLUS](https://fairplus.github.io/the-fair-cookbook/) for life sciences. Pick one framework and use it consistently – switching between FAIR-PLUS, RDA FAIR Data Maturity Model, and others confuses everyone.
+We recommend [FAIR-PLUS](https://fairplus.github.io/the-fair-cookbook/) for life sciences. Pick one framework and use it consistently – switching between FAIR-PLUS, the RDA FAIR Data Maturity Model and others confuses people.
 
 ## Worked example: FAIRifying a real dataset
 
-This is the most important part of this module. Don't end on theory.
+This is the most important part of the module. Don't finish the session on theory.
 
-> Take a real (or realistic) dataset – say, an RNA-seq experiment – and walk through which of the four resources you'd consult at each step. End with: *what changed?* (a "before" and "after" view of how FAIR the dataset is.)
+> Take a real (or realistic) dataset – say, an RNA-seq experiment – and walk through which of the four resources you'd consult at each step. Finish by asking what changed, using a "before" and "after" view of how FAIR the dataset is.
 
-A concrete example sticks. Abstract signposting evaporates.
+People remember a concrete example. They soon forget signposting that isn't tied to one.

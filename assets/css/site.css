@@ -889,10 +889,11 @@ html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250
 }
 
 /* Module title: number and title on the page, no banner */
-.mod-title { display: flex; align-items: center; gap: 1.25rem; margin: 2rem 0 1.5rem; }
+.mod-title { display: flex; align-items: flex-start; gap: 1.25rem; margin: 2rem 0 1.5rem; }
 .mod-title .mod-hero-number { width: 4.5rem; height: 4.5rem; font-size: 1.25rem; }
 .mod-title-content { min-width: 0; }
 .mod-title .mod-hero-badges { margin-bottom: 0.4rem; }
+.mod-title-summary { margin: 0.6rem 0 0; max-width: 46rem; color: var(--muted, inherit); font-size: var(--fs-body); }
 .mod-title-text { margin: 0; color: var(--ink); font-size: var(--fs-h1); font-weight: 900; line-height: 1.08; }
 @media (max-width: 640px) {
   .mod-title { gap: 0.9rem; margin-top: 1.25rem; }

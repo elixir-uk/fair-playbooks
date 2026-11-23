@@ -114,3 +114,31 @@ description: A facilitator's kit for RDM professionals running FAIR sessions –
     </p>
   </div>
 </section>
+
+<!-- ON TOUR -->
+{%- assign visits = site.data.visits -%}
+<section id="on-tour">
+  <h2 class="section-head"><span class="section-num">04</span> On tour</h2>
+  <p class="muted">We're taking the playbooks to universities across the UK. Each visit is a Playbook 1 course and a Playbook 2 stand, co-hosted with the local team. RDM professionals from nearby universities are invited to audit the sessions, and we cover their travel and costs.</p>
+
+  <h3>Next stops <span class="muted">· {{ visits.confirmed.window }}</span></h3>
+  <div class="yours-grid">
+    {%- for v in visits.confirmed.places %}
+    <div class="yours-step">
+      <div class="yours-num">{{ forloop.index }}</div>
+      <strong>{{ v.city }}</strong>
+      <p class="muted">{{ v.host }}{% if v.date %} · {{ v.date }}{% endif %}</p>
+    </div>
+    {%- endfor %}
+  </div>
+
+  <h3>Exploring <span class="muted">· {{ visits.exploring.note | downcase }}</span></h3>
+  <div class="yours-grid">
+    {%- for v in visits.exploring.places %}
+    <div class="yours-step">
+      <div class="yours-num">?</div>
+      <strong>{{ v.city }}</strong>
+    </div>
+    {%- endfor %}
+  </div>
+</section>

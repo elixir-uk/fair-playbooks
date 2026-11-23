@@ -1,0 +1,21 @@
+# Site visits shown on the home page ("On tour").
+# Each visit is one co-hosted day (or two half days): a Playbook 1 course and a
+# Playbook 2 stand. Move a place from `exploring` to `confirmed` once agreed,
+# and add `date:` when it is set.
+
+confirmed:
+  window: January to March 2027 – dates to come
+  places:
+    - city: Cardiff
+      host: Cardiff University
+    - city: London
+      host: UCL
+    - city: Oxford
+      host: University of Oxford
+
+exploring:
+  note: For the next three visits
+  places:
+    - city: Belfast
+    - city: Glasgow
+    - city: Manchester

@@ -1,0 +1,53 @@
+# Builds the site on every pull request, without deploying, so changes are
+# tested before they reach main. Download the "site" artifact from the run
+# to preview the built pages.
+name: Check build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "/fair-playbooks"
+        env:
+          JEKYLL_ENV: production
+
+      - name: Check the built pages
+        run: |
+          set -e
+          test -f _site/index.html
+          ls _site/modules/*/index.html >/dev/null
+          echo "Module pages: materials come before the intro prose"
+          for f in _site/modules/*/index.html; do
+            if grep -q 'class="workshop-pack"' "$f" && grep -q 'mod-prose' "$f"; then
+              pack=$(grep -n 'class="workshop-pack"' "$f" | head -1 | cut -d: -f1)
+              prose=$(grep -n 'mod-prose' "$f" | head -1 | cut -d: -f1)
+              [ "$pack" -lt "$prose" ] || { echo "FAIL $f"; exit 1; }
+              echo "  ok $f"
+            fi
+          done
+          echo "Home page: On tour section"
+          grep -q 'id="on-tour"' _site/index.html
+          grep -q 'Cardiff' _site/index.html
+          grep -q 'Manchester' _site/index.html
+          echo "  ok"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site
+          retention-days: 7

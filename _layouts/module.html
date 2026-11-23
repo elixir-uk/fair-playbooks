@@ -10,67 +10,30 @@ layout: default
 {%- endcomment -%}
 
 {%- assign id = page.slug -%}
-<!-- HERO with oversized module number -->
-<header class="mod-hero">
+<!-- TITLE: the module number and title, nothing else -->
+<div class="mod-title">
   <div class="mod-hero-number">
     {%- if page.isSideRoom -%}<span class="pixel-icon" data-pixel-icon="sideroom"></span>{%- else -%}{{ page.number | prepend: '0' | slice: -2, 2 }}{%- endif -%}
   </div>
-  <div class="mod-hero-content">
+  <div class="mod-title-content">
+    {%- assign st = site.data.statuses[page.status] -%}
+    {%- if page.isSideRoom or page.variant or st %}
     <div class="mod-hero-badges">
       {% if page.isSideRoom %}<span class="badge">side room</span>{% endif %}
       {% if page.variant %}<span class="variant-chip">Version {{ page.variant }}</span>{% endif %}
-      {%- assign st = site.data.statuses[page.status] -%}{% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
+      {% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
     </div>
-    <h1 class="mod-hero-title">{{ page.title }}</h1>
-    <p class="mod-hero-summary">{{ page.summary }}</p>
-    {% if page.benefit %}<p class="mod-hero-benefit"><span>What's in it for participants</span>{{ page.benefit }}</p>{% endif %}
-    {% if page.hook %}<p class="mod-hero-benefit"><span>Why they'll care</span>{{ page.hook }}</p>{% endif %}
-
-    {%- comment -%} Game-style counter: steps, time and the short version {%- endcomment -%}
-{%- unless site.data.statuses[page.status] %}
-    <p class="mod-hud" aria-label="At a glance">
-      {%- if page.session %}<span>Steps <b>{{ page.session.size | prepend: '0' | slice: -2, 2 }}</b></span>{% endif -%}
-      <span>Time <b>{{ page.estimatedMinutes.long }}</b> min</span>
-      {%- if page.estimatedMinutes.short %}<span>Short <b>{{ page.estimatedMinutes.short }}</b> min</span>{% endif -%}
-    </p>
-    {%- endunless %}
-
+    {%- endif %}
+    <h1 class="mod-title-text">{{ page.title }}</h1>
+    {% if page.summary %}<p class="mod-title-summary">{{ page.summary }}</p>{% endif %}
   </div>
-</header>
-
-{% if page.drawnFromExistingResources %}
-<div class="callout">
-  <strong>Drawn from existing resources</strong> This module brings together established
-  sources: RDMkit, GO FAIR and the original FAIR principles paper. Follow the links for more depth.
 </div>
-{% endif %}
-
-{% if page.sources and page.sources.size > 0 %}
-<section class="sources-strip">
-  <span class="sources-eyebrow">Built from</span>
-  <ul class="sources-list">
-    {% for s in page.sources %}
-      <li>
-        <span class="pixel-icon" data-pixel-icon="floppy"></span>
-        <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.name }}</a>
-        {% if s.note %}<span class="sources-note"> – {{ s.note }}</span>{% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
 
 {%- assign has_session = false -%}
 {%- if page.session and page.session.size > 0 -%}{%- assign has_session = true -%}{%- endif -%}
 {%- assign slot = '<div class="session-slot"></div>' -%}
 {%- assign body_parts = content | split: slot -%}
 {%- assign present_page = site.pages | where: "module", id | first -%}
-
-{% if has_session and body_parts.size > 1 %}
-<article class="prose mod-prose numbered">
-  {{ body_parts[0] }}
-</article>
-{% endif %}
 
 {% if has_session %}
 <section class="workshop-pack">
@@ -95,7 +58,39 @@ layout: default
     <a class="pack-dl" href="{{ '/certificate/' | relative_url }}?module={{ id }}">Certificates<span class="pack-dl-ext">print one per participant</span></a>
   </div>
 </section>
+{% endif %}
 
+
+{% if page.drawnFromExistingResources %}
+<div class="callout">
+  <strong>Drawn from existing resources</strong> This module brings together established
+  sources: RDMkit, GO FAIR and the original FAIR principles paper. Follow the links for more depth.
+</div>
+{% endif %}
+
+{% if page.sources and page.sources.size > 0 %}
+<section class="sources-strip">
+  <span class="sources-eyebrow">Built from</span>
+  <ul class="sources-list">
+    {% for s in page.sources %}
+      <li>
+        <span class="pixel-icon" data-pixel-icon="floppy"></span>
+        <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.name }}</a>
+        {% if s.note %}<span class="sources-note"> – {{ s.note }}</span>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+
+{% if has_session and body_parts.size > 1 %}
+<article class="prose mod-prose numbered">
+  {{ body_parts[0] }}
+</article>
+{% endif %}
+
+{% if has_session %}
 <section class="fac-session" id="run-session">
   <h2 class="fac-title">Run this session</h2>
 

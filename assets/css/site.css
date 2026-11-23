@@ -777,7 +777,7 @@ a.act-tile p { font-size: var(--fs-ui); flex: 1; margin: 0 0 0.6rem; }
 /* Cheat code (assets/js/cheat.js): 8-bit mode for 15 seconds */
 html.eightbit body, html.eightbit h1, html.eightbit h2, html.eightbit h3, html.eightbit button, html.eightbit input, html.eightbit .btn { font-family: var(--font-pixel) !important; letter-spacing: 0 !important; }
 html.eightbit body { font-size: 11px; line-height: 2.1; }
-html.eightbit h1, html.eightbit .hero-title, html.eightbit .mod-hero-title { font-size: 1.6rem !important; line-height: 1.5 !important; }
+html.eightbit h1, html.eightbit .hero-title, html.eightbit .mod-hero-title, html.eightbit .mod-title-text { font-size: 1.6rem !important; line-height: 1.5 !important; }
 html.eightbit img, html.eightbit svg { image-rendering: pixelated; }
 html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(2, 20, 34, 0.07) 0 2px, transparent 2px 4px); }
 .cheat-runner { position: absolute; bottom: 0; left: -48px; width: 48px; height: 48px; z-index: 2; animation: cheat-run 7s linear forwards, cheat-hop 0.32s steps(2) infinite; }
@@ -873,7 +873,7 @@ html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250
   body { background: #fff !important; }
   main { max-width: none !important; padding: 0 !important; }
   /* Module page prints just the facilitator session */
-  .mod-hero, .sources-strip, .workshop-pack, .mod-prose, .mod-footer { display: none !important; }
+  .mod-hero, .mod-title, .sources-strip, .workshop-pack, .mod-prose, .mod-footer { display: none !important; }
   .fac-session { margin: 0; }
   .fac-step { page-break-inside: avoid; }
   .fac-script { background: #f4f4f4; color: #000; }
@@ -886,4 +886,16 @@ html.eightbit body::after { content: ''; position: fixed; inset: 0; z-index: 250
   .stand-sign h3 { font-size: 64pt; }
   .stand-sign .sign-sub, .stand-sign .sign-tally { font-size: 24pt; }
   .stand-sign ol { font-size: 28pt; }
+}
+
+/* Module title: number and title on the page, no banner */
+.mod-title { display: flex; align-items: flex-start; gap: 1.25rem; margin: 2rem 0 1.5rem; }
+.mod-title .mod-hero-number { width: 4.5rem; height: 4.5rem; font-size: 1.25rem; }
+.mod-title-content { min-width: 0; }
+.mod-title .mod-hero-badges { margin-bottom: 0.4rem; }
+.mod-title-summary { margin: 0.6rem 0 0; max-width: 46rem; color: var(--muted, inherit); font-size: var(--fs-body); }
+.mod-title-text { margin: 0; color: var(--ink); font-size: var(--fs-h1); font-weight: 900; line-height: 1.08; }
+@media (max-width: 640px) {
+  .mod-title { gap: 0.9rem; margin-top: 1.25rem; }
+  .mod-title .mod-hero-number { width: 3.2rem; height: 3.2rem; font-size: 0.95rem; }
 }

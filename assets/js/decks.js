@@ -163,13 +163,9 @@
     }
 
     var logoSrc = b.logo || (base() + 'assets/branding/elixir-uk-logo-negative.svg');
-    function dots(s, onDark) {
-      s.addShape(pptx.ShapeType.ellipse, { x: 10.6, y: -1.9, w: 4.4, h: 4.4, fill: { color: onDark ? b.mid : '9BCBDD', transparency: onDark ? 40 : 65 }, line: { type: 'none' } });
-    }
-    function smallDots(s) {
-      s.addShape(pptx.ShapeType.ellipse, { x: 10.35, y: 1.55, w: 1.35, h: 1.35, fill: { color: b.accent }, line: { type: 'none' } });
-      s.addShape(pptx.ShapeType.ellipse, { x: 11.95, y: 3.1, w: 0.42, h: 0.42, fill: { color: b.mid }, line: { type: 'none' } });
-    }
+    // Decorative corner circles removed: slides stay plain.
+    function dots() {}
+    function smallDots() {}
 
     return toPng(logoSrc).then(function (logo) {
       // Title slide

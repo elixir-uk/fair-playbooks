@@ -10,29 +10,21 @@ layout: default
 {%- endcomment -%}
 
 {%- assign id = page.slug -%}
-<!-- HERO with oversized module number -->
-<header class="mod-hero">
+<!-- TITLE: the module number and title, nothing else -->
+<header class="mod-title">
   <div class="mod-hero-number">
     {%- if page.isSideRoom -%}<span class="pixel-icon" data-pixel-icon="sideroom"></span>{%- else -%}{{ page.number | prepend: '0' | slice: -2, 2 }}{%- endif -%}
   </div>
-  <div class="mod-hero-content">
+  <div class="mod-title-content">
+    {%- assign st = site.data.statuses[page.status] -%}
+    {%- if page.isSideRoom or page.variant or st %}
     <div class="mod-hero-badges">
       {% if page.isSideRoom %}<span class="badge">side room</span>{% endif %}
       {% if page.variant %}<span class="variant-chip">Version {{ page.variant }}</span>{% endif %}
-      {%- assign st = site.data.statuses[page.status] -%}{% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
+      {% if st %}<span class="status-chip">{{ st.label }}</span>{% endif %}
     </div>
-    <h1 class="mod-hero-title">{{ page.title }}</h1>
-    <p class="mod-hero-summary">{{ page.summary }}</p>
-
-    {%- comment -%} Game-style counter: steps, time and the short version {%- endcomment -%}
-{%- unless site.data.statuses[page.status] %}
-    <p class="mod-hud" aria-label="At a glance">
-      {%- if page.session %}<span>Steps <b>{{ page.session.size | prepend: '0' | slice: -2, 2 }}</b></span>{% endif -%}
-      <span>Time <b>{{ page.estimatedMinutes.long }}</b> min</span>
-      {%- if page.estimatedMinutes.short %}<span>Short <b>{{ page.estimatedMinutes.short }}</b> min</span>{% endif -%}
-    </p>
-    {%- endunless %}
-
+    {%- endif %}
+    <h1 class="mod-title-text">{{ page.title }}</h1>
   </div>
 </header>
 

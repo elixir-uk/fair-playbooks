@@ -127,12 +127,14 @@
   }
 
   // Rasterise any same-origin image (SVG included) to PNG so Office renders it everywhere.
-  function toPng(src) {
+  // maxW caps the width in pixels: logos print under an inch tall, so 600px is plenty.
+  function toPng(src, maxW) {
+    maxW = maxW || 1600;
     return new Promise(function (resolve) {
       var img = new Image();
       img.onload = function () {
         var w = img.naturalWidth || 1200, h = img.naturalHeight || 800;
-        var scale = Math.min(1, 2000 / w);
+        var scale = Math.min(1, maxW / w);
         var c = document.createElement('canvas');
         c.width = Math.round(w * scale); c.height = Math.round(h * scale);
         c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
@@ -167,7 +169,7 @@
     function dots() {}
     function smallDots() {}
 
-    return toPng(logoSrc).then(function (logo) {
+    return toPng(logoSrc, 600).then(function (logo) {
       // Title slide
       var s = pptx.addSlide();
       s.background = { color: b.primary };
@@ -270,7 +272,7 @@
       });
 
       // Closing slide, always: what it's built from, the licence, and the partners
-      return Promise.all([toPng(base() + 'assets/branding/elixir-uk-logo.svg'), toPng(base() + 'assets/branding/BioFAIR-logo.png')]);
+      return Promise.all([toPng(base() + 'assets/branding/elixir-uk-logo.svg', 600), toPng(base() + 'assets/branding/BioFAIR-logo.png', 600)]);
     }).then(function (partners) {
       var s = pptx.addSlide();
       s.background = { color: 'FFFFFF' };
@@ -294,7 +296,7 @@
       });
       footer(s);
       pptx.subject = 'CC BY 4.0 · FAIR-in-action Playbook · ELIXIR-UK RDM Club · commissioned by BioFAIR';
-      return pptx.writeFile({ fileName: fileName(d, p, '.pptx') });
+      return pptx.writeFile({ fileName: fileName(d, p, '.pptx'), compression: true });
     });
   }
 
@@ -395,7 +397,7 @@
     }
 
     var logoSrc = b.logo || (base() + 'assets/branding/elixir-uk-logo.svg');
-    return toPng(logoSrc).then(function (logo) {
+    return toPng(logoSrc, 600).then(function (logo) {
       if (logo) {
         var bytes = Uint8Array.from(atob(logo.data.split(',')[1]), function (c) { return c.charCodeAt(0); });
         children.push(new D.Paragraph({ children: [new D.ImageRun({ data: bytes, transformation: { width: Math.round(48 * logo.w / logo.h), height: 48 } })] }));
@@ -464,7 +466,7 @@
       children.push(heading('Licence', D.HeadingLevel.HEADING_1));
       children.push(para([new D.TextRun({ text: 'CC BY 4.0. ', bold: true }), new D.TextRun({ text: 'Reuse and adapt this guide, crediting "FAIR-in-action Playbook, ELIXIR-UK RDM Club". Reused images and materials keep their own licences, as credited above. https://creativecommons.org/licenses/by/4.0/' })]));
       children.push(para([new D.TextRun({ text: 'Built by the ELIXIR-UK RDM Club · commissioned by BioFAIR', color: DEFAULT.muted })]));
-      return Promise.all([toPng(base() + 'assets/branding/elixir-uk-logo.svg'), toPng(base() + 'assets/branding/BioFAIR-logo.png')]);
+      return Promise.all([toPng(base() + 'assets/branding/elixir-uk-logo.svg', 600), toPng(base() + 'assets/branding/BioFAIR-logo.png', 600)]);
     }).then(function (partners) {
       var imgs = partners.filter(Boolean).map(function (lg) {
         var bytes = Uint8Array.from(atob(lg.data.split(',')[1]), function (c) { return c.charCodeAt(0); });
@@ -490,6 +492,13 @@
   }
 
   // ─────────────────────────────── Wiring ───────────────────────────────
+  // Fetch the libraries in the background once the page has settled, so the
+  // first click doesn't wait for them. A failure here is harmless: the click retries.
+  if (document.querySelector('[data-download]')) {
+    var warm = function () { Object.keys(LIBS).forEach(function (k) { loadScript(base() + LIBS[k]).catch(function () {}); }); };
+    if ('requestIdleCallback' in window) window.addEventListener('load', function () { requestIdleCallback(warm, { timeout: 4000 }); });
+    else window.addEventListener('load', function () { setTimeout(warm, 1500); });
+  }
   var BUILDERS = { pptx: buildPptx, docx: buildDocx };
   document.addEventListener('click', function (e) {
     var btn = e.target.closest && e.target.closest('[data-download]');
